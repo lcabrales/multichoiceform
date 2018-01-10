@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">@color/white</color>
+    <color name="color_primary_dark">@color/gray</color>
+    <color name="color_accent">@color/blue</color>
+    <color name="color_accent_dark">@color/blue_dark</color>
+
+    <!--UI colors-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="blue">#0F2C4F</color>
+    <color name="blue_dark">#1E2E41</color>
+    <color name="red">#D32F2F</color>
+    <color name="gray">#8D8B8B</color>
+    <color name="darker_gray">#5b5b5b</color>
+    <color name="gray_light">#F2F2F2</color>
+    <color name="gray_low">#FAF9FF</color>
+    <color name="ios_gray">#F1F1F5</color>
+    <color name="sky_blue">#35B5F4</color>
+    <color name="separator">@color/color_accent</color>
+    <color name="divider">#1D000000</color>
+    <color name="toolbar">@color/gray_light</color>
+    <color name="toolbar_text">@color/color_accent</color>
+    <color name="nav_drawer_background">#E10F2C4F</color>
+    <color name="nav_drawer_shadow">#CF000000</color>
+    <color name="ripple">@color/color_accent</color>
+    <color name="ripple_dark">@color/color_accent_dark</color>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FormStepView">
+        <attr name="title" format="string" />
+        <attr name="titleColor" format="color" />
+        <attr name="selectionColor" format="color" />
+        <attr name="separatorColor" format="color" />
+        <attr name="arrowDrawable" format="reference" />
+    </declare-styleable>
+</resources>
