@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MultiChoiceForm-master</string>
+    <string name="app_name">MultiChoiceForm-Sample</string>
+    <string name="validate">Validate</string>
 </resources>

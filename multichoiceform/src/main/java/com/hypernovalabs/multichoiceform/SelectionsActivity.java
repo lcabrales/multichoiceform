@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,8 +15,8 @@ import com.hypernovalabs.multichoiceform.model.ExtraModel;
 
 public class SelectionsActivity extends AppCompatActivity {
 
-    public static final String EXTRA_MODEL_KEY = "ExtraModelKey";
-    public static final String SELECTION_KEY = "SelectionKey";
+    protected static final String EXTRA_MODEL_KEY = "ExtraModelKey";
+    protected static final String SELECTION_KEY = "SelectionKey";
     public static final String ID_KEY = "IdKey";
 
     private SelectionsActivity mContext = this;
@@ -28,14 +29,11 @@ public class SelectionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selections);
 
+        getIntent().setExtrasClassLoader(ExtraModel.class.getClassLoader());
         mModel = getIntent().getParcelableExtra(EXTRA_MODEL_KEY);
 
         setupToolbar();
         setupListView();
-
-        //TODO CHANGE START ANIMATION
-        //TODO ADD VALIDATE METHOD
-        //TODO ADD OTHER METHODS
     }
 
     public void setupToolbar() {
@@ -53,16 +51,20 @@ public class SelectionsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        /*activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Drawable upArrow = ContextCompat.getDrawable(activity, R.drawable.ic_arrow_back);
-        upArrow.setColorFilter(ContextCompat.getColor(activity, R.color.toolbar_text), PorterDuff.Mode.SRC_ATOP);
-        activity.getSupportActionBar().setHomeAsUpIndicator(upArrow);*/
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Defines the ListView containing all of the data options.
+     * Includes an OnItemClickListener, returns to home activity with the selection
+     */
     private void setupListView() {
         mListView = findViewById(R.id.list_view);
         mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        mListView.setEmptyView(findViewById(R.id.empty_view));
+        setEmptyViewTexts(mModel.emptyViewTitle, mModel.emptyViewMsg);
 
         mAdapter = new ArrayAdapter<>(mContext, R.layout.simple_list_item_checked,
                 mModel.data);
@@ -73,19 +75,49 @@ public class SelectionsActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra(SELECTION_KEY, String.valueOf(mAdapter.getItem(i)));
                 intent.putExtra(ID_KEY, mModel.id);
+
                 setResult(RESULT_OK, intent);
                 finish();
+
+                overrideTransition();
             }
         });
 
         checkSelection();
     }
 
+    private void setEmptyViewTexts(String title, String msg) {
+        ((TextView) findViewById(R.id.tv_empty_title)).setText(title);
+        ((TextView) findViewById(R.id.tv_empty_msg)).setText(msg);
+    }
+
+    private void overrideTransition() {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
     /**
-     * Comprueba y deja seleccionado una opción de un step del formulario que ya haya sido seleccionado
+     * If there is already a selection for the current FormStep, checks it
      */
     private void checkSelection() {
-        if (!mModel.selection.equals(getString(R.string.form_select)) && !mModel.selection.equals(""))
+        if (mModel.selection.length() > 0)
             mListView.setItemChecked(mAdapter.getPosition(mModel.selection), true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overrideTransition();
     }
 }

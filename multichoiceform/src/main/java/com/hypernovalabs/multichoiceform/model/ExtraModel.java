@@ -17,6 +17,8 @@ public class ExtraModel implements Parcelable {
     public boolean required;
     public int toolbarBackgroundColor;
     public int toolbarTitleColor;
+    public String emptyViewTitle;
+    public String emptyViewMsg;
 
     public ExtraModel() {
 
@@ -24,7 +26,7 @@ public class ExtraModel implements Parcelable {
 
     protected ExtraModel(Parcel in) {
         if (in.readByte() == 0x01) {
-            data = new ArrayList<String>();
+            data = new ArrayList<>();
             in.readList(data, String.class.getClassLoader());
         } else {
             data = null;
@@ -35,6 +37,8 @@ public class ExtraModel implements Parcelable {
         required = in.readByte() != 0x00;
         toolbarBackgroundColor = in.readInt();
         toolbarTitleColor = in.readInt();
+        emptyViewTitle = in.readString();
+        emptyViewMsg = in.readString();
     }
 
     @Override
@@ -56,6 +60,8 @@ public class ExtraModel implements Parcelable {
         dest.writeByte((byte) (required ? 0x01 : 0x00));
         dest.writeInt(toolbarBackgroundColor);
         dest.writeInt(toolbarTitleColor);
+        dest.writeString(emptyViewTitle);
+        dest.writeString(emptyViewMsg);
     }
 
     @SuppressWarnings("unused")

@@ -26,4 +26,7 @@
     <color name="nav_drawer_shadow">#CF000000</color>
     <color name="ripple">@color/color_accent</color>
     <color name="ripple_dark">@color/color_accent_dark</color>
+
+    <color name="bluet">#800F2C4F</color>
+
 </resources>

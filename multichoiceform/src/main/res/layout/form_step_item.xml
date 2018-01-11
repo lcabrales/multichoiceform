@@ -40,10 +40,9 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.1"
-            android:gravity="end"
-            android:src="@drawable/ic_action_arrow" />
+            android:gravity="end" />
     </LinearLayout>
 
     <View
