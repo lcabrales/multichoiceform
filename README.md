@@ -48,7 +48,7 @@ compile 'com.hypernovalabs:multichoiceform:0.3.0@aar'
 
 # Usage
 
-You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.3.0/).
+You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.3.0/index.html).
 
 Here is a simple implementation of the MultiChoiceForm library. Add a FormStepView into your layout as follows:
 
