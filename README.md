@@ -22,19 +22,19 @@ Here's a list of the MultiChoiceForm library core features as of the current ver
 
 Check out the videos of our sample app:
 
-    1. [Full Sample](https://github.com/lcabrales/multichoiceform/screenshots/sample.mp4)
-    2. [Validation only](https://github.com/lcabrales/multichoiceform/screenshots/validation_animation.mp4)
+1. [Full Sample](https://github.com/lcabrales/multichoiceform/screenshots/sample.mp4)
+2. [Validation only](https://github.com/lcabrales/multichoiceform/screenshots/validation_animation.mp4)
 
 Or just check out the screenshots below:
 
     - **Main Form**
-![alt tag](https://github.com/lcabrales/multichoiceform/screenshots/main_form.png)
+![alt tag](https://raw.githubusercontent.com/lcabrales/multichoiceform/master/screenshots/main_form.png)
     - **Options List**
-![alt tag](https://github.com/lcabrales/multichoiceform/screenshots/options_list.png)
+![alt tag](https://raw.githubusercontent.com/lcabrales/multichoiceform/master/screenshots/options_list.png)
     - **Empty View**
-![alt tag](https://github.com/lcabrales/multichoiceform/screenshots/options_empty_view.png)
+![alt tag](https://raw.githubusercontent.com/lcabrales/multichoiceform/master/screenshots/options_empty_view.png)
     - **Main Form Selected**
-![alt tag](https://github.com/lcabrales/multichoiceform/screenshots/main_form_selections.png)
+![alt tag](https://raw.githubusercontent.com/lcabrales/multichoiceform/master/screenshots/main_form_selections.png)
 
 # Import
 
