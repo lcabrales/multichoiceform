@@ -1,8 +1,9 @@
 # MultiChoiceForm
 Android Library [MultiChoiceForm](https://github.com/lcabrales/multichoiceform)
 
-Easy implementation of a multi selection form element. It runs on [API level 16]
-(https://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels) and upwards.
+Easy implementation of a multi selection form element.
+It runs on [API level 16](https://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels)
+and upwards.
 
 # Features
 
@@ -48,7 +49,7 @@ compile 'com.hypernovalabs:multichoiceform:0.2.0@aar'
 # Usage
 
 Here is a simple implementation of the MultiChoiceForm library. You can access the javadoc
-[here](https://github.com/lcabrales/multichoiceform/javadoc/v0.2.0/index.html).
+[here](https://raw.githubusercontent.com/lcabrales/multichoiceform/master/javadoc/v0.2.0/index.html).
 Add a FormStepView into your layout as follows:
 
 ```xml
