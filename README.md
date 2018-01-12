@@ -43,12 +43,12 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:0.2.0@aar'
+compile 'com.hypernovalabs:multichoiceform:0.3.0@aar'
 ```
 
 # Usage
 
-You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.2.0/).
+You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.3.0/).
 
 Here is a simple implementation of the MultiChoiceForm library. Add a FormStepView into your layout as follows:
 
