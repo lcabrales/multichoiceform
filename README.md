@@ -5,7 +5,7 @@ Easy implementation of a multi selection form element (like a spinner).
 
 # Features
 
-Here's a list of the MultiChoiceForm library core features as of v0.0.2.
+Here's a list of the MultiChoiceForm library core features as of v0.1.0:
 
   * Include any amount of FormSteps in your layout.
   * Single selection only.
@@ -16,6 +16,27 @@ Here's a list of the MultiChoiceForm library core features as of v0.0.2.
   * Customize options EmptyView.
   * Customize FormStepView colors and drawable.
   
+# Import
+
+Using Gradle, import the dependency into your project:
+Add this into your project's build.gradle file:
+
+```java
+allprojects {
+    repositories {
+        ...
+        maven {
+            url  'https://dl.bintray.com/hypernovalabs/maven'
+        }
+    }
+}
+```
+
+Then, in your app's build.gradle file:
+```java
+compile 'com.hypernovalabs:multichoiceform:0.1.0@aar'
+```
+
 # Usage
 
 Add a FormStepView into your layout as follows:
