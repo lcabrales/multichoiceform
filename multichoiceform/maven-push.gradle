@@ -31,7 +31,7 @@ bintray {
     publish = true //[Default: false] Whether version should be auto published after an upload
     override = true //[Default: false] Whether to override version artifacts already published
     // jFrog plugin must be declared for this line to work
-    configurations = ['archives']
+//    configurations = ['archives']
     // Package info for BinTray
     pkg {
         repo = 'maven'
