@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.Duration;
 import com.hypernovalabs.multichoiceform.MultiChoiceForm;
-import com.hypernovalabs.multichoiceform.SelectionsActivity;
+import com.hypernovalabs.multichoiceform.OptionsActivity;
+import com.hypernovalabs.multichoiceform.ValidationAnim;
 import com.hypernovalabs.multichoiceform.model.FormStep;
 import com.hypernovalabs.multichoiceform.view.FormStepView;
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private MainActivity mContext = this;
     private MultiChoiceForm mForm;
     private ArrayList<FormStep> mSteps;
-    private FormStep mEmptyStep;
+    private FormStep mDependentStep, mDependentStep2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupForm() {
+        //Create your steps
         ArrayList<String> data = getDummyData("Test", 3);
-        FormStep step = new FormStep(data, (FormStepView) findViewById(R.id.form_test), true);
+        FormStep step = new FormStep(data, (FormStepView) findViewById(R.id.form_test), false);
 
         ArrayList<String> data2 = getDummyData("Value", 5);
         FormStep step2 = new FormStep(data2, (FormStepView) findViewById(R.id.form_test2), true);
@@ -55,14 +57,22 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> data3 = getDummyData("LK", 20);
         FormStep step3 = new FormStep(data3, (FormStepView) findViewById(R.id.form_test3), true);
 
-        mEmptyStep = new FormStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_empty), false);
+        mDependentStep = new FormStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_dependent), false);
 
+        mDependentStep2 = new FormStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_dependent2), false);
+
+        FormStep emptyStep = new FormStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_empty), false);
+
+        //Adds them all into an ArrayList
         mSteps = new ArrayList<>();
         mSteps.add(step);
         mSteps.add(step2);
         mSteps.add(step3);
-        mSteps.add(mEmptyStep);
+        mSteps.add(mDependentStep);
+        mSteps.add(mDependentStep2);
+        mSteps.add(emptyStep);
 
+        //Create your MultiChoiceForm instance
         MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext);
         builder.setSteps(mSteps); //required
         builder.setToolbarColors(
@@ -70,9 +80,12 @@ public class MainActivity extends AppCompatActivity {
                 ContextCompat.getColor(mContext, R.color.toolbar_text)); //optional
         builder.setRequiredText("Fill out everything, please"); //optional
         builder.setValidationColor(ContextCompat.getColor(mContext, R.color.bluet)); //optional
+        builder.setValidationAnimation(ValidationAnim.SHAKE_HORIZONTAL); //optional
         builder.setValidationDuration(Duration.SHORT); //optional
+        builder.setEmptyViewTexts("Attention!", "Fill out all of the required fields, please"); //optional
         mForm = builder.build(); //build your instance
 
+        //Creates the form
         mForm.setupForm();
     }
 
@@ -108,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = view.getId();
                 switch (id) {
                     case R.id.btn_validate:
-                        mForm.validate();
+                        mForm.validate(); //validate all of the required FormSteps
                         break;
                 }
             }
@@ -126,14 +139,30 @@ public class MainActivity extends AppCompatActivity {
 
         //In case a step depends on another step
         if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQ_SELECTION) {
-            int id = data.getIntExtra(SelectionsActivity.ID_KEY, 0);
+            int id = data.getIntExtra(OptionsActivity.ID_KEY, 0);
+
+            //If you need to handle several dependent steps
+            FormStep formStep;
             switch (id) {
                 case R.id.form_test3:
-                    FormStep formStep = FormStep.getStepFromId(mSteps, id);
+                    formStep = FormStep.getStepFromId(mSteps, id);
 
                     if (formStep != null) {
-                        mEmptyStep.setData(getDataFromSelection(formStep.getView().getSelection(), 5));
-                        mEmptyStep.getView().enable(true);
+                        mDependentStep.setData(getDataFromSelection(formStep.getView().getSelection(), 5));
+                        // Removes any previous selection from both of the dependent FormSteps fields
+                        // and enables them
+                        mDependentStep.getView().deselect(true); // direct child, enables it
+                        mDependentStep2.getView().deselect(); // only deselects, still has a parent deselected
+                    }
+
+                    break;
+                case R.id.form_dependent:
+                    formStep = FormStep.getStepFromId(mSteps, id);
+
+                    if (formStep != null) {
+                        mDependentStep2.setData(getDataFromSelection(formStep.getView().getSelection(), 5));
+                        //Removes any previous selection and enables it.
+                        mDependentStep2.getView().deselect(true);
                     }
 
                     break;

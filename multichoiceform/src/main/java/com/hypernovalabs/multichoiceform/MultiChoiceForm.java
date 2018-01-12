@@ -24,6 +24,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by ldemorais on 04/04/2017.
  * <p>
  * Main helper of the library. Holds a form instance, including all of the FormSteps.
+ * </p>
  */
 public class MultiChoiceForm {
     public static final int REQ_SELECTION = 27;
@@ -33,6 +34,7 @@ public class MultiChoiceForm {
     private int mToolbarBackgroundColor, mToolbarTitleColor;
     private int mValidationColor;
     private Duration mValidationDuration;
+    private ValidationAnim mValidationAnim;
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
 
@@ -40,20 +42,31 @@ public class MultiChoiceForm {
     //TODO MAVEN - GRADLE TUTORIAL
 
     /**
-     * Builder class of FormStep
+     * Builder class of MultiChoiceForm.
      */
     public static class Builder {
         private MultiChoiceForm form;
 
+        /**
+         * Constructor of the Builder class.
+         *
+         * @param context Mandatory activity Context.
+         */
         public Builder(AppCompatActivity context) {
             form = new MultiChoiceForm();
             form.mContext = context;
             form.mValidationColor = R.color.redt2;
+            form.mValidationAnim = ValidationAnim.SHAKE_HORIZONTAL;
             form.mValidationDuration = Duration.MEDIUM;
             form.mEmptyViewTitle = context.getString(R.string.form_empty_view_title);
             form.mEmptyViewMsg = context.getString(R.string.form_empty_view_msg);
         }
 
+        /**
+         * Builds a MultiChoiceForm instance.
+         *
+         * @return MultiChoiceForm instance
+         */
         public MultiChoiceForm build() {
             MultiChoiceForm builtForm = form;
             form = new MultiChoiceForm();
@@ -61,32 +74,83 @@ public class MultiChoiceForm {
             return builtForm;
         }
 
+        /**
+         * Sets all of the steps to be handled.
+         *
+         * @param steps FormSteps to be handled.
+         * @return Current instance of Builder.
+         */
         public Builder setSteps(ArrayList<FormStep> steps) {
             form.mFormSteps = steps;
             return this;
         }
 
+        /**
+         * Sets both of OptionsActivity Toolbar colors.
+         *
+         * @param backgroundColor Toolbar background color.
+         * @param textColor       Toolbar title color.
+         * @return Current instance of Builder.
+         */
         public Builder setToolbarColors(int backgroundColor, int textColor) {
             form.mToolbarBackgroundColor = backgroundColor;
             form.mToolbarTitleColor = textColor;
             return this;
         }
 
+        /**
+         * Sets the text to be shown in a Toast in case the validation fails.
+         *
+         * @param text Required text value.
+         * @return Current instance of Builder.
+         */
         public Builder setRequiredText(String text) {
             form.mRequiredText = text;
             return this;
         }
 
+        /**
+         * Sets the validation animation main color.
+         *
+         * @param color Any color, 50% alpha color is recommended.
+         * @return Current instance of Builder.
+         */
         public Builder setValidationColor(int color) {
             form.mValidationColor = color;
             return this;
         }
 
+        /**
+         * Sets the animation of the validation
+         *
+         * @param validationAnim Enum value of ValidationAnim.
+         * @return Current instance of Builder.
+         */
+        public Builder setValidationAnimation(ValidationAnim validationAnim) {
+            this.form.mValidationAnim = validationAnim;
+            return this;
+        }
+
+        /**
+         * Sets the duration of the validation animation.
+         *
+         * @param duration Enum value of Duration.
+         * @return Current instance of Builder.
+         */
         public Builder setValidationDuration(Duration duration) {
             this.form.mValidationDuration = duration;
             return this;
         }
 
+        /**
+         * If a FormStep does not have any data associated with it, it will show an empty view
+         * when prompted. This method defines both the title and the message that will show on the
+         * empty view.
+         *
+         * @param title   Title of EmptyView.
+         * @param message Message of EmptyView.
+         * @return Current instance of Builder.
+         */
         public Builder setEmptyViewTexts(String title, String message) {
             this.form.mEmptyViewTitle = title;
             this.form.mEmptyViewMsg = message;
@@ -105,7 +169,7 @@ public class MultiChoiceForm {
             public void onClick(View view) {
                 FormStep step = (FormStep) view.getTag();
 
-                Intent intent = new Intent(mContext, SelectionsActivity.class);
+                Intent intent = new Intent(mContext, OptionsActivity.class);
 
                 ExtraModel model = new ExtraModel();
                 model.data = step.getData();
@@ -117,7 +181,7 @@ public class MultiChoiceForm {
                 model.emptyViewTitle = mEmptyViewTitle;
                 model.emptyViewMsg = mEmptyViewMsg;
 
-                intent.putExtra(SelectionsActivity.EXTRA_MODEL_KEY, model);
+                intent.putExtra(OptionsActivity.EXTRA_MODEL_KEY, model);
 
                 mContext.startActivityForResult(intent, REQ_SELECTION);
 
@@ -133,38 +197,25 @@ public class MultiChoiceForm {
         };
 
         for (FormStep step : mFormSteps) {
-            step.getView().setOnClickListener(listener);
-            step.getView().setTag(step);
+            step.getView().getLayout().setOnClickListener(listener);
+            step.getView().getLayout().setTag(step);
 
             step.getView().getTitleView().setOnClickListener(titleListener);
         }
     }
 
-    public boolean setStepData(FormStep step, ArrayList<String> data) {
-        if (mFormSteps.contains(step)) {
-            for (FormStep s : mFormSteps) {
-                if (s.equals(step)) {
-                    s.setData(data);
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     /**
-     * Handles the SelectionsActivity onResult.
-     * Edit the FormStep UI to show the selected option
+     * Handles the OptionsActivity onResult.
+     * Edit the FormStep UI to show the selected option.
      *
-     * @param requestCode - onActivityResult requestCode
-     * @param resultCode  - onActivityResult resultCode
-     * @param data        - onActivityResult data
+     * @param requestCode onActivityResult requestCode.
+     * @param resultCode  onActivityResult resultCode.
+     * @param data        onActivityResult data.
      */
     public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (requestCode == REQ_SELECTION && resultCode == RESULT_OK) {
-            String selection = data.getStringExtra(SelectionsActivity.SELECTION_KEY);
-            int id = data.getIntExtra(SelectionsActivity.ID_KEY, 0);
+            String selection = data.getStringExtra(OptionsActivity.SELECTION_KEY);
+            int id = data.getIntExtra(OptionsActivity.ID_KEY, 0);
             if (id != 0) {
                 FormStep step = FormStep.getStepFromId(mFormSteps, id);
                 if (step != null) {
@@ -177,17 +228,18 @@ public class MultiChoiceForm {
     /**
      * Shows a Toast with the full name of the FormStep's title.
      *
-     * @param view - FormStep view
+     * @param view FormStep view.
      */
     private void tooltip(View view) {
-        Toast.makeText(mContext, ((TextView) view).getText().toString(), Toast.LENGTH_SHORT).show();
+        String text = ((TextView) view).getText().toString();
+        if (text.length() > 0)
+            Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * Validate all of the required FormSteps, they cannot be empty.
      *
-     * @return true - all of the required FormSteps are selected
-     * false - at least one required FormStep is not selected
+     * @return Whether all of the required FormSteps are selected.
      */
     public boolean validate() {
         for (FormStep formStep : mFormSteps) {
@@ -195,7 +247,7 @@ public class MultiChoiceForm {
                 if (mRequiredText != null)
                     Toast.makeText(mContext, mRequiredText, Toast.LENGTH_SHORT).show();
 
-                Animation shakeAnimation = AnimationUtils.loadAnimation(mContext, R.anim.shake_horizontal);
+                Animation animation = AnimationUtils.loadAnimation(mContext, mValidationAnim.getResId());
 
                 ObjectAnimator
                         .ofObject(
@@ -207,7 +259,7 @@ public class MultiChoiceForm {
                         .setDuration(mValidationDuration.getDuration())
                         .start();
 
-                formStep.getView().startAnimation(shakeAnimation);
+                formStep.getView().startAnimation(animation);
 
                 return false;
             }

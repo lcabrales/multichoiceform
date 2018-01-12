@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 /**
  * Created by lucascabrales on 1/8/18.
+ * <p>
+ * Holds everything that needs to be sent to OptionsActivity. Only to be used internally.
+ * </p>
  */
-
 public class ExtraModel implements Parcelable {
     public ArrayList<String> data;
     public String selection;
@@ -24,6 +26,7 @@ public class ExtraModel implements Parcelable {
 
     }
 
+    //region Parcelable
     protected ExtraModel(Parcel in) {
         if (in.readByte() == 0x01) {
             data = new ArrayList<>();
@@ -76,4 +79,5 @@ public class ExtraModel implements Parcelable {
             return new ExtraModel[size];
         }
     };
+    //endregion
 }

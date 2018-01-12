@@ -39,33 +39,57 @@
             android:id="@+id/form_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:selectionColor="@color/blue"
+            app:separatorColor="@color/gray"
             app:title="Test 1"
-            app:titleColor="@color/red" />
+            app:titleColor="@color/blue" />
 
         <com.hypernovalabs.multichoiceform.view.FormStepView
             android:id="@+id/form_test2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:separatorColor="@color/red"
-            app:title="Test 2" />
+            app:selectionColor="@color/blue"
+            app:separatorColor="@color/gray"
+            app:title="Test 2"
+            app:titleColor="@color/blue" />
 
         <com.hypernovalabs.multichoiceform.view.FormStepView
             android:id="@+id/form_test3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:selectionColor="@color/red"
-            app:title="LK" />
+            app:selectionColor="@color/blue"
+            app:separatorColor="@color/gray"
+            app:title="LK"
+            app:titleColor="@color/blue" />
+
+        <com.hypernovalabs.multichoiceform.view.FormStepView
+            android:id="@+id/form_dependent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:enabled="false"
+            app:selectionColor="@color/blue"
+            app:separatorColor="@color/gray"
+            app:title="Dependent"
+            app:titleColor="@color/blue" />
+
+        <com.hypernovalabs.multichoiceform.view.FormStepView
+            android:id="@+id/form_dependent2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:enabled="false"
+            app:selectionColor="@color/blue"
+            app:separatorColor="@color/gray"
+            app:title="Dependent 2"
+            app:titleColor="@color/blue" />
 
         <com.hypernovalabs.multichoiceform.view.FormStepView
             android:id="@+id/form_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:arrowDrawable="@drawable/ic_launcher_background"
-            app:enabled="false"
-            app:titleColor="@color/blue"
-            app:separatorColor="@color/gray"
             app:selectionColor="@color/blue"
-            app:title="Empty" />
+            app:separatorColor="@color/gray"
+            app:title="Empty"
+            app:titleColor="@color/blue" />
     </LinearLayout>
 
     <Button

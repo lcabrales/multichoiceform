@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ios_gray"
-    tools:context="com.hypernovalabs.multichoiceform.SelectionsActivity">
+    tools:context="com.hypernovalabs.multichoiceform.OptionsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -17,7 +17,7 @@ import com.hypernovalabs.multichoiceform.R;
 /**
  * Created by lucascabrales on 12/26/17.
  * <p>
- * Holds the definition for the FormStep multi choice view
+ * Holds the definition for the FormStepView.
  */
 public class FormStepView extends LinearLayout {
 
@@ -38,10 +38,10 @@ public class FormStepView extends LinearLayout {
     private boolean mEnabled;
 
     /**
-     * Single constructor for a custom view
+     * Single constructor for the FormStepView.
      *
-     * @param context - any context, activity recommended
-     * @param attrs   - view custom attritubes
+     * @param context Any context, activity recommended.
+     * @param attrs   FormStepView's custom attritubes.
      */
     public FormStepView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -56,7 +56,7 @@ public class FormStepView extends LinearLayout {
     }
 
     /**
-     * Initializes the custom view and sets the defined attributes
+     * Initializes the custom view and sets the defined attributes.
      */
     private void init() {
         mDisabledColor = ContextCompat.getColor(mContext, R.color.disabled);
@@ -98,9 +98,9 @@ public class FormStepView extends LinearLayout {
     }
 
     /**
-     * Sets the FormStep title
+     * Sets the FormStepView's title.
      *
-     * @param title - text value
+     * @param title Title of the FormStepView.
      */
     public void setTitle(String title) {
         mTitleTextView.setText(title);
@@ -109,14 +109,19 @@ public class FormStepView extends LinearLayout {
         requestLayout();
     }
 
+    /**
+     * Returns the title of the step.
+     *
+     * @return Title of the FormStepView.
+     */
     public String getTitle() {
         return mTitle;
     }
 
     /**
-     * Sets on UI the selected option text
+     * Sets on UI the selected option text.
      *
-     * @param selection - text value
+     * @param selection Selected option text value.
      */
     public void setSelection(String selection) {
         mSelection = selection;
@@ -126,72 +131,141 @@ public class FormStepView extends LinearLayout {
         requestLayout();
     }
 
+    /**
+     * Returns the selected value.
+     *
+     * @return Current selection of the FormStepView.
+     */
     public String getSelection() {
         return mSelection;
     }
 
+    /**
+     * Sets the right arrow image Drawable.
+     *
+     * @param drawable Any Drawable.
+     */
     public void setArrowImageView(Drawable drawable) {
         mArrowImageView.setBackground(drawable);
     }
 
+    /**
+     * Returns the right arrow ImageView.
+     *
+     * @return FormStepView's arrow ImageView.
+     */
     public ImageView getArrowImageView() {
         return mArrowImageView;
     }
 
+    /**
+     * Returns the view layout.
+     *
+     * @return FormStepView's root.
+     */
     public LinearLayout getLayout() {
         return mLayout;
     }
 
+    /**
+     * Returns the selection TextView.
+     *
+     * @return FormStepView's selection TextView.
+     */
     public TextView getSelectionView() {
         return mSelectionTextView;
     }
 
+    /**
+     * Returns the title TextView.
+     *
+     * @return FormStepView's title TextView.
+     */
     public TextView getTitleView() {
         return mTitleTextView;
     }
 
+    /**
+     * Sets FormStep's title color.
+     *
+     * @param color Any color.
+     */
     public void setTitleColor(int color) {
         mTitleTextView.setTextColor(color);
     }
 
+    /**
+     * Sets FormStep's selection color.
+     *
+     * @param color Any color.
+     */
     public void setSelectionColor(int color) {
         mSelectionTextView.setTextColor(color);
     }
 
+    /**
+     * Sets FormStep's separator color.
+     *
+     * @param color Any color.
+     */
     public void setSeparatorColor(int color) {
         mSeparator.setBackgroundColor(color);
     }
 
     /**
-     * Checks if the FormStep has been selected
+     * Checks if the FormStep has been selected.
      *
-     * @return
+     * @return Whether it is selected.
      */
     public boolean isSelected() {
         return getSelection().length() > 0;
     }
 
     /**
-     * Used to enable or disable completely the FormStep
+     * Used to enable or disable completely the FormStep.
      *
-     * @param enable - true     -> enables it
-     *               - false    -> disables it
+     * @param enable Whether to enable it.
      */
     public void enable(boolean enable) {
         mEnabled = enable;
 
         if (enable) {
-            setEnabled(true);
+            mLayout.setEnabled(true);
             mArrowImageView.setVisibility(View.VISIBLE);
             mSeparator.setBackgroundColor(mSeparatorColor);
         } else {
-            setEnabled(false);
+            mLayout.setEnabled(false);
             mArrowImageView.setVisibility(View.GONE);
             mSeparator.setBackgroundColor(mDisabledColor);
         }
+
+        invalidate();
+        requestLayout();
     }
 
+    /**
+     * @return Whether the FormStepView is enabled.
+     */
     public boolean isEnabled() {
         return mEnabled;
+    }
+
+    /**
+     * Removes the current selection of the FormStepView. Also, enables or disables it.
+     * This can be used to deselect a dependent FormStep if its parent has been selected (changed
+     * data dependency).
+     *
+     * @param enable Whether to enable the FormStepView.
+     */
+    public void deselect(boolean enable) {
+        setSelection(null);
+        enable(enable);
+    }
+
+    /**
+     * Removes the current selection of the FormStepView and disables it.
+     */
+    public void deselect() {
+        deselect(false);
     }
 }

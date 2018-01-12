@@ -13,13 +13,19 @@ import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.model.ExtraModel;
 
-public class SelectionsActivity extends AppCompatActivity {
+/**
+ * Created by ldemorais on 04/04/2017.
+ * <p>
+ * Activity containing a list of a FormStep's options
+ * </p>
+ */
+public class OptionsActivity extends AppCompatActivity {
 
     protected static final String EXTRA_MODEL_KEY = "ExtraModelKey";
     protected static final String SELECTION_KEY = "SelectionKey";
     public static final String ID_KEY = "IdKey";
 
-    private SelectionsActivity mContext = this;
+    private OptionsActivity mContext = this;
     private ListView mListView;
     private ArrayAdapter<String> mAdapter;
     private ExtraModel mModel;
@@ -27,7 +33,7 @@ public class SelectionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selections);
+        setContentView(R.layout.activity_options);
 
         getIntent().setExtrasClassLoader(ExtraModel.class.getClassLoader());
         mModel = getIntent().getParcelableExtra(EXTRA_MODEL_KEY);
@@ -36,7 +42,10 @@ public class SelectionsActivity extends AppCompatActivity {
         setupListView();
     }
 
-    public void setupToolbar() {
+    /**
+     * Defines and customize the Activity's Toolbar
+     */
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView tvTitle = toolbar.findViewById(R.id.toolbar_title);
 
@@ -96,10 +105,10 @@ public class SelectionsActivity extends AppCompatActivity {
     }
 
     /**
-     * If there is already a selection for the current FormStep, checks it
+     * If there is already a selection for the current FormStep, selects it
      */
     private void checkSelection() {
-        if (mModel.selection.length() > 0)
+        if (mModel.selection != null && mModel.selection.length() > 0)
             mListView.setItemChecked(mAdapter.getPosition(mModel.selection), true);
     }
 
