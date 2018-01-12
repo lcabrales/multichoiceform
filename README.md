@@ -18,8 +18,7 @@ Here's a list of the MultiChoiceForm library core features as of v0.1.0:
   
 # Import
 
-Using Gradle, import the dependency into your project:
-Add this into your project's build.gradle file:
+Using Gradle, import the dependency into your project, add this into your project's build.gradle file:
 
 ```java
 allprojects {
@@ -63,10 +62,10 @@ FormStep step = new FormStep(data, (FormStepView) findViewById(R.id.form_test), 
 
 Then, create an `ArrayList<FormStep>` and add all of your FormSteps into it:
 ```java
-mFormSteps = new ArrayList<>();
-mFormSteps.add(step);
-mFormSteps.add(step2);
-mFormSteps.add(step3);
+ArrayList<FormStep> steps = new ArrayList<>();
+steps.add(step);
+steps.add(step2);
+steps.add(step3);
 ...
 ```
 
@@ -74,7 +73,7 @@ Next, you have to instantiate a MultiChoiceForm helper using the class' Builder:
 
 ```java
 MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext);
-builder.setSteps(mSteps); //required, ArrayList<FormStep> containing all of your FormSteps
+builder.setSteps(steps); //required, ArrayList<FormStep> containing all of your FormSteps
 builder.setToolbarColors(
     ContextCompat.getColor(mContext, R.color.toolbar),
     ContextCompat.getColor(mContext, R.color.toolbar_text)); //optional
