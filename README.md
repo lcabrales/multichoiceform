@@ -76,7 +76,6 @@ Next, you have to define your FormSteps in your activity class. The parameters a
   * required (optional) - default is false
   
 Example:
-
 ```java
 ArrayList<String> data = ... //your data
 FormStep step = new FormStep(data, (FormStepView) findViewById(R.id.form_test), true);
