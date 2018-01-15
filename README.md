@@ -10,8 +10,8 @@ and upwards.
 Here's a list of the MultiChoiceForm library core features as of the current version.
 
   * Include any amount of FormSteps in your layout.
+  * Two types of fields: single selection and date.
   * Support for dependent fields.
-  * Single selection only.
   * Change any FormStep's options data in runtime.
   * Set required fields (with validation animations).
   * Customize validation animation.
@@ -43,12 +43,12 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:0.3.0@aar'
+compile 'com.hypernovalabs:multichoiceform:0.4.0@aar'
 ```
 
 # Usage
 
-You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.3.0/index.html).
+You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.4.0/index.html).
 
 Here is a simple implementation of the MultiChoiceForm library. Add a FormStepView into your layout as follows:
 
@@ -68,15 +68,15 @@ Next, you have to define your FormSteps in your activity class. The parameters a
 Example:
 ```java
 ArrayList<String> data = ... //your data
-FormStep step = new FormStep(data, (FormStepView) findViewById(R.id.form_test), true);
+FormSingleSelectStep step = new FormSingleSelectStep(data, (FormStepView) findViewById(R.id.form_test), true);
 ```
 
 Then, create an `ArrayList<FormStep>` and add all of your FormSteps into it:
 ```java
-mFormSteps = new ArrayList<>();
-mFormSteps.add(step);
-mFormSteps.add(step2);
-mFormSteps.add(step3);
+mSteps = new ArrayList<>();
+mSteps.add(step);
+mSteps.add(step2);
+mSteps.add(step3);
 ...
 ```
 
@@ -111,6 +111,31 @@ Optionally, to validate your data, call `mForm.validate();` in your "Submit" but
 if it returns true, all your required fields are filled.
 
 That's it, you are all set!
+
+## FormSteps Types
+
+As of the current version, these are the types of FormSteps you can use (for more information, check
+the [javadoc](https://lcabrales.github.io/multichoiceform/javadoc/v0.4.0/index.html):
+
+### FormSingleSelectStep
+
+Provides a list of options and returns only one selected option. Example:
+
+```java
+ArrayList<String> data = ... //your data
+FormSingleSelectStep step = new FormSingleSelectStep(data, (FormStepView) findViewById(R.id.form_test), true);
+```
+
+### FormDateStep
+
+Provides an AlertDialog containing a DatePicker to select a date.
+DateFormat is customizable, along with min and max date, and the Dialog buttons.
+
+```java
+FormDateStep dateStep = new FormDateStep((FormStepView) findViewById(R.id.form_date), true);
+SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US)
+dateStep.setDateFormat(sdf); //optional
+```
 
 ## Extra Customization
 
@@ -150,15 +175,17 @@ You can fully customize the view in XML:
 You can also customize it in your Java class:
   
 ```java
-FormStep formStep = new FormStep(data, (FormStepView) findViewById(R.id.form_test), true);
+FormStepView view = (FormStepView) findViewById(R.id.form_test);
 
-formStep.getView().setTitle("Title");
-formStep.getView().setTitleColor(Color.BLACK);
-formStep.getView().setSelection("Selection");
-formStep.getView().setSelectionColor(Color.RED);
-formStep.getView().setSeparatorColor(ContextCompat.getColor(mContext, R.color.red));
-formStep.getView().setArrowImageView(ContextCompat.getDrawable(mContext, R.drawable.ic_action_arrow));
-formStep.getView().enable(false);
+view.setTitle("Title");
+view.setTitleColor(Color.BLACK);
+view.setSelection("Selection");
+view.setSelectionColor(Color.RED);
+view.setSeparatorColor(ContextCompat.getColor(mContext, R.color.red));
+view.setArrowImageView(ContextCompat.getDrawable(mContext, R.drawable.ic_action_arrow));
+view.enable(false);
+
+FormSingleSelectStep formStep = new FormSingleSelectStep(data, view, true);
 ```
 
 ## Dependent FormSteps

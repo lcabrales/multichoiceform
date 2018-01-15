@@ -11,13 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hypernovalabs.multichoiceform.model.ExtraModel;
-
 /**
- * Created by ldemorais on 04/04/2017.
- * <p>
  * Activity containing a list of a FormStep's options
- * </p>
  */
 public class OptionsActivity extends AppCompatActivity {
 

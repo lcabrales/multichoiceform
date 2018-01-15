@@ -1,4 +1,4 @@
-package com.hypernovalabs.multichoiceform.model;
+package com.hypernovalabs.multichoiceform;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,10 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 /**
- * Created by lucascabrales on 1/8/18.
- * <p>
  * Holds everything that needs to be sent to OptionsActivity. Only to be used internally.
- * </p>
  */
 public class ExtraModel implements Parcelable {
     public ArrayList<String> data;

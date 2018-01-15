@@ -3,34 +3,36 @@ package com.hypernovalabs.multichoiceform;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hypernovalabs.multichoiceform.model.ExtraModel;
-import com.hypernovalabs.multichoiceform.model.FormStep;
+import com.hypernovalabs.multichoiceform.form.FormDateStep;
+import com.hypernovalabs.multichoiceform.form.FormSingleSelectStep;
+import com.hypernovalabs.multichoiceform.form.FormStep;
 
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by ldemorais on 04/04/2017.
- * <p>
  * Main helper of the library. Holds a form instance, including all of the FormSteps.
- * </p>
  */
 public class MultiChoiceForm {
     public static final int REQ_SELECTION = 27;
 
     private Activity mContext;
-    private ArrayList<FormStep> mFormSteps;
+    private ArrayList<? extends FormStep> mFormSteps;
     private int mToolbarBackgroundColor, mToolbarTitleColor;
     private int mValidationColor;
     private Duration mValidationDuration;
@@ -38,8 +40,10 @@ public class MultiChoiceForm {
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
 
-    //TODO IMPROVE GITHUB DOCUMENTATION
-    //TODO MAVEN - GRADLE TUTORIAL
+    //TODO DESELECT MANUALLY (END CLIENT) (v0.5.0)
+    //TODO MAKE ARRAY LIST INTERNAL (v0.5.0)
+    //TODO CREATE A PARENT FOR FormStep TO HANDLE OTHER TYPE OF VIEWS (v0.6.0)
+    //TODO CREATE A WIKI (DOCUMENTATION) PAGE (v0.6.0)
 
     /**
      * Builder class of MultiChoiceForm.
@@ -167,25 +171,20 @@ public class MultiChoiceForm {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FormStep step = (FormStep) view.getTag();
 
-                Intent intent = new Intent(mContext, OptionsActivity.class);
+                switch (step.getType()) {
+                    case SINGLE_SELECT:
+                        Intent intent = getIntent((FormSingleSelectStep) step);
+                        mContext.startActivityForResult(intent, REQ_SELECTION);
+                        mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        break;
+                    case DATE:
+                        handleDateStep((FormDateStep) step);
+                        break;
+                }
 
-                ExtraModel model = new ExtraModel();
-                model.data = step.getData();
-                model.selection = step.getView().getSelection();
-                model.id = step.getView().getId();
-                model.title = step.getView().getTitle();
-                model.toolbarBackgroundColor = mToolbarBackgroundColor;
-                model.toolbarTitleColor = mToolbarTitleColor;
-                model.emptyViewTitle = mEmptyViewTitle;
-                model.emptyViewMsg = mEmptyViewMsg;
-
-                intent.putExtra(OptionsActivity.EXTRA_MODEL_KEY, model);
-
-                mContext.startActivityForResult(intent, REQ_SELECTION);
-
-                mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         };
 
@@ -205,24 +204,79 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Handles the OptionsActivity onResult.
-     * Edit the FormStep UI to show the selected option.
+     * Returns the intent related to OptionsActivity with all the needed parameters.
      *
-     * @param requestCode onActivityResult requestCode.
-     * @param resultCode  onActivityResult resultCode.
-     * @param data        onActivityResult data.
+     * @param step Associated FormSingleSelectStep.
+     * @return Intent to OptionsActivity.
      */
-    public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
-        if (requestCode == REQ_SELECTION && resultCode == RESULT_OK) {
-            String selection = data.getStringExtra(OptionsActivity.SELECTION_KEY);
-            int id = data.getIntExtra(OptionsActivity.ID_KEY, 0);
-            if (id != 0) {
-                FormStep step = FormStep.getStepFromId(mFormSteps, id);
-                if (step != null) {
-                    step.getView().setSelection(selection);
-                }
-            }
+    private Intent getIntent(FormSingleSelectStep step) {
+        Intent intent = new Intent(mContext, OptionsActivity.class);
+
+        ExtraModel model = new ExtraModel();
+        model.data = step.getData();
+        model.selection = step.getView().getSelection();
+        model.id = step.getView().getId();
+        model.title = step.getView().getTitle();
+        model.toolbarBackgroundColor = mToolbarBackgroundColor;
+        model.toolbarTitleColor = mToolbarTitleColor;
+        model.emptyViewTitle = mEmptyViewTitle;
+        model.emptyViewMsg = mEmptyViewMsg;
+
+        intent.putExtra(OptionsActivity.EXTRA_MODEL_KEY, model);
+
+        return intent;
+    }
+
+    /**
+     * Creates an AlertDialog with a DatePicker. Buttons' texts are customizable.
+     * MinDate and MaxDate also customizable.
+     *
+     * @param step Associated FormDateStep
+     */
+    private void handleDateStep(FormDateStep step) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(step.getView().getTitle());
+
+        builder.setView(R.layout.picker_date);
+
+        builder.setPositiveButton(step.getPositiveButton(), null);
+        builder.setNegativeButton(step.getNegativeButton(), null);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(false);
+
+        DatePicker datePicker = dialog.findViewById(R.id.date_picker);
+        if (datePicker != null) {
+            if (step.getMinDate() != null)
+                datePicker.setMinDate(step.getMinDate().getTime());
+
+            if (step.getMaxDate() != null)
+                datePicker.setMaxDate(step.getMaxDate().getTime());
         }
+
+        Button btnAccept = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        btnAccept.setTag(R.id.dialog, dialog);
+        btnAccept.setTag(R.id.date_picker, datePicker);
+        btnAccept.setTag(R.id.form_step, step);
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog dialog = (AlertDialog) view.getTag(R.id.dialog);
+                DatePicker datePicker = (DatePicker) view.getTag(R.id.date_picker);
+                FormDateStep step = (FormDateStep) view.getTag(R.id.form_step);
+
+                String date = Utils.getDateFromInteger(
+                        datePicker.getDayOfMonth(),
+                        datePicker.getMonth(),
+                        datePicker.getYear(),
+                        step.getDateFormat());
+
+                step.getView().setSelection(date);
+
+                dialog.dismiss();
+            }
+        });
     }
 
     /**
@@ -237,11 +291,34 @@ public class MultiChoiceForm {
     }
 
     /**
+     * Handles the OptionsActivity onResult.
+     * Edit the FormStep UI to show the selected option.
+     *
+     * @param requestCode onActivityResult requestCode.
+     * @param resultCode  onActivityResult resultCode.
+     * @param data        onActivityResult data.
+     */
+    public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        if (requestCode == REQ_SELECTION && resultCode == RESULT_OK) {
+            String selection = data.getStringExtra(OptionsActivity.SELECTION_KEY);
+            int id = data.getIntExtra(OptionsActivity.ID_KEY, 0);
+            if (id != 0) {
+                FormStep step = FormStep.getStepFromId((ArrayList<FormStep>) mFormSteps, id);
+                if (step != null) {
+                    step.getView().setSelection(selection);
+                }
+            }
+        }
+    }
+
+    /**
      * Validate all of the required FormSteps, they cannot be empty.
      *
      * @return Whether all of the required FormSteps are selected.
      */
     public boolean validate() {
+        boolean trust = true;
+
         for (FormStep formStep : mFormSteps) {
             if (formStep.isRequired() && !formStep.getView().isSelected()) {
                 if (mRequiredText != null)
@@ -261,10 +338,10 @@ public class MultiChoiceForm {
 
                 formStep.getView().startAnimation(animation);
 
-                return false;
+                trust = false;
             }
         }
 
-        return true;
+        return trust;
     }
 }

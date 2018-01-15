@@ -1,10 +1,7 @@
 package com.hypernovalabs.multichoiceform;
 
 /**
- * Created by lucascabrales on 1/11/18.
- * <p>
- *     Defines the possible durations of the validation animation
- * </p>
+ * Defines the possible durations of the validation animation
  */
 
 public enum Duration {

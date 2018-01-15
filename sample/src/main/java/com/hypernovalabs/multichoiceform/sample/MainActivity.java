@@ -12,10 +12,15 @@ import com.hypernovalabs.multichoiceform.Duration;
 import com.hypernovalabs.multichoiceform.MultiChoiceForm;
 import com.hypernovalabs.multichoiceform.OptionsActivity;
 import com.hypernovalabs.multichoiceform.ValidationAnim;
-import com.hypernovalabs.multichoiceform.model.FormStep;
+import com.hypernovalabs.multichoiceform.form.FormDateStep;
+import com.hypernovalabs.multichoiceform.form.FormSingleSelectStep;
+import com.hypernovalabs.multichoiceform.form.FormStep;
 import com.hypernovalabs.multichoiceform.view.FormStepView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,19 +54,31 @@ public class MainActivity extends AppCompatActivity {
     private void setupForm() {
         //Create your steps
         ArrayList<String> data = getDummyData("Test", 3);
-        FormStep step = new FormStep(data, (FormStepView) findViewById(R.id.form_test), false);
+        FormSingleSelectStep step = new FormSingleSelectStep(data, (FormStepView) findViewById(R.id.form_test), false);
 
         ArrayList<String> data2 = getDummyData("Value", 5);
-        FormStep step2 = new FormStep(data2, (FormStepView) findViewById(R.id.form_test2), true);
+        FormSingleSelectStep step2 = new FormSingleSelectStep(data2, (FormStepView) findViewById(R.id.form_test2), true);
 
         ArrayList<String> data3 = getDummyData("LK", 20);
-        FormStep step3 = new FormStep(data3, (FormStepView) findViewById(R.id.form_test3), true);
+        FormSingleSelectStep step3 = new FormSingleSelectStep(data3, (FormStepView) findViewById(R.id.form_test3), true);
 
-        mDependentStep = new FormStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_dependent), false);
+        mDependentStep = new FormSingleSelectStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_dependent));
 
-        mDependentStep2 = new FormStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_dependent2), false);
+        mDependentStep2 = new FormSingleSelectStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_dependent2));
 
-        FormStep emptyStep = new FormStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_empty), false);
+        FormSingleSelectStep emptyStep = new FormSingleSelectStep(new ArrayList<String>(), (FormStepView) findViewById(R.id.form_empty));
+
+        FormDateStep dateStep = new FormDateStep((FormStepView) findViewById(R.id.form_date), true);
+        dateStep.setPositiveButton("Accept");
+        dateStep.setNegativeButton("Cancel");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+        dateStep.setDateFormat(sdf);
+        try {
+            dateStep.setMinDate(sdf.parse("01-01-2010"));
+            dateStep.setMaxDate(sdf.parse("01-01-2020"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         //Adds them all into an ArrayList
         mSteps = new ArrayList<>();
@@ -71,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mSteps.add(mDependentStep);
         mSteps.add(mDependentStep2);
         mSteps.add(emptyStep);
+        mSteps.add(dateStep);
 
         //Create your MultiChoiceForm instance
         MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext);

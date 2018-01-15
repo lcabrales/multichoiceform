@@ -90,6 +90,15 @@
             app:separatorColor="@color/gray"
             app:title="Empty"
             app:titleColor="@color/blue" />
+
+        <com.hypernovalabs.multichoiceform.view.FormStepView
+            android:id="@+id/form_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:selectionColor="@color/blue"
+            app:separatorColor="@color/gray"
+            app:title="Date"
+            app:titleColor="@color/blue" />
     </LinearLayout>
 
     <Button

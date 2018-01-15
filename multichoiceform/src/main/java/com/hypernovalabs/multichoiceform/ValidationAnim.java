@@ -3,10 +3,7 @@ package com.hypernovalabs.multichoiceform;
 import android.support.annotation.IdRes;
 
 /**
- * Created by lucascabrales on 1/12/18.
- * <p>
  * Define the possible animations for the validation.
- * </p>
  */
 
 public enum ValidationAnim {
