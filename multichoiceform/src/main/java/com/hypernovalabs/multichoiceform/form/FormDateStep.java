@@ -30,7 +30,7 @@ public class FormDateStep extends FormStep {
 
         positiveButton = "Accept";
         negativeButton = "Cancel";
-        dateFormat = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     }
 
     /**
@@ -45,7 +45,7 @@ public class FormDateStep extends FormStep {
 
         positiveButton = "Accept";
         negativeButton = "Cancel";
-        dateFormat = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     }
 
     /**

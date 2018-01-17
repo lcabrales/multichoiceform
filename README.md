@@ -43,7 +43,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:0.4.0@aar'
+compile 'com.hypernovalabs:multichoiceform:0.4.1@aar'
 ```
 
 # Usage
@@ -234,3 +234,13 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
+# Changelog
+
+## [0.4.1] - 2018-01-17
+### Added
+- FormDateStep and FormSingleSelectStep.
+- This CHANGELOG section.
+
+### Fixed
+- FormDateStep SimpleDateFormat.

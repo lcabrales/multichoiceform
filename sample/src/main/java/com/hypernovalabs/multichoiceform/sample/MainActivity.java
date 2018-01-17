@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         dateStep.setPositiveButton("Accept");
         dateStep.setNegativeButton("Cancel");
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
-        dateStep.setDateFormat(sdf);
+//        dateStep.setDateFormat(sdf);
         try {
             dateStep.setMinDate(sdf.parse("01-01-2010"));
             dateStep.setMaxDate(sdf.parse("01-01-2020"));

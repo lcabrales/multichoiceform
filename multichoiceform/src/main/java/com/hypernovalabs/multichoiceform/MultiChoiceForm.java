@@ -41,7 +41,9 @@ public class MultiChoiceForm {
     private String mEmptyViewTitle, mEmptyViewMsg;
 
     //TODO DESELECT MANUALLY (END CLIENT) (v0.5.0)
-    //TODO MAKE ARRAY LIST INTERNAL (v0.5.0)
+    //TODO SEND ARRAY LIST IN CONSTRUCTOR (v0.5.0)
+    //TODO ALL CONSTANTS GO INTO ONE CLASS: MultiChoiceFormConfig and javadoc them (v0.5.0)
+    //TODO RENAME ExtraModel TO MultiChoiceFormConfig (v0.5.0)
     //TODO CREATE A PARENT FOR FormStep TO HANDLE OTHER TYPE OF VIEWS (v0.6.0)
     //TODO CREATE A WIKI (DOCUMENTATION) PAGE (v0.6.0)
 
