@@ -6,9 +6,15 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 /**
- * Holds everything that needs to be sent to OptionsActivity. Only to be used internally.
+ * Main configuration model.
+ * Defines everything that needs to be sent to OptionsActivity. Only to be used internally.
  */
-public class ExtraModel implements Parcelable {
+public class MultiChoiceFormConfig implements Parcelable {
+    /**
+     * Key to the view ID parameter.
+     */
+    public static final String ID_KEY = "IdKey";
+
     public ArrayList<String> data;
     public String selection;
     public String title;
@@ -19,12 +25,12 @@ public class ExtraModel implements Parcelable {
     public String emptyViewTitle;
     public String emptyViewMsg;
 
-    public ExtraModel() {
+    public MultiChoiceFormConfig() {
 
     }
 
     //region Parcelable
-    protected ExtraModel(Parcel in) {
+    protected MultiChoiceFormConfig(Parcel in) {
         if (in.readByte() == 0x01) {
             data = new ArrayList<>();
             in.readList(data, String.class.getClassLoader());
@@ -65,15 +71,15 @@ public class ExtraModel implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Creator<ExtraModel> CREATOR = new Creator<ExtraModel>() {
+    public static final Creator<MultiChoiceFormConfig> CREATOR = new Creator<MultiChoiceFormConfig>() {
         @Override
-        public ExtraModel createFromParcel(Parcel in) {
-            return new ExtraModel(in);
+        public MultiChoiceFormConfig createFromParcel(Parcel in) {
+            return new MultiChoiceFormConfig(in);
         }
 
         @Override
-        public ExtraModel[] newArray(int size) {
-            return new ExtraModel[size];
+        public MultiChoiceFormConfig[] newArray(int size) {
+            return new MultiChoiceFormConfig[size];
         }
     };
     //endregion

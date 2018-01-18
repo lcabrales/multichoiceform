@@ -43,12 +43,12 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:0.4.1@aar'
+compile 'com.hypernovalabs:multichoiceform:0.5.0@aar'
 ```
 
 # Usage
 
-You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.4.0/index.html).
+You can access the full javadoc [here](https://lcabrales.github.io/multichoiceform/javadoc/v0.5.0/index.html).
 
 Here is a simple implementation of the MultiChoiceForm library. Add a FormStepView into your layout as follows:
 
@@ -83,8 +83,7 @@ mSteps.add(step3);
 Next, you have to instantiate a MultiChoiceForm helper using the class' Builder:
 
 ```java
-MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext);
-builder.setSteps(mSteps); //required, ArrayList<FormStep> containing all of your FormSteps
+MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps);
 mForm = builder.build(); //build your instance
 
 mForm.setupForm(); //required in order to enable the FormSteps
@@ -115,7 +114,7 @@ That's it, you are all set!
 ## FormSteps Types
 
 As of the current version, these are the types of FormSteps you can use (for more information, check
-the [javadoc](https://lcabrales.github.io/multichoiceform/javadoc/v0.4.0/index.html):
+the [javadoc](https://lcabrales.github.io/multichoiceform/javadoc/v0.5.0index.html):
 
 ### FormSingleSelectStep
 
@@ -203,7 +202,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     //In case a step depends on another step
     if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQ_SELECTION) {
-        int id = data.getIntExtra(OptionsActivity.ID_KEY, 0); //gets the resId of the selected FormStep
+        int id = data.getIntExtra(MultiChoiceFormConfig.ID_KEY, 0); //gets the resId of the selected FormStep
 
         //If you need to handle several dependent steps
         FormStep formStep;
@@ -236,6 +235,14 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [0.5.0]
+### Added
+- onLongItemClickListener to clear the selection.
+
+### Changed
+- General improvements on the FormSteps.
+
 
 ## [0.4.1] - 2018-01-17
 ### Added

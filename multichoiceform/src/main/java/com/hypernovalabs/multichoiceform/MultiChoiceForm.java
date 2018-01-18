@@ -40,10 +40,6 @@ public class MultiChoiceForm {
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
 
-    //TODO DESELECT MANUALLY (END CLIENT) (v0.5.0)
-    //TODO SEND ARRAY LIST IN CONSTRUCTOR (v0.5.0)
-    //TODO ALL CONSTANTS GO INTO ONE CLASS: MultiChoiceFormConfig and javadoc them (v0.5.0)
-    //TODO RENAME ExtraModel TO MultiChoiceFormConfig (v0.5.0)
     //TODO CREATE A PARENT FOR FormStep TO HANDLE OTHER TYPE OF VIEWS (v0.6.0)
     //TODO CREATE A WIKI (DOCUMENTATION) PAGE (v0.6.0)
 
@@ -57,10 +53,12 @@ public class MultiChoiceForm {
          * Constructor of the Builder class.
          *
          * @param context Mandatory activity Context.
+         * @param steps   FormSteps to be handled.
          */
-        public Builder(AppCompatActivity context) {
+        public Builder(AppCompatActivity context, ArrayList<FormStep> steps) {
             form = new MultiChoiceForm();
             form.mContext = context;
+            form.mFormSteps = steps;
             form.mValidationColor = R.color.redt2;
             form.mValidationAnim = ValidationAnim.SHAKE_HORIZONTAL;
             form.mValidationDuration = Duration.MEDIUM;
@@ -197,9 +195,20 @@ public class MultiChoiceForm {
             }
         };
 
+        View.OnLongClickListener longListener = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                FormStep step = (FormStep) view.getTag();
+                step.getView().setSelection(null);
+
+                return true;
+            }
+        };
+
         for (FormStep step : mFormSteps) {
-            step.getView().getLayout().setOnClickListener(listener);
             step.getView().getLayout().setTag(step);
+            step.getView().getLayout().setOnClickListener(listener);
+            step.getView().getLayout().setOnLongClickListener(longListener);
 
             step.getView().getTitleView().setOnClickListener(titleListener);
         }
@@ -214,7 +223,7 @@ public class MultiChoiceForm {
     private Intent getIntent(FormSingleSelectStep step) {
         Intent intent = new Intent(mContext, OptionsActivity.class);
 
-        ExtraModel model = new ExtraModel();
+        MultiChoiceFormConfig model = new MultiChoiceFormConfig();
         model.data = step.getData();
         model.selection = step.getView().getSelection();
         model.id = step.getView().getId();
@@ -303,7 +312,7 @@ public class MultiChoiceForm {
     public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (requestCode == REQ_SELECTION && resultCode == RESULT_OK) {
             String selection = data.getStringExtra(OptionsActivity.SELECTION_KEY);
-            int id = data.getIntExtra(OptionsActivity.ID_KEY, 0);
+            int id = data.getIntExtra(MultiChoiceFormConfig.ID_KEY, 0);
             if (id != 0) {
                 FormStep step = FormStep.getStepFromId((ArrayList<FormStep>) mFormSteps, id);
                 if (step != null) {

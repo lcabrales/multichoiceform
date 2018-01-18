@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.Duration;
 import com.hypernovalabs.multichoiceform.MultiChoiceForm;
-import com.hypernovalabs.multichoiceform.OptionsActivity;
+import com.hypernovalabs.multichoiceform.MultiChoiceFormConfig;
 import com.hypernovalabs.multichoiceform.ValidationAnim;
 import com.hypernovalabs.multichoiceform.form.FormDateStep;
 import com.hypernovalabs.multichoiceform.form.FormSingleSelectStep;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         mSteps.add(dateStep);
 
         //Create your MultiChoiceForm instance
-        MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext);
+        MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps);
         builder.setSteps(mSteps); //required
         builder.setToolbarColors(
                 ContextCompat.getColor(mContext, R.color.toolbar),
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         //In case a step depends on another step
         if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQ_SELECTION) {
-            int id = data.getIntExtra(OptionsActivity.ID_KEY, 0);
+            int id = data.getIntExtra(MultiChoiceFormConfig.ID_KEY, 0);
 
             //If you need to handle several dependent steps
             FormStep formStep;

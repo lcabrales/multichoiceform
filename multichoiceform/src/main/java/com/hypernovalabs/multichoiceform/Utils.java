@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Holds all of the helper methods for the library.
+ * Defines all of the helper methods for the library.
  */
 
 class Utils {

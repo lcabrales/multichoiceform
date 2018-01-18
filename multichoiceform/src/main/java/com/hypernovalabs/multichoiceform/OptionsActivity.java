@@ -18,19 +18,18 @@ public class OptionsActivity extends AppCompatActivity {
 
     protected static final String EXTRA_MODEL_KEY = "ExtraModelKey";
     protected static final String SELECTION_KEY = "SelectionKey";
-    public static final String ID_KEY = "IdKey";
 
     private OptionsActivity mContext = this;
     private ListView mListView;
     private ArrayAdapter<String> mAdapter;
-    private ExtraModel mModel;
+    private MultiChoiceFormConfig mModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        getIntent().setExtrasClassLoader(ExtraModel.class.getClassLoader());
+        getIntent().setExtrasClassLoader(MultiChoiceFormConfig.class.getClassLoader());
         mModel = getIntent().getParcelableExtra(EXTRA_MODEL_KEY);
 
         setupToolbar();
@@ -78,7 +77,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
                 intent.putExtra(SELECTION_KEY, String.valueOf(mAdapter.getItem(i)));
-                intent.putExtra(ID_KEY, mModel.id);
+                intent.putExtra(MultiChoiceFormConfig.ID_KEY, mModel.id);
 
                 setResult(RESULT_OK, intent);
                 finish();
