@@ -236,7 +236,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 # Changelog
 
-## [0.5.0]
+## [0.5.0] - 2018-01-18
 ### Added
 - onLongItemClickListener to clear the selection.
 
