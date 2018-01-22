@@ -235,9 +235,15 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 # Changelog
 
+## [1.1.1] - 2018-01-22
+### Fixed
+- ScrollView issue
+
+
 ## [1.1.0] - 2018-01-22
 ### Added
 - `getSteps()` method from `MultiChoiceForm`
+
 
 ## [1.0.1] - 2018-01-22
 ### Fixed

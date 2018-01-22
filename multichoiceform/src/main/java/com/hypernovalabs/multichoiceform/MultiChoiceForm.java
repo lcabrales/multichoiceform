@@ -181,20 +181,9 @@ public class MultiChoiceForm {
             }
         };
 
-        View.OnLongClickListener longListener = new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                MCFStep step = (MCFStep) view.getTag();
-                step.getView().setSelection(null);
-
-                return true;
-            }
-        };
-
         for (MCFStep step : mMCFSteps) {
             step.getView().getLayout().setTag(step);
             step.getView().getLayout().setOnClickListener(listener);
-            step.getView().getLayout().setOnLongClickListener(longListener);
 
             step.getView().getTitleView().setOnClickListener(titleListener);
         }
