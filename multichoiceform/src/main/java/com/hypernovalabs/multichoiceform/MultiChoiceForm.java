@@ -341,4 +341,13 @@ public class MultiChoiceForm {
 
         return trust;
     }
+
+    /**
+     * Retrieves the current list of {@link MCFStep}s.
+     *
+     * @return Current list of {@link MCFStep}s.
+     */
+    public ArrayList<? extends MCFStep> getSteps() {
+        return mMCFSteps;
+    }
 }

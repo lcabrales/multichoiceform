@@ -157,9 +157,9 @@ public class MainActivity extends AppCompatActivity {
 
         //In case a step depends on another step
         if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQUEST_SELECTION) {
-            int id = data.getIntExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, 0);
+            int id = data.getIntExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
 
-            MCFStep currentStep = MCFStep.getStepFromId(mSteps, id);
+            MCFStep currentStep = MCFStep.getStepFromId(mForm.getSteps(), id);
 
             //If you need to handle several dependent steps
             switch (id) {

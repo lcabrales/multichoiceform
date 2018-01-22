@@ -79,7 +79,7 @@ public class MCFStep {
      * @param id    resId of MCFStepView
      * @return MCFStep of the associated MCFStepView
      */
-    public static MCFStep getStepFromId(ArrayList<MCFStep> steps, @IdRes int id) {
+    public static MCFStep getStepFromId(ArrayList<? extends MCFStep> steps, @IdRes int id) {
         for (MCFStep step : steps) {
             if (step.id == id)
                 return step;

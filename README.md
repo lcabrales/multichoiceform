@@ -43,7 +43,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:1.0.0@aar'
+compile 'com.hypernovalabs:multichoiceform:1.1.0@aar'
 ```
 
 # Usage
@@ -202,11 +202,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     mForm.handleActivityResult(requestCode, resultCode, data);
 
     //In case a step depends on another step
-    if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQ_SELECTION) {
-        int id = data.getIntExtra(MultiChoiceFormConfig.ID_KEY, 0); //gets the resId of the selected MCFStep
+    if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQUEST_SELECTION) {
+        int id = data.getIntExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
 
 
-        MCFStep currentStep = MCFStep.getStepFromId(mSteps, id);
+        MCFStep currentStep = MCFStep.getStepFromId(mForm.getSteps(), id);
 
         //If you need to handle several dependent steps
         switch (id) {
@@ -234,6 +234,10 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.1.0] - 2018-01-22
+### Added
+- `getSteps()` method from `MultiChoiceForm`
 
 ## [1.0.1] - 2018-01-22
 ### Fixed
