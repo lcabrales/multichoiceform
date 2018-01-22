@@ -145,8 +145,7 @@ This is all optional, adds increased customization to your form.
 Customize the `OptionsActivity` and other `MultiChoiceForm` settings:
 
 ```java
-MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext);
-builder.setSteps(mSteps); //required, ArrayList<MCFStep> containing all of your MCFSteps
+MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps);
 builder.setToolbarColors(
     ContextCompat.getColor(mContext, R.color.toolbar),
     ContextCompat.getColor(mContext, R.color.toolbar_text)); //optional
