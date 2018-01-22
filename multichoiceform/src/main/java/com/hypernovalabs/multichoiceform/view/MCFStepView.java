@@ -17,9 +17,9 @@ import com.hypernovalabs.multichoiceform.R;
 /**
  * Created by lucascabrales on 12/26/17.
  * <p>
- * Holds the definition for the FormStepView.
+ * Holds the definition for the MCFStepView.
  */
-public class FormStepView extends LinearLayout {
+public class MCFStepView extends LinearLayout {
 
     private final AttributeSet mAttrs;
     private Context mContext;
@@ -38,16 +38,16 @@ public class FormStepView extends LinearLayout {
     private boolean mEnabled;
 
     /**
-     * Single constructor for the FormStepView.
+     * Single constructor for the MCFStepView.
      *
      * @param context Any context, activity recommended.
-     * @param attrs   FormStepView's custom attritubes.
+     * @param attrs   MCFStepView's custom attritubes.
      */
-    public FormStepView(Context context, AttributeSet attrs) {
+    public MCFStepView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(VERTICAL);
 
-        LayoutInflater.from(context).inflate(R.layout.form_step_item, this, true);
+        LayoutInflater.from(context).inflate(R.layout.mcf_step_item, this, true);
 
         mContext = context;
         mAttrs = attrs;
@@ -59,24 +59,24 @@ public class FormStepView extends LinearLayout {
      * Initializes the custom view and sets the defined attributes.
      */
     private void init() {
-        mDisabledColor = ContextCompat.getColor(mContext, R.color.disabled);
+        mDisabledColor = ContextCompat.getColor(mContext, R.color.mcf_disabled);
 
         TypedArray a = mContext.getTheme().obtainStyledAttributes(
                 mAttrs,
-                R.styleable.FormStepView,
+                R.styleable.MCFStepView,
                 0, 0);
 
         try {
-            mTitle = a.getString(R.styleable.FormStepView_title);
-            mSeparatorColor = a.getColor(R.styleable.FormStepView_separatorColor,
-                    ContextCompat.getColor(mContext, R.color.gray));
-            mTitleColor = a.getColor(R.styleable.FormStepView_titleColor, Color.BLACK);
-            mSelectionColor = a.getColor(R.styleable.FormStepView_selectionColor, Color.BLACK);
-            mArrowDrawable = a.getDrawable(R.styleable.FormStepView_arrowDrawable);
-            mEnabled = a.getBoolean(R.styleable.FormStepView_enabled, true);
+            mTitle = a.getString(R.styleable.MCFStepView_mcf_title);
+            mSeparatorColor = a.getColor(R.styleable.MCFStepView_mcf_separatorColor,
+                    ContextCompat.getColor(mContext, R.color.mcf_gray));
+            mTitleColor = a.getColor(R.styleable.MCFStepView_mcf_titleColor, Color.BLACK);
+            mSelectionColor = a.getColor(R.styleable.MCFStepView_mcf_selectionColor, Color.BLACK);
+            mArrowDrawable = a.getDrawable(R.styleable.MCFStepView_mcf_arrowDrawable);
+            mEnabled = a.getBoolean(R.styleable.MCFStepView_mcf_enabled, true);
 
             if (mArrowDrawable == null)
-                mArrowDrawable = ContextCompat.getDrawable(mContext, R.drawable.ic_action_arrow);
+                mArrowDrawable = ContextCompat.getDrawable(mContext, R.drawable.mcf_ic_action_arrow);
         } finally {
             a.recycle();
         }
@@ -94,13 +94,13 @@ public class FormStepView extends LinearLayout {
         setSelectionColor(mSelectionColor);
         setSeparatorColor(mSeparatorColor);
         setArrowImageView(mArrowDrawable);
-        enable(mEnabled);
+        setEnabled(mEnabled);
     }
 
     /**
-     * Sets the FormStepView's title.
+     * Sets the MCFStepView's title.
      *
-     * @param title Title of the FormStepView.
+     * @param title Title of the MCFStepView.
      */
     public void setTitle(String title) {
         mTitleTextView.setText(title);
@@ -112,7 +112,7 @@ public class FormStepView extends LinearLayout {
     /**
      * Returns the title of the step.
      *
-     * @return Title of the FormStepView.
+     * @return Title of the MCFStepView.
      */
     public String getTitle() {
         return mTitle;
@@ -134,7 +134,7 @@ public class FormStepView extends LinearLayout {
     /**
      * Returns the selected value.
      *
-     * @return Current selection of the FormStepView.
+     * @return Current selection of the MCFStepView.
      */
     public String getSelection() {
         return mSelection;
@@ -152,7 +152,7 @@ public class FormStepView extends LinearLayout {
     /**
      * Returns the right arrow ImageView.
      *
-     * @return FormStepView's arrow ImageView.
+     * @return MCFStepView's arrow ImageView.
      */
     public ImageView getArrowImageView() {
         return mArrowImageView;
@@ -161,7 +161,7 @@ public class FormStepView extends LinearLayout {
     /**
      * Returns the view layout.
      *
-     * @return FormStepView's root.
+     * @return MCFStepView's root.
      */
     public LinearLayout getLayout() {
         return mLayout;
@@ -170,7 +170,7 @@ public class FormStepView extends LinearLayout {
     /**
      * Returns the selection TextView.
      *
-     * @return FormStepView's selection TextView.
+     * @return MCFStepView's selection TextView.
      */
     public TextView getSelectionView() {
         return mSelectionTextView;
@@ -179,14 +179,14 @@ public class FormStepView extends LinearLayout {
     /**
      * Returns the title TextView.
      *
-     * @return FormStepView's title TextView.
+     * @return MCFStepView's title TextView.
      */
     public TextView getTitleView() {
         return mTitleTextView;
     }
 
     /**
-     * Sets FormStep's title color.
+     * Sets MCFStep's title color.
      *
      * @param color Any color.
      */
@@ -195,7 +195,7 @@ public class FormStepView extends LinearLayout {
     }
 
     /**
-     * Sets FormStep's selection color.
+     * Sets MCFStep's selection color.
      *
      * @param color Any color.
      */
@@ -204,7 +204,7 @@ public class FormStepView extends LinearLayout {
     }
 
     /**
-     * Sets FormStep's separator color.
+     * Sets MCFStep's separator color.
      *
      * @param color Any color.
      */
@@ -213,7 +213,7 @@ public class FormStepView extends LinearLayout {
     }
 
     /**
-     * Checks if the FormStep has been selected.
+     * Checks if the MCFStep has been selected.
      *
      * @return Whether it is selected.
      */
@@ -222,11 +222,12 @@ public class FormStepView extends LinearLayout {
     }
 
     /**
-     * Used to enable or disable completely the FormStep.
+     * Used to enable or disable completely the MCFStep.
      *
      * @param enable Whether to enable it.
      */
-    public void enable(boolean enable) {
+    @Override
+    public void setEnabled(boolean enable) {
         mEnabled = enable;
 
         if (enable) {
@@ -244,26 +245,26 @@ public class FormStepView extends LinearLayout {
     }
 
     /**
-     * @return Whether the FormStepView is enabled.
+     * @return Whether the MCFStepView is enabled.
      */
     public boolean isEnabled() {
         return mEnabled;
     }
 
     /**
-     * Removes the current selection of the FormStepView. Also, enables or disables it.
-     * This can be used to deselect a dependent FormStep if its parent has been selected (changed
+     * Removes the current selection of the MCFStepView. Also, enables or disables it.
+     * This can be used to deselect a dependent MCFStep if its parent has been selected (changed
      * data dependency).
      *
-     * @param enable Whether to enable the FormStepView.
+     * @param enable Whether to enable the MCFStepView.
      */
     public void deselect(boolean enable) {
         setSelection(null);
-        enable(enable);
+        setEnabled(enable);
     }
 
     /**
-     * Removes the current selection of the FormStepView and disables it.
+     * Removes the current selection of the MCFStepView and disables it.
      */
     public void deselect() {
         deselect(false);

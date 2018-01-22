@@ -7,9 +7,9 @@ import android.support.annotation.IdRes;
  */
 
 public enum ValidationAnim {
-    SHAKE(R.anim.shake),
-    SHAKE_HORIZONTAL(R.anim.shake_horizontal),
-    SHAKE_VERTICAL(R.anim.shake_vertical);
+    SHAKE(R.anim.mcf_shake),
+    SHAKE_HORIZONTAL(R.anim.mcf_shake_horizontal),
+    SHAKE_VERTICAL(R.anim.mcf_shake_vertical);
 
     @IdRes
     int resId;

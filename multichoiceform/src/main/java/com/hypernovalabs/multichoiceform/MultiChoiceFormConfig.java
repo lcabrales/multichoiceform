@@ -1,5 +1,6 @@
 package com.hypernovalabs.multichoiceform;
 
+import android.graphics.drawable.RippleDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,10 +11,12 @@ import java.util.ArrayList;
  * Defines everything that needs to be sent to OptionsActivity. Only to be used internally.
  */
 public class MultiChoiceFormConfig implements Parcelable {
+
+    private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
     /**
      * Key to the view ID parameter.
      */
-    public static final String ID_KEY = "IdKey";
+    public static final String EXTRA_ID_KEY = EXTRA_PREFIX + "IdKey";
 
     public ArrayList<String> data;
     public String selection;

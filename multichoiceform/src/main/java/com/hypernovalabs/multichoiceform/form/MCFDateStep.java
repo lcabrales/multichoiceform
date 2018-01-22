@@ -1,6 +1,6 @@
 package com.hypernovalabs.multichoiceform.form;
 
-import com.hypernovalabs.multichoiceform.view.FormStepView;
+import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,10 +9,10 @@ import java.util.Locale;
 /**
  * Provides an AlertDialog containing a DatePicker to select a date.
  * DateFormat is customizable, along with min and max Date, and the Dialog buttons.
- * Child of FormStep.
+ * Child of MCFStep.
  */
 
-public class FormDateStep extends FormStep {
+public class MCFDateStep extends MCFStep {
     private Date maxDate;
     private Date minDate;
     private String positiveButton;
@@ -20,13 +20,13 @@ public class FormDateStep extends FormStep {
     private SimpleDateFormat dateFormat;
 
     /**
-     * Main constructor of FormDateStep. Sets default values for some parameters.
+     * Main constructor of MCFDateStep. Sets default values for some parameters.
      *
-     * @param view Associated FormStepView.
+     * @param view Associated MCFStepView.
      */
-    public FormDateStep(FormStepView view) {
+    public MCFDateStep(MCFStepView view) {
         super(view);
-        super.setType(FormStepType.DATE);
+        super.setType(MCFStepType.DATE);
 
         positiveButton = "Accept";
         negativeButton = "Cancel";
@@ -36,12 +36,12 @@ public class FormDateStep extends FormStep {
     /**
      * Constructor with the added "required" parameter.
      *
-     * @param view     FormStepView.
-     * @param required Whether the FormStep is required
+     * @param view     MCFStepView.
+     * @param required Whether the MCFStep is required
      */
-    public FormDateStep(FormStepView view, boolean required) {
+    public MCFDateStep(MCFStepView view, boolean required) {
         super(view, required);
-        super.setType(FormStepType.DATE);
+        super.setType(MCFStepType.DATE);
 
         positiveButton = "Accept";
         negativeButton = "Cancel";
@@ -121,18 +121,18 @@ public class FormDateStep extends FormStep {
     }
 
     /**
-     * Returns the FormDateStep's SimpleDateFormat
+     * Returns the MCFDateStep's SimpleDateFormat
      *
-     * @return FormDateStep's SimpleDateFormat
+     * @return MCFDateStep's SimpleDateFormat
      */
     public SimpleDateFormat getDateFormat() {
         return dateFormat;
     }
 
     /**
-     * Sets the FormDateStep's SimpleDateFormat
+     * Sets the MCFDateStep's SimpleDateFormat
      *
-     * @param dateFormat FormDateStep's SimpleDateFormat
+     * @param dateFormat MCFDateStep's SimpleDateFormat
      */
     public void setDateFormat(SimpleDateFormat dateFormat) {
         this.dateFormat = dateFormat;

@@ -17,22 +17,22 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hypernovalabs.multichoiceform.form.FormDateStep;
-import com.hypernovalabs.multichoiceform.form.FormSingleSelectStep;
-import com.hypernovalabs.multichoiceform.form.FormStep;
+import com.hypernovalabs.multichoiceform.form.MCFDateStep;
+import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
+import com.hypernovalabs.multichoiceform.form.MCFStep;
 
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Main helper of the library. Holds a form instance, including all of the FormSteps.
+ * Main helper of the library. Holds a form instance, including all of the {@link MCFStep}.
  */
 public class MultiChoiceForm {
-    public static final int REQ_SELECTION = 27;
+    public static final int REQUEST_SELECTION = 27;
 
     private Activity mContext;
-    private ArrayList<? extends FormStep> mFormSteps;
+    private ArrayList<? extends MCFStep> mMCFSteps;
     private int mToolbarBackgroundColor, mToolbarTitleColor;
     private int mValidationColor;
     private Duration mValidationDuration;
@@ -40,11 +40,8 @@ public class MultiChoiceForm {
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
 
-    //TODO CREATE A PARENT FOR FormStep TO HANDLE OTHER TYPE OF VIEWS (v0.6.0)
-    //TODO CREATE A WIKI (DOCUMENTATION) PAGE (v0.6.0)
-
     /**
-     * Builder class of MultiChoiceForm.
+     * Builder class of {@link MultiChoiceForm}.
      */
     public static class Builder {
         private MultiChoiceForm form;
@@ -53,23 +50,23 @@ public class MultiChoiceForm {
          * Constructor of the Builder class.
          *
          * @param context Mandatory activity Context.
-         * @param steps   FormSteps to be handled.
+         * @param steps   MCFSteps to be handled.
          */
-        public Builder(AppCompatActivity context, ArrayList<FormStep> steps) {
+        public Builder(AppCompatActivity context, ArrayList<MCFStep> steps) {
             form = new MultiChoiceForm();
             form.mContext = context;
-            form.mFormSteps = steps;
-            form.mValidationColor = R.color.redt2;
+            form.mMCFSteps = steps;
+            form.mValidationColor = R.color.mcf_red_t;
             form.mValidationAnim = ValidationAnim.SHAKE_HORIZONTAL;
             form.mValidationDuration = Duration.MEDIUM;
-            form.mEmptyViewTitle = context.getString(R.string.form_empty_view_title);
-            form.mEmptyViewMsg = context.getString(R.string.form_empty_view_msg);
+            form.mEmptyViewTitle = context.getString(R.string.mcf_form_empty_view_title);
+            form.mEmptyViewMsg = context.getString(R.string.mcf_form_empty_view_msg);
         }
 
         /**
-         * Builds a MultiChoiceForm instance.
+         * Builds a {@link MultiChoiceForm} instance.
          *
-         * @return MultiChoiceForm instance
+         * @return {@link MultiChoiceForm} instance
          */
         public MultiChoiceForm build() {
             MultiChoiceForm builtForm = form;
@@ -79,22 +76,11 @@ public class MultiChoiceForm {
         }
 
         /**
-         * Sets all of the steps to be handled.
+         * Sets both of {@link OptionsActivity} toolbar colors.
          *
-         * @param steps FormSteps to be handled.
-         * @return Current instance of Builder.
-         */
-        public Builder setSteps(ArrayList<FormStep> steps) {
-            form.mFormSteps = steps;
-            return this;
-        }
-
-        /**
-         * Sets both of OptionsActivity Toolbar colors.
-         *
-         * @param backgroundColor Toolbar background color.
-         * @param textColor       Toolbar title color.
-         * @return Current instance of Builder.
+         * @param backgroundColor {@link android.widget.Toolbar} background color.
+         * @param textColor       {@link android.widget.Toolbar} title color.
+         * @return Current instance of this builder.
          */
         public Builder setToolbarColors(int backgroundColor, int textColor) {
             form.mToolbarBackgroundColor = backgroundColor;
@@ -103,10 +89,10 @@ public class MultiChoiceForm {
         }
 
         /**
-         * Sets the text to be shown in a Toast in case the validation fails.
+         * Sets the text to be shown in a {@link Toast} in case the validation fails.
          *
          * @param text Required text value.
-         * @return Current instance of Builder.
+         * @return Current instance of this builder.
          */
         public Builder setRequiredText(String text) {
             form.mRequiredText = text;
@@ -117,7 +103,7 @@ public class MultiChoiceForm {
          * Sets the validation animation main color.
          *
          * @param color Any color, 50% alpha color is recommended.
-         * @return Current instance of Builder.
+         * @return Current instance of this builder.
          */
         public Builder setValidationColor(int color) {
             form.mValidationColor = color;
@@ -127,8 +113,8 @@ public class MultiChoiceForm {
         /**
          * Sets the animation of the validation
          *
-         * @param validationAnim Enum value of ValidationAnim.
-         * @return Current instance of Builder.
+         * @param validationAnim Enum value of {@link ValidationAnim}.
+         * @return Current instance of this builder.
          */
         public Builder setValidationAnimation(ValidationAnim validationAnim) {
             this.form.mValidationAnim = validationAnim;
@@ -138,8 +124,8 @@ public class MultiChoiceForm {
         /**
          * Sets the duration of the validation animation.
          *
-         * @param duration Enum value of Duration.
-         * @return Current instance of Builder.
+         * @param duration Enum value of {@link Duration}.
+         * @return Current instance of this builder.
          */
         public Builder setValidationDuration(Duration duration) {
             this.form.mValidationDuration = duration;
@@ -147,13 +133,13 @@ public class MultiChoiceForm {
         }
 
         /**
-         * If a FormStep does not have any data associated with it, it will show an empty view
+         * If a {@link MCFStep} does not have any data associated with it, it will show an empty view
          * when prompted. This method defines both the title and the message that will show on the
          * empty view.
          *
          * @param title   Title of EmptyView.
          * @param message Message of EmptyView.
-         * @return Current instance of Builder.
+         * @return Current instance of this builder.
          */
         public Builder setEmptyViewTexts(String title, String message) {
             this.form.mEmptyViewTitle = title;
@@ -163,7 +149,7 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Defines the necessary listeners for the FormStep, options listener and title tooltip listener.
+     * Defines the necessary listeners for the {@link MCFStep}, options listener and title tooltip listener.
      * It has to be called after building the form in order for it to be enabled.
      * Otherwise, form would not be enabled.
      */
@@ -172,16 +158,16 @@ public class MultiChoiceForm {
             @Override
             public void onClick(View view) {
 
-                FormStep step = (FormStep) view.getTag();
+                MCFStep step = (MCFStep) view.getTag();
 
                 switch (step.getType()) {
                     case SINGLE_SELECT:
-                        Intent intent = getIntent((FormSingleSelectStep) step);
-                        mContext.startActivityForResult(intent, REQ_SELECTION);
-                        mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        Intent intent = getIntent((MCFSingleSelectStep) step);
+                        mContext.startActivityForResult(intent, REQUEST_SELECTION);
+                        mContext.overridePendingTransition(R.anim.mcf_slide_in_right, R.anim.mcf_slide_out_left);
                         break;
                     case DATE:
-                        handleDateStep((FormDateStep) step);
+                        handleDateStep((MCFDateStep) step);
                         break;
                 }
 
@@ -198,14 +184,14 @@ public class MultiChoiceForm {
         View.OnLongClickListener longListener = new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                FormStep step = (FormStep) view.getTag();
+                MCFStep step = (MCFStep) view.getTag();
                 step.getView().setSelection(null);
 
                 return true;
             }
         };
 
-        for (FormStep step : mFormSteps) {
+        for (MCFStep step : mMCFSteps) {
             step.getView().getLayout().setTag(step);
             step.getView().getLayout().setOnClickListener(listener);
             step.getView().getLayout().setOnLongClickListener(longListener);
@@ -215,12 +201,12 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Returns the intent related to OptionsActivity with all the needed parameters.
+     * Returns the intent related to {@link OptionsActivity} with all the needed parameters.
      *
-     * @param step Associated FormSingleSelectStep.
-     * @return Intent to OptionsActivity.
+     * @param step Associated {@link MCFSingleSelectStep}.
+     * @return Intent to {@link OptionsActivity}.
      */
-    private Intent getIntent(FormSingleSelectStep step) {
+    private Intent getIntent(MCFSingleSelectStep step) {
         Intent intent = new Intent(mContext, OptionsActivity.class);
 
         MultiChoiceFormConfig model = new MultiChoiceFormConfig();
@@ -233,22 +219,22 @@ public class MultiChoiceForm {
         model.emptyViewTitle = mEmptyViewTitle;
         model.emptyViewMsg = mEmptyViewMsg;
 
-        intent.putExtra(OptionsActivity.EXTRA_MODEL_KEY, model);
+        intent.putExtra(OptionsActivity.EXTRA_CONFIG, model);
 
         return intent;
     }
 
     /**
-     * Creates an AlertDialog with a DatePicker. Buttons' texts are customizable.
-     * MinDate and MaxDate also customizable.
+     * Creates an {@link AlertDialog} with a {@link DatePicker}. Buttons' texts are customizable.
+     * {@link DatePicker#setMinDate(long)} and {@link DatePicker#setMaxDate(long)} are supported.
      *
-     * @param step Associated FormDateStep
+     * @param step Associated MCFDateStep
      */
-    private void handleDateStep(FormDateStep step) {
+    private void handleDateStep(MCFDateStep step) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(step.getView().getTitle());
 
-        builder.setView(R.layout.picker_date);
+        builder.setView(R.layout.mcf_picker_date);
 
         builder.setPositiveButton(step.getPositiveButton(), null);
         builder.setNegativeButton(step.getNegativeButton(), null);
@@ -257,7 +243,7 @@ public class MultiChoiceForm {
         dialog.show();
         dialog.setCanceledOnTouchOutside(false);
 
-        DatePicker datePicker = dialog.findViewById(R.id.date_picker);
+        DatePicker datePicker = dialog.findViewById(R.id.mcf_date_picker);
         if (datePicker != null) {
             if (step.getMinDate() != null)
                 datePicker.setMinDate(step.getMinDate().getTime());
@@ -267,15 +253,15 @@ public class MultiChoiceForm {
         }
 
         Button btnAccept = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        btnAccept.setTag(R.id.dialog, dialog);
-        btnAccept.setTag(R.id.date_picker, datePicker);
-        btnAccept.setTag(R.id.form_step, step);
+        btnAccept.setTag(R.id.mcf_dialog, dialog);
+        btnAccept.setTag(R.id.mcf_date_picker, datePicker);
+        btnAccept.setTag(R.id.mcf_form_step, step);
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog dialog = (AlertDialog) view.getTag(R.id.dialog);
-                DatePicker datePicker = (DatePicker) view.getTag(R.id.date_picker);
-                FormDateStep step = (FormDateStep) view.getTag(R.id.form_step);
+                AlertDialog dialog = (AlertDialog) view.getTag(R.id.mcf_dialog);
+                DatePicker datePicker = (DatePicker) view.getTag(R.id.mcf_date_picker);
+                MCFDateStep step = (MCFDateStep) view.getTag(R.id.mcf_form_step);
 
                 String date = Utils.getDateFromInteger(
                         datePicker.getDayOfMonth(),
@@ -291,9 +277,9 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Shows a Toast with the full name of the FormStep's title.
+     * Shows a {@link Toast} with the full name of the MCFStep's title.
      *
-     * @param view FormStep view.
+     * @param view MCFStep view.
      */
     private void tooltip(View view) {
         String text = ((TextView) view).getText().toString();
@@ -302,19 +288,19 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Handles the OptionsActivity onResult.
-     * Edit the FormStep UI to show the selected option.
+     * Handles the {@link OptionsActivity} onResult.
+     * Edit the {@link com.hypernovalabs.multichoiceform.view.MCFStepView} to show the selected option.
      *
      * @param requestCode onActivityResult requestCode.
      * @param resultCode  onActivityResult resultCode.
      * @param data        onActivityResult data.
      */
     public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
-        if (requestCode == REQ_SELECTION && resultCode == RESULT_OK) {
-            String selection = data.getStringExtra(OptionsActivity.SELECTION_KEY);
-            int id = data.getIntExtra(MultiChoiceFormConfig.ID_KEY, 0);
+        if (requestCode == REQUEST_SELECTION && resultCode == RESULT_OK) {
+            String selection = data.getStringExtra(OptionsActivity.EXTRA_SELECTION);
+            int id = data.getIntExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, 0);
             if (id != 0) {
-                FormStep step = FormStep.getStepFromId((ArrayList<FormStep>) mFormSteps, id);
+                MCFStep step = MCFStep.getStepFromId((ArrayList<MCFStep>) mMCFSteps, id);
                 if (step != null) {
                     step.getView().setSelection(selection);
                 }
@@ -323,15 +309,15 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Validate all of the required FormSteps, they cannot be empty.
+     * Validate all of the {@link MCFStep} where {@link MCFStep#isRequired()}, they cannot be empty.
      *
-     * @return Whether all of the required FormSteps are selected.
+     * @return Whether all of the required {@link MCFStep}s are selected.
      */
     public boolean validate() {
         boolean trust = true;
 
-        for (FormStep formStep : mFormSteps) {
-            if (formStep.isRequired() && !formStep.getView().isSelected()) {
+        for (MCFStep step : mMCFSteps) {
+            if (step.isRequired() && !step.getView().isSelected()) {
                 if (mRequiredText != null)
                     Toast.makeText(mContext, mRequiredText, Toast.LENGTH_SHORT).show();
 
@@ -339,15 +325,15 @@ public class MultiChoiceForm {
 
                 ObjectAnimator
                         .ofObject(
-                                formStep.getView(),
+                                step.getView(),
                                 "backgroundColor",
                                 new ArgbEvaluator(),
                                 mValidationColor,
-                                ContextCompat.getColor(mContext, R.color.transparent))
+                                ContextCompat.getColor(mContext, R.color.mcf_transparent))
                         .setDuration(mValidationDuration.getDuration())
                         .start();
 
-                formStep.getView().startAnimation(animation);
+                step.getView().startAnimation(animation);
 
                 trust = false;
             }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="dialog" type="id"/>
-    <item name="date_picker" type="id"/>
-    <item name="form_step" type="id"/>
+    <item name="mcf_dialog" type="id"/>
+    <item name="mcf_date_picker" type="id"/>
+    <item name="mcf_form_step" type="id"/>
 </resources>

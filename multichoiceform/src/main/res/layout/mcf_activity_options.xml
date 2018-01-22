@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ios_gray"
+    android:background="@color/mcf_ios_gray"
     tools:context="com.hypernovalabs.multichoiceform.OptionsActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -12,14 +12,14 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/mcf_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             app:title=" ">
 
             <TextView
-                android:id="@+id/toolbar_title"
+                android:id="@+id/mcf_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -34,41 +34,41 @@
         android:layout_marginTop="?attr/actionBarSize">
 
         <LinearLayout
-            android:id="@+id/empty_view"
+            android:id="@+id/mcf_empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/ios_gray"
+            android:background="@color/mcf_ios_gray"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="25dp"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/tv_empty_title"
+                android:id="@+id/mcf_tv_empty_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/form_empty_view_title"
-                android:textColor="@color/gray"
+                android:text="@string/mcf_form_empty_view_title"
+                android:textColor="@color/mcf_gray"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tv_empty_msg"
+                android:id="@+id/mcf_tv_empty_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="@string/form_empty_view_msg"
-                android:textColor="@color/gray"
+                android:text="@string/mcf_form_empty_view_msg"
+                android:textColor="@color/mcf_gray"
                 android:textSize="14sp" />
         </LinearLayout>
 
         <ListView
-            android:id="@+id/list_view"
+            android:id="@+id/mcf_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:divider="@color/ios_gray"
+            android:divider="@color/mcf_ios_gray"
             android:paddingBottom="16dp"
             android:paddingTop="16dp" />
     </FrameLayout>

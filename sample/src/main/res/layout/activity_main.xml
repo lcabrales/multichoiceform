@@ -35,70 +35,70 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <com.hypernovalabs.multichoiceform.view.FormStepView
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:selectionColor="@color/blue"
-            app:separatorColor="@color/gray"
-            app:title="Test 1"
-            app:titleColor="@color/blue" />
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="Test 1"
+            app:mcf_titleColor="@color/blue" />
 
-        <com.hypernovalabs.multichoiceform.view.FormStepView
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_test2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:selectionColor="@color/blue"
-            app:separatorColor="@color/gray"
-            app:title="Test 2"
-            app:titleColor="@color/blue" />
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="Test 2"
+            app:mcf_titleColor="@color/blue" />
 
-        <com.hypernovalabs.multichoiceform.view.FormStepView
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_test3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:selectionColor="@color/blue"
-            app:separatorColor="@color/gray"
-            app:title="LK"
-            app:titleColor="@color/blue" />
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="LK"
+            app:mcf_titleColor="@color/blue" />
 
-        <com.hypernovalabs.multichoiceform.view.FormStepView
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_dependent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:enabled="false"
-            app:selectionColor="@color/blue"
-            app:separatorColor="@color/gray"
-            app:title="Dependent"
-            app:titleColor="@color/blue" />
+            app:mcf_enabled="false"
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="Dependent"
+            app:mcf_titleColor="@color/blue" />
 
-        <com.hypernovalabs.multichoiceform.view.FormStepView
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_dependent2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:enabled="false"
-            app:selectionColor="@color/blue"
-            app:separatorColor="@color/gray"
-            app:title="Dependent 2"
-            app:titleColor="@color/blue" />
+            app:mcf_enabled="false"
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="Dependent 2"
+            app:mcf_titleColor="@color/blue" />
 
-        <com.hypernovalabs.multichoiceform.view.FormStepView
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:selectionColor="@color/blue"
-            app:separatorColor="@color/gray"
-            app:title="Empty"
-            app:titleColor="@color/blue" />
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="Empty"
+            app:mcf_titleColor="@color/blue" />
 
-        <com.hypernovalabs.multichoiceform.view.FormStepView
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:selectionColor="@color/blue"
-            app:separatorColor="@color/gray"
-            app:title="Date"
-            app:titleColor="@color/blue" />
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="Date"
+            app:mcf_titleColor="@color/blue" />
     </LinearLayout>
 
     <Button

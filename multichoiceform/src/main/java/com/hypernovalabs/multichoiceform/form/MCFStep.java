@@ -2,29 +2,29 @@ package com.hypernovalabs.multichoiceform.form;
 
 import android.support.annotation.IdRes;
 
-import com.hypernovalabs.multichoiceform.view.FormStepView;
+import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.util.ArrayList;
 
 /**
  * Created by lucascabrales on 1/5/18.
  * <p>
- * Main model of a FormStep. Holds the data, the view, its type and whether it is required.
+ * Main model of a MCFStep. Holds the data, the view, its type and whether it is required.
  * </p>
  */
-public class FormStep {
+public class MCFStep {
     private ArrayList<String> data;
-    private FormStepView view;
+    private MCFStepView view;
     private int id;
-    private FormStepType type;
+    private MCFStepType type;
     private boolean required;
 
     /**
      * Optionless constructor.
      *
-     * @param view Associated FormStepView.
+     * @param view Associated MCFStepView.
      */
-    FormStep(FormStepView view) {
+    MCFStep(MCFStepView view) {
         this.data = new ArrayList<>();
         this.view = view;
         this.id = view.getId();
@@ -34,10 +34,10 @@ public class FormStep {
     /**
      * Optionless constructor with the added "required" parameter.
      *
-     * @param view     Associated FormStepView.
-     * @param required Whether the FormStep is required.
+     * @param view     Associated MCFStepView.
+     * @param required Whether the MCFStep is required.
      */
-    FormStep(FormStepView view, boolean required) {
+    MCFStep(MCFStepView view, boolean required) {
         this.data = new ArrayList<>();
         this.view = view;
         this.id = view.getId();
@@ -45,12 +45,12 @@ public class FormStep {
     }
 
     /**
-     * Simple constructor of the FormStep class, isRequired is false.
+     * Simple constructor of the MCFStep class, isRequired is false.
      *
      * @param data Contains all of the options.
-     * @param view Associated FormStepView.
+     * @param view Associated MCFStepView.
      */
-    FormStep(ArrayList<String> data, FormStepView view) {
+    MCFStep(ArrayList<String> data, MCFStepView view) {
         this.data = data;
         this.view = view;
         this.id = view.getId();
@@ -58,13 +58,13 @@ public class FormStep {
     }
 
     /**
-     * Constructor that defines whether the FormStep is required.
+     * Constructor that defines whether the MCFStep is required.
      *
      * @param data     Contains all of the options.
-     * @param view     Associated FormStepView.
-     * @param required Whether the FormStep is required.
+     * @param view     Associated MCFStepView.
+     * @param required Whether the MCFStep is required.
      */
-    FormStep(ArrayList<String> data, FormStepView view, boolean required) {
+    MCFStep(ArrayList<String> data, MCFStepView view, boolean required) {
         this.data = data;
         this.view = view;
         this.id = view.getId();
@@ -73,14 +73,14 @@ public class FormStep {
     }
 
     /**
-     * Finds a single FormStep instance based on its FormStepView resId.
+     * Finds a single MCFStep instance based on its MCFStepView resId.
      *
      * @param steps All of the MultiChoiceForm steps.
-     * @param id    resId of FormStepView
-     * @return FormStep of the associated FormStepView
+     * @param id    resId of MCFStepView
+     * @return MCFStep of the associated MCFStepView
      */
-    public static FormStep getStepFromId(ArrayList<FormStep> steps, @IdRes int id) {
-        for (FormStep step : steps) {
+    public static MCFStep getStepFromId(ArrayList<MCFStep> steps, @IdRes int id) {
+        for (MCFStep step : steps) {
             if (step.id == id)
                 return step;
         }
@@ -89,18 +89,18 @@ public class FormStep {
     }
 
     /**
-     * @return Associated FormStepView.
+     * @return Associated MCFStepView.
      */
-    public FormStepView getView() {
+    public MCFStepView getView() {
         return view;
     }
 
     /**
-     * Sets the associated FormStepView.
+     * Sets the associated MCFStepView.
      *
-     * @param view Associated FormStepView.
+     * @param view Associated MCFStepView.
      */
-    public void setView(FormStepView view) {
+    public void setView(MCFStepView view) {
         this.view = view;
     }
 
@@ -121,36 +121,36 @@ public class FormStep {
     }
 
     /**
-     * @return Whether the FormStep is required.
+     * @return Whether the MCFStep is required.
      */
     public boolean isRequired() {
         return required;
     }
 
     /**
-     * Sets whether the FormStep is required.
+     * Sets whether the MCFStep is required.
      *
-     * @param required Whether the FormStep is required.
+     * @param required Whether the MCFStep is required.
      */
     public void setRequired(boolean required) {
         this.required = required;
     }
 
     /**
-     * Gets the associated FormStepType
+     * Gets the associated MCFStepType
      *
-     * @return Associated FormStepType
+     * @return Associated MCFStepType
      */
-    public FormStepType getType() {
+    public MCFStepType getType() {
         return type;
     }
 
     /**
-     * Sets the associated FormStepType
+     * Sets the associated MCFStepType
      *
-     * @param type Associated FormStepType
+     * @param type Associated MCFStepType
      */
-    public void setType(FormStepType type) {
+    public void setType(MCFStepType type) {
         this.type = type;
     }
 }

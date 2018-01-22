@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gray">#8D8B8B</color>
-    <color name="gray_light">#a9a9a9</color>
-    <color name="ios_gray">#F1F1F5</color>
-    <color name="disabled">#09000000</color>
-    <color name="transparent">#00000000</color>
-    <color name="redt2">#6ABF311A</color>
+    <color name="mcf_gray">#8D8B8B</color>
+    <color name="mcf_gray_light">#CACACA</color>
+    <color name="mcf_ios_gray">#F1F1F5</color>
+    <color name="mcf_disabled">#09000000</color>
+    <color name="mcf_transparent">#00000000</color>
+    <color name="mcf_red_t">#6ABF311A</color>
 </resources>

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">MultiChoiceForm</string>
-    <string name="form_empty_view_title">There are no data for this section</string>
-    <string name="form_empty_view_msg">The selected parameters did not generate any results. Please modify your selected options.</string>
-    <string name="accept">Aceptar</string>
+    <string name="mcf_app_name">MultiChoiceForm</string>
+    <string name="mcf_form_empty_view_title">There are no data for this section</string>
+    <string name="mcf_form_empty_view_msg">The selected parameters did not generate any results. Please modify your selected options.</string>
+    <string name="mcf_accept">Aceptar</string>
 </resources>
