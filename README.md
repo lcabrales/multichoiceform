@@ -235,6 +235,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 # Changelog
 
+## [1.0.1] - 2018-01-22
+### Fixed
+- Bug with MCFDateStep
+
+
 ## [1.0.0] - 2018-01-22
 ### Added
 - Resource prefixes.

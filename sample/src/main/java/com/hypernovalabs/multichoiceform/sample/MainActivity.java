@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         MCFDateStep dateStep = new MCFDateStep((MCFStepView) findViewById(R.id.form_date), true);
         dateStep.setPositiveButton("Accept");
         dateStep.setNegativeButton("Cancel");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 //        dateStep.setDateFormat(sdf);
         try {
             dateStep.setMinDate(sdf.parse("01-01-2010"));
