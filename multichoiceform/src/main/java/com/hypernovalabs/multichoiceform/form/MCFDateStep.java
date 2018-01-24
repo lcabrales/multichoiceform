@@ -1,5 +1,7 @@
 package com.hypernovalabs.multichoiceform.form;
 
+import android.support.annotation.NonNull;
+
 import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +26,7 @@ public class MCFDateStep extends MCFStep {
      *
      * @param view Associated MCFStepView.
      */
-    public MCFDateStep(MCFStepView view) {
+    public MCFDateStep(@NonNull MCFStepView view) {
         super(view);
         super.setType(MCFStepType.DATE);
 
@@ -39,7 +41,7 @@ public class MCFDateStep extends MCFStep {
      * @param view     MCFStepView.
      * @param required Whether the MCFStep is required
      */
-    public MCFDateStep(MCFStepView view, boolean required) {
+    public MCFDateStep(@NonNull MCFStepView view, boolean required) {
         super(view, required);
         super.setType(MCFStepType.DATE);
 
@@ -98,7 +100,7 @@ public class MCFDateStep extends MCFStep {
      *
      * @param positiveButton Positive button text.
      */
-    public void setPositiveButton(String positiveButton) {
+    public void setPositiveButton(@NonNull String positiveButton) {
         this.positiveButton = positiveButton;
     }
 
@@ -116,7 +118,7 @@ public class MCFDateStep extends MCFStep {
      *
      * @param negativeButton Negative button text.
      */
-    public void setNegativeButton(String negativeButton) {
+    public void setNegativeButton(@NonNull String negativeButton) {
         this.negativeButton = negativeButton;
     }
 

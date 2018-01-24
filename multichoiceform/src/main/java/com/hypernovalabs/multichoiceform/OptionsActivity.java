@@ -17,8 +17,8 @@ import android.widget.TextView;
 public class OptionsActivity extends AppCompatActivity {
 
     private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
-    protected static final String EXTRA_CONFIG = EXTRA_PREFIX + "Config";
-    protected static final String EXTRA_SELECTION = EXTRA_PREFIX + "Selection";
+    protected static final String EXTRA_CONFIG = EXTRA_PREFIX + ".Config";
+    protected static final String EXTRA_SELECTION = EXTRA_PREFIX + ".Selection";
 
     private OptionsActivity mContext = this;
     private ListView mListView;

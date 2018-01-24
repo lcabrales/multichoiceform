@@ -52,7 +52,7 @@ public class MultiChoiceForm {
          * @param context Mandatory activity Context.
          * @param steps   MCFSteps to be handled.
          */
-        public Builder(AppCompatActivity context, ArrayList<MCFStep> steps) {
+        public Builder(@NonNull AppCompatActivity context, @NonNull ArrayList<MCFStep> steps) {
             form = new MultiChoiceForm();
             form.mContext = context;
             form.mMCFSteps = steps;

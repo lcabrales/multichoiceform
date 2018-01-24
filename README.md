@@ -13,6 +13,7 @@ Here's a list of the MultiChoiceForm library core features as of the current ver
   * Two types of fields: single selection and date.
   * Support for dependent fields.
   * Change any `MCFStep`'s options data in runtime.
+  * Accepts `MCFStep` data as `ArrayList<String>` or `String[]`.
   * Set required fields (with validation animations).
   * Customize validation animation.
   * Customize `OptionsActivity` toolbar.
@@ -43,7 +44,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:1.1.1@aar'
+compile 'com.hypernovalabs:multichoiceform:1.2.0@aar'
 ```
 
 # Usage
@@ -234,6 +235,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.2.0] - 2018-01-24
+### Added
+- Support of `MCFStep` options data as `String[]`.
+
 
 ## [1.1.1] - 2018-01-22
 ### Fixed

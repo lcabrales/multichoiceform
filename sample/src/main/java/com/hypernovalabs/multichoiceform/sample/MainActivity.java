@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> data = getDummyData("Test", 3);
         MCFSingleSelectStep step = new MCFSingleSelectStep(data, (MCFStepView) findViewById(R.id.form_test), false);
 
-        ArrayList<String> data2 = getDummyData("Value", 5);
+        String[] data2 = {"Yes", "No"};
         MCFSingleSelectStep step2 = new MCFSingleSelectStep(data2, (MCFStepView) findViewById(R.id.form_test2), true);
 
         ArrayList<String> data3 = getDummyData("LK", 20);

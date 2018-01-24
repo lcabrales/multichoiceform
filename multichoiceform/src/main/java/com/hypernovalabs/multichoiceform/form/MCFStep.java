@@ -1,10 +1,12 @@
 package com.hypernovalabs.multichoiceform.form;
 
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 
 import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by lucascabrales on 1/5/18.
@@ -24,7 +26,7 @@ public class MCFStep {
      *
      * @param view Associated MCFStepView.
      */
-    MCFStep(MCFStepView view) {
+    MCFStep(@NonNull MCFStepView view) {
         this.data = new ArrayList<>();
         this.view = view;
         this.id = view.getId();
@@ -37,11 +39,24 @@ public class MCFStep {
      * @param view     Associated MCFStepView.
      * @param required Whether the MCFStep is required.
      */
-    MCFStep(MCFStepView view, boolean required) {
+    MCFStep(@NonNull MCFStepView view, @NonNull boolean required) {
         this.data = new ArrayList<>();
         this.view = view;
         this.id = view.getId();
         this.required = required;
+    }
+
+    /**
+     * Simple constructor of the MCFStep class, isRequired is false. Takes an array as parameter.
+     *
+     * @param data Contains all of the options.
+     * @param view Associated MCFStepView.
+     */
+    MCFStep(@NonNull String[] data, @NonNull MCFStepView view) {
+        this.data = new ArrayList<>(Arrays.asList(data));
+        this.view = view;
+        this.id = view.getId();
+        this.required = false;
     }
 
     /**
@@ -50,11 +65,26 @@ public class MCFStep {
      * @param data Contains all of the options.
      * @param view Associated MCFStepView.
      */
-    MCFStep(ArrayList<String> data, MCFStepView view) {
+    MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view) {
         this.data = data;
         this.view = view;
         this.id = view.getId();
         this.required = false;
+    }
+
+    /**
+     * Constructor that defines whether the MCFStep is required. Takes an array as parameter.
+     *
+     * @param data     Contains all of the options.
+     * @param view     Associated MCFStepView.
+     * @param required Whether the MCFStep is required.
+     */
+    MCFStep(@NonNull String[] data, @NonNull MCFStepView view, @NonNull boolean required) {
+        this.data = new ArrayList<>(Arrays.asList(data));
+        this.view = view;
+        this.id = view.getId();
+        this.type = type;
+        this.required = required;
     }
 
     /**
@@ -64,7 +94,7 @@ public class MCFStep {
      * @param view     Associated MCFStepView.
      * @param required Whether the MCFStep is required.
      */
-    MCFStep(ArrayList<String> data, MCFStepView view, boolean required) {
+    MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, @NonNull boolean required) {
         this.data = data;
         this.view = view;
         this.id = view.getId();
@@ -79,7 +109,7 @@ public class MCFStep {
      * @param id    resId of MCFStepView
      * @return MCFStep of the associated MCFStepView
      */
-    public static MCFStep getStepFromId(ArrayList<? extends MCFStep> steps, @IdRes int id) {
+    public static MCFStep getStepFromId(@NonNull ArrayList<? extends MCFStep> steps, @IdRes int id) {
         for (MCFStep step : steps) {
             if (step.id == id)
                 return step;
