@@ -238,7 +238,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## [1.2.1] - 2018-01-26
 ### Fixed
-- getSelection() returning null issue
+- `getSelection()` returning null issue
 
 
 ## [1.2.0] - 2018-01-24
@@ -248,7 +248,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## [1.1.1] - 2018-01-22
 ### Fixed
-- ScrollView issue
+- `ScrollView` issue
 
 
 ## [1.1.0] - 2018-01-22
@@ -258,7 +258,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## [1.0.1] - 2018-01-22
 ### Fixed
-- Bug with MCFDateStep
+- Bug with `MCFDateStep`
 
 
 ## [1.0.0] - 2018-01-22
@@ -267,7 +267,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ### Changed
 - OptionsActivity EXTRA constants.
-- MCFStep and derived classes prefixes.
+- `MCFStep` and derived classes prefixes.
 - MCFStepView's `enable(boolean)` to `setEnabled(boolean)`.
 
 ### Removed
@@ -276,7 +276,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## [0.5.0] - 2018-01-18
 ### Added
-- onLongItemClickListener to clear the selection.
+- `onLongItemClickListener` to clear the selection.
 
 ### Changed
 - General improvements on the FormSteps.
@@ -284,8 +284,8 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## [0.4.1] - 2018-01-17
 ### Added
-- FormDateStep and FormSingleSelectStep.
+- `FormDateStep` and `FormSingleSelectStep`.
 - This CHANGELOG section.
 
 ### Fixed
-- FormDateStep SimpleDateFormat.
+- `FormDateStep` SimpleDateFormat.
