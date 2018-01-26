@@ -44,7 +44,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:1.2.0@aar'
+compile 'com.hypernovalabs:multichoiceform:1.2.1@aar'
 ```
 
 # Usage
@@ -235,6 +235,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.2.1] - 2018-01-26
+### Fixed
+- getSelection() returning null issue
+
 
 ## [1.2.0] - 2018-01-24
 ### Added

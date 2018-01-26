@@ -259,7 +259,7 @@ public class MCFStepView extends LinearLayout {
      * @param enable Whether to enable the MCFStepView.
      */
     public void deselect(boolean enable) {
-        setSelection(null);
+        setSelection("");
         setEnabled(enable);
     }
 
