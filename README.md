@@ -236,6 +236,15 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 # Changelog
 
+## [1.3.0] - 2018-02-07
+### Added
+- Support multilines on title and selection
+- The title is shown completely in the number of lines established if nothing has been selected
+- Default selectableItemBackground
+
+### Removed
+- Title Toast functionality.
+
 ## [1.2.1] - 2018-01-26
 ### Fixed
 - `getSelection()` returning null issue

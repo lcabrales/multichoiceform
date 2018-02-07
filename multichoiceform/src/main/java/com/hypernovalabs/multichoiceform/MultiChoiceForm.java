@@ -10,16 +10,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewAnimator;
 
 import com.hypernovalabs.multichoiceform.form.MCFDateStep;
 import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
 import com.hypernovalabs.multichoiceform.form.MCFStep;
+import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.util.ArrayList;
 
@@ -157,35 +161,31 @@ public class MultiChoiceForm {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                MCFStep step = (MCFStep) view.getTag();
-
-                switch (step.getType()) {
-                    case SINGLE_SELECT:
-                        Intent intent = getIntent((MCFSingleSelectStep) step);
-                        mContext.startActivityForResult(intent, REQUEST_SELECTION);
-                        mContext.overridePendingTransition(R.anim.mcf_slide_in_right, R.anim.mcf_slide_out_left);
-                        break;
-                    case DATE:
-                        handleDateStep((MCFDateStep) step);
-                        break;
-                }
-
+                stepCalled(view);
             }
         };
-
-        View.OnClickListener titleListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tooltip(view);
-            }
-        };
-
         for (MCFStep step : mMCFSteps) {
             step.getView().getLayout().setTag(step);
             step.getView().getLayout().setOnClickListener(listener);
+        }
+    }
 
-            step.getView().getTitleView().setOnClickListener(titleListener);
+    private void stepCalled(View view) {
+        MCFStep step;
+        if (view instanceof TextView) {
+            step = (MCFStep) ((View) view.getParent()).getTag();
+        } else {
+            step = (MCFStep) view.getTag();
+        }
+        switch (step.getType()) {
+            case SINGLE_SELECT:
+                Intent intent = getIntent((MCFSingleSelectStep) step);
+                mContext.startActivityForResult(intent, REQUEST_SELECTION);
+                mContext.overridePendingTransition(R.anim.mcf_slide_in_right, R.anim.mcf_slide_out_left);
+                break;
+            case DATE:
+                handleDateStep((MCFDateStep) step);
+                break;
         }
     }
 
@@ -267,7 +267,7 @@ public class MultiChoiceForm {
 
     /**
      * Shows a {@link Toast} with the full name of the MCFStep's title.
-     *
+     * @deprecated
      * @param view MCFStep view.
      */
     private void tooltip(View view) {

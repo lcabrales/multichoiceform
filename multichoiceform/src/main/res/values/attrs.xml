@@ -7,5 +7,7 @@
         <attr name="mcf_selectionColor" format="color" />
         <attr name="mcf_separatorColor" format="color" />
         <attr name="mcf_arrowDrawable" format="reference" />
+        <attr name="mcf_titleMaxLines" format="integer" />
+        <attr name="mcf_selectionMaxLines" format="integer" />
     </declare-styleable>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class MCFStepView extends LinearLayout {
     private int mTitleColor;
     private int mSelectionColor;
     private int mDisabledColor;
+    private int mTitleMaxLines, mSelectionMaxLines;
     private boolean mEnabled;
 
     /**
@@ -74,6 +76,8 @@ public class MCFStepView extends LinearLayout {
             mSelectionColor = a.getColor(R.styleable.MCFStepView_mcf_selectionColor, Color.BLACK);
             mArrowDrawable = a.getDrawable(R.styleable.MCFStepView_mcf_arrowDrawable);
             mEnabled = a.getBoolean(R.styleable.MCFStepView_mcf_enabled, true);
+            mTitleMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_titleMaxLines, 1);
+            mSelectionMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_selectionMaxLines, 1);
 
             if (mArrowDrawable == null)
                 mArrowDrawable = ContextCompat.getDrawable(mContext, R.drawable.mcf_ic_action_arrow);
@@ -95,6 +99,8 @@ public class MCFStepView extends LinearLayout {
         setSeparatorColor(mSeparatorColor);
         setArrowImageView(mArrowDrawable);
         setEnabled(mEnabled);
+        setTitleMaxLines(mTitleMaxLines);
+        setSelectionMaxLines(mSelectionMaxLines);
     }
 
     /**
@@ -126,7 +132,6 @@ public class MCFStepView extends LinearLayout {
     public void setSelection(String selection) {
         mSelection = selection;
         mSelectionTextView.setText(selection);
-
         invalidate();
         requestLayout();
     }
@@ -268,5 +273,41 @@ public class MCFStepView extends LinearLayout {
      */
     public void deselect() {
         deselect(false);
+    }
+
+    /**
+     * Sets MCFStep's title max lines; with default 1
+     *
+     * @param titleMaxLines
+     */
+    public void setTitleMaxLines(int titleMaxLines) {
+       mTitleMaxLines = titleMaxLines;
+    }
+
+    /**
+     * Returns the max lines of title TextView.
+     *
+     * @return MCFStepView's title TextView max Lines.
+     */
+    public int getTitleMaxLines() {
+       return mTitleMaxLines;
+    }
+
+    /**
+     * Sets MCFStep's selection max lines; with default 1
+     *
+     * @param selectionMaxLines
+     */
+    public void setSelectionMaxLines(int selectionMaxLines) {
+        mSelectionMaxLines = selectionMaxLines;
+    }
+
+    /**
+     * Returns the max lines of selection TextView.
+     *
+     * @return MCFStepView's selection TextView max Lines.
+     */
+    public int getSelectionMaxLines() {
+        return mSelectionMaxLines;
     }
 }
