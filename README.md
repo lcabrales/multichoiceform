@@ -44,7 +44,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:1.3.0@aar'
+compile 'com.hypernovalabs:multichoiceform:1.3.1@aar'
 ```
 
 # Usage
@@ -235,6 +235,10 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.3.1] - 2018-03-05
+### Fixed
+- Arrow image dimensions
 
 ## [1.3.0] - 2018-02-07
 ### Added
