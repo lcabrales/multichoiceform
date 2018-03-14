@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -237,11 +236,11 @@ public class MCFStepView extends LinearLayout {
 
         if (enable) {
             mLayout.setEnabled(true);
-            mArrowImageView.setVisibility(View.VISIBLE);
+            ((View) mArrowImageView.getParent()).setVisibility(View.VISIBLE);
             mSeparator.setBackgroundColor(mSeparatorColor);
         } else {
             mLayout.setEnabled(false);
-            mArrowImageView.setVisibility(View.GONE);
+            ((View) mArrowImageView.getParent()).setVisibility(View.GONE);
             mSeparator.setBackgroundColor(mDisabledColor);
         }
 
@@ -281,7 +280,7 @@ public class MCFStepView extends LinearLayout {
      * @param titleMaxLines
      */
     public void setTitleMaxLines(int titleMaxLines) {
-       mTitleMaxLines = titleMaxLines;
+        mTitleMaxLines = titleMaxLines;
     }
 
     /**
@@ -290,7 +289,7 @@ public class MCFStepView extends LinearLayout {
      * @return MCFStepView's title TextView max Lines.
      */
     public int getTitleMaxLines() {
-       return mTitleMaxLines;
+        return mTitleMaxLines;
     }
 
     /**
