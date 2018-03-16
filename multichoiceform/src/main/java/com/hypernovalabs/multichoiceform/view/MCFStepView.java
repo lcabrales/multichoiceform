@@ -222,7 +222,7 @@ public class MCFStepView extends LinearLayout {
      * @return Whether it is selected.
      */
     public boolean isSelected() {
-        return getSelection().length() > 0;
+        return getSelection() != null && getSelection().length() > 0;
     }
 
     /**
