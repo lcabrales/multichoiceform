@@ -10,20 +10,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewAnimator;
 
 import com.hypernovalabs.multichoiceform.form.MCFDateStep;
 import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
 import com.hypernovalabs.multichoiceform.form.MCFStep;
-import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.util.ArrayList;
 
@@ -43,6 +39,7 @@ public class MultiChoiceForm {
     private ValidationAnim mValidationAnim;
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
+    private Toast mToast;
 
     /**
      * Builder class of {@link MultiChoiceForm}.
@@ -267,8 +264,9 @@ public class MultiChoiceForm {
 
     /**
      * Shows a {@link Toast} with the full name of the MCFStep's title.
-     * @deprecated
+     *
      * @param view MCFStep view.
+     * @deprecated
      */
     private void tooltip(View view) {
         String text = ((TextView) view).getText().toString();
@@ -307,8 +305,15 @@ public class MultiChoiceForm {
 
         for (MCFStep step : mMCFSteps) {
             if (step.isRequired() && !step.getView().isSelected()) {
-                if (mRequiredText != null)
-                    Toast.makeText(mContext, mRequiredText, Toast.LENGTH_SHORT).show();
+                if (mRequiredText != null) {
+
+                    if (mToast != null) {
+                        mToast.cancel();
+                    }
+
+                    mToast = Toast.makeText(mContext, mRequiredText, Toast.LENGTH_SHORT);
+                    mToast.show();
+                }
 
                 Animation animation = AnimationUtils.loadAnimation(mContext, mValidationAnim.getResId());
 
