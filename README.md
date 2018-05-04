@@ -236,6 +236,10 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 # Changelog
 
+## [1.4.1] - 2018-05-04
+### Added
+- `SearchView` on `OptionsActivity` based on the parameter `isSearchable`
+
 ## [1.3.4] - 2018-03-20
 ### Fixed
 - Toast appearing multiple times.

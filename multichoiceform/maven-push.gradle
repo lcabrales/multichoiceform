@@ -9,7 +9,7 @@ publishing {
 
             groupId 'com.hypernovalabs'
             artifactId 'multichoiceform'
-            version '1.3.4'
+            version '1.4.1'
 
             pom.withXml {
                 // Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
@@ -40,10 +40,10 @@ bintray {
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/lcabrales/multichoiceform'
         version {
-            name = '1.3.4'
+            name = '1.4.1'
             desc = 'MultiChoiceForm Library'
             released = new Date()
-            vcsTag = '1.3.4'
+            vcsTag = '1.4.1'
         }
     }
 }

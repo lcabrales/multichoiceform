@@ -3,13 +3,19 @@ package com.hypernovalabs.multichoiceform;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Activity containing a list of a MCFStep's options
@@ -23,6 +29,7 @@ public class OptionsActivity extends AppCompatActivity {
     private OptionsActivity mContext = this;
     private ListView mListView;
     private ArrayAdapter<String> mAdapter;
+    private ArrayList<String> mOptions;
     private MultiChoiceFormConfig mModel;
 
     @Override
@@ -70,12 +77,16 @@ public class OptionsActivity extends AppCompatActivity {
         mListView.setEmptyView(findViewById(R.id.mcf_empty_view));
         setEmptyViewTexts(mModel.emptyViewTitle, mModel.emptyViewMsg);
 
+        mOptions = new ArrayList<>(mModel.data);
         mAdapter = new ArrayAdapter<>(mContext, R.layout.mcf_simple_list_item_checked,
-                mModel.data);
+                mOptions);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                hideKeyboard();
+
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_SELECTION, String.valueOf(mAdapter.getItem(i)));
                 intent.putExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, mModel.id);
@@ -108,6 +119,47 @@ public class OptionsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mModel.isSearchable) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.mcf_menu_search, menu);
+
+            final MenuItem searchItem = menu.findItem(R.id.search);
+
+            /*// Set search icon
+            searchItem.setIcon(
+                    new IconDrawable(this, FontAwesomeIcons.fa_search)
+                            .colorRes(R.color.green_dark)
+                            .actionBarSize());*/
+
+            final SearchView searchView = (SearchView) searchItem.getActionView();
+            //permite modificar el hint que el EditText muestra por defecto
+            searchView.setQueryHint("Buscar...");
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    // Toast.makeText(mContext, R.string.submitted, Toast.LENGTH_SHORT).show();
+                    //se oculta el EditText
+//                searchView.setQuery("", false);
+//                searchView.setIconified(true);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+
+                    updateQueriedData(newText);
+
+                    return true;
+                }
+            });
+
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -118,10 +170,40 @@ public class OptionsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Update the options based on the SearchView query
+     */
+    private void updateQueriedData(String query) {
+        mOptions = new ArrayList<>();
+
+        for (String option : mModel.data) {
+
+            if (option.toLowerCase().contains(query.toLowerCase())) {
+                mOptions.add(option);
+            }
+        }
+
+        mAdapter.clear();
+        mAdapter.addAll(mOptions);
+        mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
         overrideTransition();
+    }
+
+    /**
+     * Tries to hide the Soft Input Keyboard. Should be used in a form activity on button click.
+     */
+    public void hideKeyboard() {
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

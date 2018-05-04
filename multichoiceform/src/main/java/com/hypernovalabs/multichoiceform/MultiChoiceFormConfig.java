@@ -1,6 +1,5 @@
 package com.hypernovalabs.multichoiceform;
 
-import android.graphics.drawable.RippleDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,6 +26,7 @@ public class MultiChoiceFormConfig implements Parcelable {
     public int toolbarTitleColor;
     public String emptyViewTitle;
     public String emptyViewMsg;
+    public boolean isSearchable;
 
     public MultiChoiceFormConfig() {
 
@@ -48,6 +48,7 @@ public class MultiChoiceFormConfig implements Parcelable {
         toolbarTitleColor = in.readInt();
         emptyViewTitle = in.readString();
         emptyViewMsg = in.readString();
+        isSearchable = in.readByte() != 0x00;
     }
 
     @Override
@@ -71,6 +72,7 @@ public class MultiChoiceFormConfig implements Parcelable {
         dest.writeInt(toolbarTitleColor);
         dest.writeString(emptyViewTitle);
         dest.writeString(emptyViewMsg);
+        dest.writeByte((byte) (isSearchable ? 0x01 : 0x00));
     }
 
     @SuppressWarnings("unused")

@@ -204,6 +204,7 @@ public class MultiChoiceForm {
         model.toolbarTitleColor = mToolbarTitleColor;
         model.emptyViewTitle = mEmptyViewTitle;
         model.emptyViewMsg = mEmptyViewMsg;
+        model.isSearchable = step.isSearchable();
 
         intent.putExtra(OptionsActivity.EXTRA_CONFIG, model);
 
