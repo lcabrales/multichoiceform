@@ -12,6 +12,7 @@ Here's a list of the MultiChoiceForm library core features as of the current ver
   * Include any amount of `MCFStep`s in your layout.
   * Two types of fields: single selection and date.
   * Support for dependent fields.
+  * Supports searchable single select fields.
   * Change any `MCFStep`'s options data in runtime.
   * Accepts `MCFStep` data as `ArrayList<String>` or `String[]`.
   * Set required fields (with validation animations).
@@ -44,7 +45,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:1.3.4@aar'
+compile 'com.hypernovalabs:multichoiceform:1.4.1@aar'
 ```
 
 # Usage
@@ -125,7 +126,8 @@ Provides a list of options and returns only one selected option. Example:
 
 ```java
 ArrayList<String> data = ... //your data
-FormSingleSelectStep step = new FormSingleSelectStep(data, (MCFStepView) findViewById(R.id.form_test), true);
+MCFSingleSelectStep step = new MCFSingleSelectStep(data, (MCFStepView) findViewById(R.id.form_test), true);
+step.setSearchable(true); //to enable the SearchView
 ```
 
 ### MCFDateStep
@@ -313,7 +315,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## [0.4.1] - 2018-01-17
 ### Added
-- `FormDateStep` and `FormSingleSelectStep`.
+- `FormDateStep` and `MCFSingleSelectStep`.
 - This CHANGELOG section.
 
 ### Fixed
