@@ -45,7 +45,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:1.4.1@aar'
+compile 'com.hypernovalabs:multichoiceform:1.4.2@aar'
 ```
 
 # Usage
@@ -237,6 +237,10 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.4.2] - 2018-05-15
+### Added
+- Definition of `setSelection(@StringRes int)` on any `MCFStep`.
 
 ## [1.4.1] - 2018-05-04
 ### Added

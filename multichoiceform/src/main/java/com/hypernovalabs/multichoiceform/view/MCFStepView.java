@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -124,7 +125,7 @@ public class MCFStepView extends LinearLayout {
     }
 
     /**
-     * Sets on UI the selected option text.
+     * Sets the selected option text.
      *
      * @param selection Selected option text value.
      */
@@ -133,6 +134,15 @@ public class MCFStepView extends LinearLayout {
         mSelectionTextView.setText(selection);
         invalidate();
         requestLayout();
+    }
+
+    /**
+     * Sets the selected options text from a string resource
+     *
+     * @param resId String resource
+     */
+    public void setSelection(@StringRes int resId) {
+        setSelection(mContext.getString(resId));
     }
 
     /**
