@@ -45,7 +45,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-compile 'com.hypernovalabs:multichoiceform:1.4.2@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.4.3@aar'
 ```
 
 # Usage
@@ -54,7 +54,7 @@ You can access the full javadoc [here](https://lcabrales.github.io/multichoicefo
 
 Here is a simple implementation of the MultiChoiceForm library:
 
-1. Add a `MCFStepView `into your layout as follows:
+1. Add a `MCFStepView` into your layout as follows:
 
 ```xml
 <com.hypernovalabs.multichoiceform.view.MCFStepView
@@ -148,15 +148,17 @@ This is all optional, adds increased customization to your form.
 Customize the `OptionsActivity` and other `MultiChoiceForm` settings:
 
 ```java
-MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps);
-builder.setToolbarColors(
-    ContextCompat.getColor(mContext, R.color.toolbar),
-    ContextCompat.getColor(mContext, R.color.toolbar_text)); //optional
-builder.setRequiredText("Fill out everything, please"); //optional
-builder.setValidationColor(ContextCompat.getColor(mContext, R.color.bluet)); //optional
-builder.setValidationAnimation(ValidationAnim.SHAKE); //optional
-builder.setValidationDuration(Duration.SHORT); //optional
-builder.setEmptyViewTexts("Attention!", "Fill out all of the required fields, please"); //optional
+MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps)
+        .setToolbarColors(
+                ContextCompat.getColor(mContext, R.color.toolbar),
+                ContextCompat.getColor(mContext, R.color.toolbar_text)) //optional
+        .setRequiredText("Fill out everything, please") //optional
+        .setValidationColor(ContextCompat.getColor(mContext, R.color.bluet)) //optional
+        .setValidationAnimation(ValidationAnim.SHAKE_HORIZONTAL) //optional
+        .setValidationDuration(Duration.SHORT) //optional
+        .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please") //optional
+        .setSearchViewHint("Search here...") //optional
+        .setSearchViewIconTint(Color.BLACK); //optional
 mForm = builder.build(); //build your instance
 ```
 
@@ -237,6 +239,14 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.4.3] - 2018-05-15
+### Added
+- Builder method to set the `SearchView`'s hint.
+- Builder method to set the `SearchView`'s icon tint color.
+
+### Fixed
+- Android Oreo issue with the SearchView where it would not collapse the ActionView.
 
 ## [1.4.2] - 2018-05-15
 ### Added

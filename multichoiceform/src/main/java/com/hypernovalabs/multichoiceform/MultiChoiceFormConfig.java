@@ -27,9 +27,10 @@ public class MultiChoiceFormConfig implements Parcelable {
     public String emptyViewTitle;
     public String emptyViewMsg;
     public boolean isSearchable;
+    public String searchViewHint;
+    public int searchViewIconTint;
 
     public MultiChoiceFormConfig() {
-
     }
 
     //region Parcelable
@@ -49,6 +50,8 @@ public class MultiChoiceFormConfig implements Parcelable {
         emptyViewTitle = in.readString();
         emptyViewMsg = in.readString();
         isSearchable = in.readByte() != 0x00;
+        searchViewHint = in.readString();
+        searchViewIconTint = in.readInt();
     }
 
     @Override
@@ -73,6 +76,8 @@ public class MultiChoiceFormConfig implements Parcelable {
         dest.writeString(emptyViewTitle);
         dest.writeString(emptyViewMsg);
         dest.writeByte((byte) (isSearchable ? 0x01 : 0x00));
+        dest.writeString(searchViewHint);
+        dest.writeInt(searchViewIconTint);
     }
 
     @SuppressWarnings("unused")

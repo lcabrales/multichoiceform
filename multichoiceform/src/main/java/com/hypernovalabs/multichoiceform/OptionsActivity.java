@@ -1,7 +1,10 @@
 package com.hypernovalabs.multichoiceform;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -126,22 +129,19 @@ public class OptionsActivity extends AppCompatActivity {
 
             final MenuItem searchItem = menu.findItem(R.id.search);
 
-            /*// Set search icon
-            searchItem.setIcon(
-                    new IconDrawable(this, FontAwesomeIcons.fa_search)
-                            .colorRes(R.color.green_dark)
-                            .actionBarSize());*/
+            Drawable iconDrawable = ContextCompat.getDrawable(mContext, R.drawable.mcf_ic_search);
+            iconDrawable.setColorFilter( mModel.searchViewIconTint, PorterDuff.Mode.MULTIPLY);
+            searchItem.setIcon(iconDrawable);
 
             final SearchView searchView = (SearchView) searchItem.getActionView();
-            //permite modificar el hint que el EditText muestra por defecto
-            searchView.setQueryHint("Buscar...");
+            searchView.setQueryHint(mModel.searchViewHint);
+            searchView.setIconifiedByDefault(true);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    // Toast.makeText(mContext, R.string.submitted, Toast.LENGTH_SHORT).show();
-                    //se oculta el EditText
-//                searchView.setQuery("", false);
-//                searchView.setIconified(true);
+//                    searchView.setQuery("", false);
+//                    searchView.setIconified(true);
+                    hideKeyboard();
                     return true;
                 }
 

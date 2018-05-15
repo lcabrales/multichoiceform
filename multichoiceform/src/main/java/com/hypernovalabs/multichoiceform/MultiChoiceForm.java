@@ -39,6 +39,8 @@ public class MultiChoiceForm {
     private ValidationAnim mValidationAnim;
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
+    private String mSearchViewHint;
+    private int mSearchViewIconTint;
     private Toast mToast;
 
     /**
@@ -62,6 +64,8 @@ public class MultiChoiceForm {
             form.mValidationDuration = Duration.MEDIUM;
             form.mEmptyViewTitle = context.getString(R.string.mcf_form_empty_view_title);
             form.mEmptyViewMsg = context.getString(R.string.mcf_form_empty_view_msg);
+            form.mSearchViewHint = context.getString(R.string.mcf_search_title);
+            form.mSearchViewIconTint = Utils.getDefaultThemeAttr(context, R.attr.colorAccent);
         }
 
         /**
@@ -147,6 +151,29 @@ public class MultiChoiceForm {
             this.form.mEmptyViewMsg = message;
             return this;
         }
+
+        /**
+         * If a {@link MCFStep} is searchable, this is used to show the SearchView's hint.
+         *
+         * @param hint hint of SearchView.
+         * @return Current instance of this builder.
+         */
+        public Builder setSearchViewHint(String hint) {
+            this.form.mSearchViewHint = hint;
+            return this;
+        }
+
+        /**
+         * If a {@link MCFStep} is searchable, this is used to show the SearchView's icon. Takes
+         * the app's theme {@link R.attr#colorAccent} by default.
+         *
+         * @param color tint color of the SearchView icon.
+         * @return Current instance of this builder.
+         */
+        public Builder setSearchViewIconTint(int color) {
+            this.form.mSearchViewIconTint = color;
+            return this;
+        }
     }
 
     /**
@@ -205,6 +232,8 @@ public class MultiChoiceForm {
         model.emptyViewTitle = mEmptyViewTitle;
         model.emptyViewMsg = mEmptyViewMsg;
         model.isSearchable = step.isSearchable();
+        model.searchViewHint = mSearchViewHint;
+        model.searchViewIconTint = mSearchViewIconTint;
 
         intent.putExtra(OptionsActivity.EXTRA_CONFIG, model);
 

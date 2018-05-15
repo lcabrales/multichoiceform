@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/search"
-        android:hint="@string/mcf_search_title"
         android:title="@string/mcf_search_title"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView|ifRoom" />
 </menu>

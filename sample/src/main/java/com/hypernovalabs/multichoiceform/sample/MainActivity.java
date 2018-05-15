@@ -1,6 +1,7 @@
 package com.hypernovalabs.multichoiceform.sample;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> data = getDummyData("Test", 3);
         MCFSingleSelectStep step = new MCFSingleSelectStep(data, (MCFStepView) findViewById(R.id.form_test), false);
         step.setSearchable(true); //to enable the SearchView
-        step.getView().setSelection(R.string.app_name);
 
         String[] data2 = {"Yes", "No"};
         MCFSingleSelectStep step2 = new MCFSingleSelectStep(data2, (MCFStepView) findViewById(R.id.form_test2), true);
@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
                 .setValidationColor(ContextCompat.getColor(mContext, R.color.bluet)) //optional
                 .setValidationAnimation(ValidationAnim.SHAKE_HORIZONTAL) //optional
                 .setValidationDuration(Duration.SHORT) //optional
-                .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please"); //optional
+                .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please") //optional
+                .setSearchViewHint("Search here...") //optional
+                .setSearchViewIconTint(Color.BLACK); //optional
 
         mForm = builder.build(); //build your instance
 
