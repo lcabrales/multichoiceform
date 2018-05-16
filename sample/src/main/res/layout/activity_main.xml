@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             app:mcf_selectionColor="@color/blue"
             app:mcf_separatorColor="@color/mcf_gray"
-            app:mcf_title="Fecha de Ingreso Anterior"
+            app:mcf_title="Test Field"
             app:mcf_titleColor="@color/blue" />
 
         <com.hypernovalabs.multichoiceform.view.MCFStepView
@@ -50,7 +50,8 @@
             android:layout_height="wrap_content"
             app:mcf_selectionColor="@color/blue"
             app:mcf_separatorColor="@color/mcf_gray"
-            app:mcf_title="Especifique la fuente deseada"
+            app:mcf_title="Long title long title long title"
+            app:mcf_titleMaxLines="3"
             app:mcf_titleColor="@color/blue" />
 
         <com.hypernovalabs.multichoiceform.view.MCFStepView

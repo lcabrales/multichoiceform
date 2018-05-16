@@ -36,6 +36,7 @@ public class MCFStepView extends LinearLayout {
     private int mTitleColor;
     private int mSelectionColor;
     private int mDisabledColor;
+    private int mDisabledTextColor;
     private int mTitleMaxLines, mSelectionMaxLines;
     private boolean mEnabled;
 
@@ -62,6 +63,7 @@ public class MCFStepView extends LinearLayout {
      */
     private void init() {
         mDisabledColor = ContextCompat.getColor(mContext, R.color.mcf_disabled);
+        mDisabledTextColor = ContextCompat.getColor(mContext, R.color.mcf_gray);
 
         TypedArray a = mContext.getTheme().obtainStyledAttributes(
                 mAttrs,
@@ -73,7 +75,7 @@ public class MCFStepView extends LinearLayout {
             mSeparatorColor = a.getColor(R.styleable.MCFStepView_mcf_separatorColor,
                     ContextCompat.getColor(mContext, R.color.mcf_gray));
             mTitleColor = a.getColor(R.styleable.MCFStepView_mcf_titleColor, Color.BLACK);
-            mSelectionColor = a.getColor(R.styleable.MCFStepView_mcf_selectionColor, Color.BLACK);
+            mSelectionColor = a.getColor(R.styleable.MCFStepView_mcf_selectionColor, Color.GRAY);
             mArrowDrawable = a.getDrawable(R.styleable.MCFStepView_mcf_arrowDrawable);
             mEnabled = a.getBoolean(R.styleable.MCFStepView_mcf_enabled, true);
             mTitleMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_titleMaxLines, 1);
@@ -132,6 +134,7 @@ public class MCFStepView extends LinearLayout {
     public void setSelection(String selection) {
         mSelection = selection;
         mSelectionTextView.setText(selection);
+
         invalidate();
         requestLayout();
     }
@@ -247,10 +250,12 @@ public class MCFStepView extends LinearLayout {
         if (enable) {
             mLayout.setEnabled(true);
             ((View) mArrowImageView.getParent()).setVisibility(View.VISIBLE);
+            mSelectionTextView.setTextColor(mSelectionColor);
             mSeparator.setBackgroundColor(mSeparatorColor);
         } else {
             mLayout.setEnabled(false);
             ((View) mArrowImageView.getParent()).setVisibility(View.GONE);
+            mSelectionTextView.setTextColor(mDisabledTextColor);
             mSeparator.setBackgroundColor(mDisabledColor);
         }
 
@@ -287,10 +292,15 @@ public class MCFStepView extends LinearLayout {
     /**
      * Sets MCFStep's title max lines; with default 1
      *
-     * @param titleMaxLines
+     * @param maxLines title TextView maxLines attribute
      */
-    public void setTitleMaxLines(int titleMaxLines) {
-        mTitleMaxLines = titleMaxLines;
+    public void setTitleMaxLines(int maxLines) {
+        mTitleMaxLines = maxLines;
+
+        mTitleTextView.setMaxLines(maxLines);
+
+        invalidate();
+        requestLayout();
     }
 
     /**
@@ -305,10 +315,15 @@ public class MCFStepView extends LinearLayout {
     /**
      * Sets MCFStep's selection max lines; with default 1
      *
-     * @param selectionMaxLines
+     * @param maxLines selection TextView maxLines attribute
      */
-    public void setSelectionMaxLines(int selectionMaxLines) {
-        mSelectionMaxLines = selectionMaxLines;
+    public void setSelectionMaxLines(int maxLines) {
+        mSelectionMaxLines = maxLines;
+
+        mSelectionTextView.setMaxLines(maxLines);
+
+        invalidate();
+        requestLayout();
     }
 
     /**

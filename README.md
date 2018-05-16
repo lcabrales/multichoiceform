@@ -45,7 +45,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.4.3@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.4.@aar'
 ```
 
 # Usage
@@ -239,6 +239,13 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.4.4] - 2018-05-16
+### Fixed
+- Implementation of `setTitleMaxLines` and `setSelectionMaxLines`
+
+### Improved
+- Performance on the step views when the texts are too long.
 
 ## [1.4.3] - 2018-05-15
 ### Added
