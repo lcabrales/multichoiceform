@@ -45,7 +45,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.4.@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.4.4@aar'
 ```
 
 # Usage
