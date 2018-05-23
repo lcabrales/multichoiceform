@@ -11,11 +11,13 @@ import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.Duration;
 import com.hypernovalabs.multichoiceform.MultiChoiceForm;
-import com.hypernovalabs.multichoiceform.MultiChoiceFormConfig;
 import com.hypernovalabs.multichoiceform.ValidationAnim;
+import com.hypernovalabs.multichoiceform.config.MCFConfig;
 import com.hypernovalabs.multichoiceform.form.MCFDateStep;
 import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
 import com.hypernovalabs.multichoiceform.form.MCFStep;
+import com.hypernovalabs.multichoiceform.form.MCFTextInputStep;
+import com.hypernovalabs.multichoiceform.model.Regex;
 import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.text.ParseException;
@@ -61,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
         String[] data2 = {"Yes", "No"};
         MCFSingleSelectStep step2 = new MCFSingleSelectStep(data2, (MCFStepView) findViewById(R.id.form_test2), true);
 
-        ArrayList<String> data3 = getDummyData("LK", 20);
-        MCFSingleSelectStep step3 = new MCFSingleSelectStep(data3, (MCFStepView) findViewById(R.id.form_test3), true);
+        MCFTextInputStep textInputStep = new MCFTextInputStep(
+                (MCFStepView) findViewById(R.id.form_test3),
+                true,
+                new Regex("^[a-zA-Z0-9]*$", "Only alphanumeric characters"));
+        textInputStep.setExplanatoryText("Please enter your name");
 
         mDependentStep = new MCFSingleSelectStep(new ArrayList<String>(), (MCFStepView) findViewById(R.id.form_dependent));
 
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         mSteps = new ArrayList<>();
         mSteps.add(step);
         mSteps.add(step2);
-        mSteps.add(step3);
+        mSteps.add(textInputStep);
         mSteps.add(mDependentStep);
         mSteps.add(mDependentStep2);
         mSteps.add(emptyStep);
@@ -103,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
                 .setValidationDuration(Duration.SHORT) //optional
                 .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please") //optional
                 .setSearchViewHint("Search here...") //optional
-                .setSearchViewIconTint(Color.BLACK); //optional
+                .setToolbarIconTint(Color.BLACK) //optional
+                .setHasAutoFocus(true); //optional
 
         mForm = builder.build(); //build your instance
 
@@ -161,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
         //In case a step depends on another step
         if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQUEST_SELECTION) {
-            int id = data.getIntExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
+            int id = data.getIntExtra(MCFConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
 
             MCFStep currentStep = MCFStep.getStepFromId(mForm.getSteps(), id);
 

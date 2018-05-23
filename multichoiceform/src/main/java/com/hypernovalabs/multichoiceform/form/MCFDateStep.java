@@ -39,7 +39,7 @@ public class MCFDateStep extends MCFStep {
      * Constructor with the added "required" parameter.
      *
      * @param view     MCFStepView.
-     * @param required Whether the MCFStep is required
+     * @param required Whether the MCFStep is required.
      */
     public MCFDateStep(@NonNull MCFStepView view, boolean required) {
         super(view, required);

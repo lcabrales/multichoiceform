@@ -18,6 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hypernovalabs.multichoiceform.config.MCFConfig;
+import com.hypernovalabs.multichoiceform.config.MCFOptionsConfig;
+
 import java.util.ArrayList;
 
 /**
@@ -33,14 +36,14 @@ public class OptionsActivity extends AppCompatActivity {
     private ListView mListView;
     private ArrayAdapter<String> mAdapter;
     private ArrayList<String> mOptions;
-    private MultiChoiceFormConfig mModel;
+    private MCFOptionsConfig mModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mcf_activity_options);
 
-        getIntent().setExtrasClassLoader(MultiChoiceFormConfig.class.getClassLoader());
+        getIntent().setExtrasClassLoader(MCFOptionsConfig.class.getClassLoader());
         mModel = getIntent().getParcelableExtra(EXTRA_CONFIG);
 
         setupToolbar();
@@ -92,7 +95,7 @@ public class OptionsActivity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_SELECTION, String.valueOf(mAdapter.getItem(i)));
-                intent.putExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, mModel.id);
+                intent.putExtra(MCFConfig.EXTRA_ID_KEY, mModel.id);
 
                 setResult(RESULT_OK, intent);
                 finish();
@@ -130,7 +133,7 @@ public class OptionsActivity extends AppCompatActivity {
             final MenuItem searchItem = menu.findItem(R.id.search);
 
             Drawable iconDrawable = ContextCompat.getDrawable(mContext, R.drawable.mcf_ic_search);
-            iconDrawable.setColorFilter( mModel.searchViewIconTint, PorterDuff.Mode.MULTIPLY);
+            iconDrawable.setColorFilter(mModel.searchViewIconTint, PorterDuff.Mode.MULTIPLY);
             searchItem.setIcon(iconDrawable);
 
             final SearchView searchView = (SearchView) searchItem.getActionView();
@@ -139,9 +142,8 @@ public class OptionsActivity extends AppCompatActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-//                    searchView.setQuery("", false);
-//                    searchView.setIconified(true);
                     hideKeyboard();
+
                     return true;
                 }
 

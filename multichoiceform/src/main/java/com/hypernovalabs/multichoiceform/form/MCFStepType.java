@@ -6,5 +6,6 @@ package com.hypernovalabs.multichoiceform.form;
 
 public enum MCFStepType {
     SINGLE_SELECT,
-    DATE
+    DATE,
+    TEXT_INPUT,
 }

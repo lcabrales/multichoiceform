@@ -1,21 +1,17 @@
-package com.hypernovalabs.multichoiceform;
+package com.hypernovalabs.multichoiceform.config;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.hypernovalabs.multichoiceform.OptionsActivity;
 
 import java.util.ArrayList;
 
 /**
  * Main configuration model.
- * Defines everything that needs to be sent to OptionsActivity. Only to be used internally.
+ * Defines everything that needs to be sent to {@link OptionsActivity}. Only to be used internally.
  */
-public class MultiChoiceFormConfig implements Parcelable {
-
-    private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
-    /**
-     * Key to the view ID parameter.
-     */
-    public static final String EXTRA_ID_KEY = EXTRA_PREFIX + "IdKey";
+public class MCFOptionsConfig implements Parcelable {
 
     public ArrayList<String> data;
     public String selection;
@@ -30,11 +26,11 @@ public class MultiChoiceFormConfig implements Parcelable {
     public String searchViewHint;
     public int searchViewIconTint;
 
-    public MultiChoiceFormConfig() {
+    public MCFOptionsConfig() {
     }
 
     //region Parcelable
-    protected MultiChoiceFormConfig(Parcel in) {
+    protected MCFOptionsConfig(Parcel in) {
         if (in.readByte() == 0x01) {
             data = new ArrayList<>();
             in.readList(data, String.class.getClassLoader());
@@ -81,15 +77,15 @@ public class MultiChoiceFormConfig implements Parcelable {
     }
 
     @SuppressWarnings("unused")
-    public static final Creator<MultiChoiceFormConfig> CREATOR = new Creator<MultiChoiceFormConfig>() {
+    public static final Creator<MCFOptionsConfig> CREATOR = new Creator<MCFOptionsConfig>() {
         @Override
-        public MultiChoiceFormConfig createFromParcel(Parcel in) {
-            return new MultiChoiceFormConfig(in);
+        public MCFOptionsConfig createFromParcel(Parcel in) {
+            return new MCFOptionsConfig(in);
         }
 
         @Override
-        public MultiChoiceFormConfig[] newArray(int size) {
-            return new MultiChoiceFormConfig[size];
+        public MCFOptionsConfig[] newArray(int size) {
+            return new MCFOptionsConfig[size];
         }
     };
     //endregion

@@ -4,4 +4,5 @@
     <string name="mcf_form_empty_view_msg">The selected parameters did not generate any results. Please modify your selected options.</string>
     <string name="mcf_accept">Aceptar</string>
     <string name="mcf_search_title">Search…</string>
+    <string name="mcf_save_title">Guardar…</string>
 </resources>

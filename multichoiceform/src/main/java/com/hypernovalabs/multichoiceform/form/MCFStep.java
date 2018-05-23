@@ -83,7 +83,6 @@ public class MCFStep {
         this.data = new ArrayList<>(Arrays.asList(data));
         this.view = view;
         this.id = view.getId();
-        this.type = type;
         this.required = required;
     }
 
@@ -98,7 +97,6 @@ public class MCFStep {
         this.data = data;
         this.view = view;
         this.id = view.getId();
-        this.type = type;
         this.required = required;
     }
 

@@ -17,9 +17,13 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hypernovalabs.multichoiceform.config.MCFConfig;
+import com.hypernovalabs.multichoiceform.config.MCFOptionsConfig;
+import com.hypernovalabs.multichoiceform.config.MCFTextInputConfig;
 import com.hypernovalabs.multichoiceform.form.MCFDateStep;
 import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
 import com.hypernovalabs.multichoiceform.form.MCFStep;
+import com.hypernovalabs.multichoiceform.form.MCFTextInputStep;
 
 import java.util.ArrayList;
 
@@ -40,7 +44,8 @@ public class MultiChoiceForm {
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
     private String mSearchViewHint;
-    private int mSearchViewIconTint;
+    private int mToolbarIconTint;
+    private boolean hasAutoFocus;
     private Toast mToast;
 
     /**
@@ -65,7 +70,7 @@ public class MultiChoiceForm {
             form.mEmptyViewTitle = context.getString(R.string.mcf_form_empty_view_title);
             form.mEmptyViewMsg = context.getString(R.string.mcf_form_empty_view_msg);
             form.mSearchViewHint = context.getString(R.string.mcf_search_title);
-            form.mSearchViewIconTint = Utils.getDefaultThemeAttr(context, R.attr.colorAccent);
+            form.mToolbarIconTint = Utils.getDefaultThemeAttr(context, R.attr.colorAccent);
         }
 
         /**
@@ -164,14 +169,25 @@ public class MultiChoiceForm {
         }
 
         /**
-         * If a {@link MCFStep} is searchable, this is used to show the SearchView's icon. Takes
+         * If a {@link MCFStep} is searchable, this is used to show the Toolbar's icon. Takes
          * the app's theme {@link R.attr#colorAccent} by default.
          *
-         * @param color tint color of the SearchView icon.
+         * @param color tint color of the Toolbar icon.
          * @return Current instance of this builder.
          */
-        public Builder setSearchViewIconTint(int color) {
-            this.form.mSearchViewIconTint = color;
+        public Builder setToolbarIconTint(int color) {
+            this.form.mToolbarIconTint = color;
+            return this;
+        }
+
+        /**
+         * Only applicable to the {@link MCFTextInputStep}s.
+         *
+         * @param hasAutoFocus whether the {@link MCFTextInputStep}s have auto focus.
+         * @return Current instance of this builder.
+         */
+        public Builder setHasAutoFocus(boolean hasAutoFocus) {
+            this.form.hasAutoFocus = hasAutoFocus;
             return this;
         }
     }
@@ -201,12 +217,23 @@ public class MultiChoiceForm {
         } else {
             step = (MCFStep) view.getTag();
         }
+
+        Intent intent;
+
         switch (step.getType()) {
+
             case SINGLE_SELECT:
-                Intent intent = getIntent((MCFSingleSelectStep) step);
+                intent = getIntent((MCFSingleSelectStep) step);
                 mContext.startActivityForResult(intent, REQUEST_SELECTION);
                 mContext.overridePendingTransition(R.anim.mcf_slide_in_right, R.anim.mcf_slide_out_left);
                 break;
+
+            case TEXT_INPUT:
+                intent = getIntent((MCFTextInputStep) step);
+                mContext.startActivityForResult(intent, REQUEST_SELECTION);
+                mContext.overridePendingTransition(R.anim.mcf_slide_in_right, R.anim.mcf_slide_out_left);
+                break;
+
             case DATE:
                 handleDateStep((MCFDateStep) step);
                 break;
@@ -222,7 +249,7 @@ public class MultiChoiceForm {
     private Intent getIntent(MCFSingleSelectStep step) {
         Intent intent = new Intent(mContext, OptionsActivity.class);
 
-        MultiChoiceFormConfig model = new MultiChoiceFormConfig();
+        MCFOptionsConfig model = new MCFOptionsConfig();
         model.data = step.getData();
         model.selection = step.getView().getSelection();
         model.id = step.getView().getId();
@@ -233,9 +260,37 @@ public class MultiChoiceForm {
         model.emptyViewMsg = mEmptyViewMsg;
         model.isSearchable = step.isSearchable();
         model.searchViewHint = mSearchViewHint;
-        model.searchViewIconTint = mSearchViewIconTint;
+        model.searchViewIconTint = mToolbarIconTint;
 
         intent.putExtra(OptionsActivity.EXTRA_CONFIG, model);
+
+        return intent;
+    }
+
+    /**
+     * Returns the intent related to {@link TextInputActivity} with all the needed parameters.
+     *
+     * @param step Associated {@link MCFTextInputStep}.
+     * @return Intent to {@link TextInputActivity}.
+     */
+    private Intent getIntent(MCFTextInputStep step) {
+        Intent intent = new Intent(mContext, TextInputActivity.class);
+
+        MCFTextInputConfig model = new MCFTextInputConfig();
+        model.data = step.getData();
+        model.selection = step.getView().getSelection();
+        model.id = step.getView().getId();
+        model.title = step.getView().getTitle();
+        model.toolbarBackgroundColor = mToolbarBackgroundColor;
+        model.toolbarTitleColor = mToolbarTitleColor;
+        model.regex = step.getRegex();
+        model.inputType = step.getInputType();
+        model.maxLength = step.getMaxLength();
+        model.explanatoryText = step.getExplanatoryText();
+        model.saveIconTint = mToolbarIconTint;
+        model.hasAutoFocus = hasAutoFocus;
+
+        intent.putExtra(TextInputActivity.EXTRA_CONFIG, model);
 
         return intent;
     }
@@ -315,9 +370,9 @@ public class MultiChoiceForm {
     public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (requestCode == REQUEST_SELECTION && resultCode == RESULT_OK) {
             String selection = data.getStringExtra(OptionsActivity.EXTRA_SELECTION);
-            int id = data.getIntExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, 0);
+            int id = data.getIntExtra(MCFConfig.EXTRA_ID_KEY, 0);
             if (id != 0) {
-                MCFStep step = MCFStep.getStepFromId((ArrayList<MCFStep>) mMCFSteps, id);
+                MCFStep step = MCFStep.getStepFromId(mMCFSteps, id);
                 if (step != null) {
                     step.getView().setSelection(selection);
                 }

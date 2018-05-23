@@ -10,14 +10,15 @@ and upwards.
 Here's a list of the MultiChoiceForm library core features as of the current version.
 
   * Include any amount of `MCFStep`s in your layout.
-  * Two types of fields: single selection and date.
+  * Three types of fields: single selection, text input and date.
   * Support for dependent fields.
   * Supports searchable single select fields.
+  * Supports regex validation for text input fields.
   * Change any `MCFStep`'s options data in runtime.
   * Accepts `MCFStep` data as `ArrayList<String>` or `String[]`.
   * Set required fields (with validation animations).
   * Customize validation animation.
-  * Customize `OptionsActivity` toolbar.
+  * Customize activity's toolbar.
   * Customize options empty view text.
   * Customize `MCFStepView` colors and drawable.
 
@@ -45,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.4.4@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.5.0@aar'
 ```
 
 # Usage
@@ -66,7 +67,7 @@ Here is a simple implementation of the MultiChoiceForm library:
 
 2. Define your `MCFStep`s in your activity class. The parameters are as follows:
   * data - your ArrayList<String> containing the MCFStep's options
-  * formStepView - your MCFStepView
+  * view - your MCFStepView
   * required (optional) - default is false
   
 Example:
@@ -104,9 +105,12 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
-6. Add the definition of `OptionsActivity` in your `AndroidManifest.xml`:
+6. Add the definition of `OptionsActivity` and `TextInputActivity` in your `AndroidManifest.xml`:
 ```xml
 <activity android:name="com.hypernovalabs.multichoiceform.OptionsActivity"
+            android:screenOrientation="portrait"/>
+
+<activity android:name="com.hypernovalabs.multichoiceform.TextInputActivity"
             android:screenOrientation="portrait"/>
 ```
 
@@ -128,6 +132,18 @@ Provides a list of options and returns only one selected option. Example:
 ArrayList<String> data = ... //your data
 MCFSingleSelectStep step = new MCFSingleSelectStep(data, (MCFStepView) findViewById(R.id.form_test), true);
 step.setSearchable(true); //to enable the SearchView
+```
+
+### MCFTextInputStep
+
+Provides a single text input field with regex validation. Example:
+
+```java
+MCFTextInputStep textInputStep = new MCFTextInputStep(
+                (MCFStepView) findViewById(R.id.form_test),
+                true,
+                new Regex("^[a-zA-Z0-9]*$", "Only alphanumeric characters"));
+textInputStep.setExplanatoryText("Please enter your name");
 ```
 
 ### MCFDateStep
@@ -158,7 +174,7 @@ MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps)
         .setValidationDuration(Duration.SHORT) //optional
         .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please") //optional
         .setSearchViewHint("Search here...") //optional
-        .setSearchViewIconTint(Color.BLACK); //optional
+        .setToolbarIconTint(Color.BLACK); //optional
 mForm = builder.build(); //build your instance
 ```
 
@@ -208,8 +224,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     //In case a step depends on another step
     if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQUEST_SELECTION) {
-        int id = data.getIntExtra(MultiChoiceFormConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
-
+        int id = data.getIntExtra(MCFConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
 
         MCFStep currentStep = MCFStep.getStepFromId(mForm.getSteps(), id);
 
@@ -239,6 +254,17 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.5.1] - 2018-05-23
+### Added
+- `hasAutoFocus` parameter to control whether the `EditText` will have focus on `TextInputActivity` creation.
+
+## [1.5.0] - 2018-05-23
+### Added
+- `MCFTextInputStep`.
+
+### Renamed
+- `MultiChoiceFormConfig` to `MCFOptionsConfig`.
 
 ## [1.4.4] - 2018-05-16
 ### Fixed

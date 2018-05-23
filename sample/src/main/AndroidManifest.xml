@@ -13,6 +13,9 @@
         <activity android:name="com.hypernovalabs.multichoiceform.OptionsActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name="com.hypernovalabs.multichoiceform.TextInputActivity"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
