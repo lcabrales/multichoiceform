@@ -46,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.5.0@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.5.1@aar'
 ```
 
 # Usage
@@ -174,7 +174,8 @@ MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps)
         .setValidationDuration(Duration.SHORT) //optional
         .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please") //optional
         .setSearchViewHint("Search here...") //optional
-        .setToolbarIconTint(Color.BLACK); //optional
+        .setToolbarIconTint(Color.BLACK) //optional
+        .setHasAutoFocus(true); //optional
 mForm = builder.build(); //build your instance
 ```
 
@@ -257,7 +258,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 ## [1.5.1] - 2018-05-23
 ### Added
-- `hasAutoFocus` parameter to control whether the `EditText` will have focus on `TextInputActivity` creation.
+- `hasAutoFocus` parameter of `MultiChoiceForm` to control whether the `EditText` will have focus on `TextInputActivity` creation.
 
 ## [1.5.0] - 2018-05-23
 ### Added
