@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.View;
 import android.widget.TextView;
 
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 true,
                 new Regex("^[a-zA-Z0-9]*$", "Only alphanumeric characters"));
         textInputStep.setExplanatoryText("Please enter your name");
+        textInputStep.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
         mDependentStep = new MCFSingleSelectStep(new ArrayList<String>(), (MCFStepView) findViewById(R.id.form_dependent));
 

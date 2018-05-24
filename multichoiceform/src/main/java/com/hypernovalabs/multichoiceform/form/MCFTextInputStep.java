@@ -75,12 +75,18 @@ public class MCFTextInputStep extends MCFStep {
     }
 
     /**
-     * Sets the {@link InputType} associated with this step.
+     * Sets the {@link InputType} associated with this step. If it's a variant of password type,
+     * sets the {@link MCFStepView#isMasked} property.
      *
      * @param inputType InputType associated with this step.
      */
     public void setInputType(int inputType) {
         mInputType = inputType;
+
+        if (isPassword()) {
+
+            getView().setMasked(true);
+        }
     }
 
     /**
@@ -118,4 +124,18 @@ public class MCFTextInputStep extends MCFStep {
     public void setExplanatoryText(String explanatoryText) {
         this.mExplanatoryText = explanatoryText;
     }
+
+    /**
+     * Checks whether the field's {@link InputType} has any variation of masked password.
+     *
+     * @return whether the {@link InputType} has any variation of masked password
+     */
+    public boolean isPassword() {
+        int inputType = getInputType();
+
+        return (inputType & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD
+                || (inputType & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                || (inputType & InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD;
+    }
+
 }

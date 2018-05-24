@@ -23,6 +23,7 @@ public class MCFTextInputConfig implements Parcelable {
     public int id;
     public boolean required;
     public boolean hasAutoFocus;
+    public boolean isPassword;
     public int toolbarBackgroundColor;
     public int toolbarTitleColor;
     public Regex regex;
@@ -48,6 +49,7 @@ public class MCFTextInputConfig implements Parcelable {
         id = in.readInt();
         required = in.readByte() != 0x00;
         hasAutoFocus = in.readByte() != 0x00;
+        isPassword = in.readByte() != 0x00;
         toolbarBackgroundColor = in.readInt();
         toolbarTitleColor = in.readInt();
         regex = (Regex) in.readValue(Regex.class.getClassLoader());
@@ -75,6 +77,7 @@ public class MCFTextInputConfig implements Parcelable {
         dest.writeInt(id);
         dest.writeByte((byte) (required ? 0x01 : 0x00));
         dest.writeByte((byte) (hasAutoFocus ? 0x01 : 0x00));
+        dest.writeByte((byte) (isPassword ? 0x01 : 0x00));
         dest.writeInt(toolbarBackgroundColor);
         dest.writeInt(toolbarTitleColor);
         dest.writeValue(regex);

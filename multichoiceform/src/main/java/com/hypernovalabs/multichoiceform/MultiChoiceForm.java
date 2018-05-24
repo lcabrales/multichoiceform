@@ -289,6 +289,7 @@ public class MultiChoiceForm {
         model.explanatoryText = step.getExplanatoryText();
         model.saveIconTint = mToolbarIconTint;
         model.hasAutoFocus = hasAutoFocus;
+        model.isPassword = step.isPassword();
 
         intent.putExtra(TextInputActivity.EXTRA_CONFIG, model);
 

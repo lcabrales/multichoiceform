@@ -38,7 +38,8 @@ public class MCFStepView extends LinearLayout {
     private int mDisabledColor;
     private int mDisabledTextColor;
     private int mTitleMaxLines, mSelectionMaxLines;
-    private boolean mEnabled;
+    private boolean isEnabled;
+    private boolean isMasked;
 
     /**
      * Single constructor for the MCFStepView.
@@ -77,7 +78,7 @@ public class MCFStepView extends LinearLayout {
             mTitleColor = a.getColor(R.styleable.MCFStepView_mcf_titleColor, Color.BLACK);
             mSelectionColor = a.getColor(R.styleable.MCFStepView_mcf_selectionColor, Color.GRAY);
             mArrowDrawable = a.getDrawable(R.styleable.MCFStepView_mcf_arrowDrawable);
-            mEnabled = a.getBoolean(R.styleable.MCFStepView_mcf_enabled, true);
+            isEnabled = a.getBoolean(R.styleable.MCFStepView_mcf_enabled, true);
             mTitleMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_titleMaxLines, 1);
             mSelectionMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_selectionMaxLines, 1);
 
@@ -100,7 +101,7 @@ public class MCFStepView extends LinearLayout {
         setSelectionColor(mSelectionColor);
         setSeparatorColor(mSeparatorColor);
         setArrowImageView(mArrowDrawable);
-        setEnabled(mEnabled);
+        setEnabled(isEnabled);
         setTitleMaxLines(mTitleMaxLines);
         setSelectionMaxLines(mSelectionMaxLines);
     }
@@ -133,6 +134,8 @@ public class MCFStepView extends LinearLayout {
      */
     public void setSelection(String selection) {
         mSelection = selection;
+
+        if (isMasked) selection = selection.replaceAll(".", "•");
         mSelectionTextView.setText(selection);
 
         invalidate();
@@ -245,7 +248,7 @@ public class MCFStepView extends LinearLayout {
      */
     @Override
     public void setEnabled(boolean enable) {
-        mEnabled = enable;
+        isEnabled = enable;
 
         if (enable) {
             mLayout.setEnabled(true);
@@ -267,7 +270,7 @@ public class MCFStepView extends LinearLayout {
      * @return Whether the MCFStepView is enabled.
      */
     public boolean isEnabled() {
-        return mEnabled;
+        return isEnabled;
     }
 
     /**
@@ -333,5 +336,23 @@ public class MCFStepView extends LinearLayout {
      */
     public int getSelectionMaxLines() {
         return mSelectionMaxLines;
+    }
+
+    /**
+     * Returns whether the selection text is masked (for passwords).
+     *
+     * @return Whether the selection text is masked.
+     */
+    public boolean isMasked() {
+        return isMasked;
+    }
+
+    /**
+     * Sets whether the selection text is masked (for passwords).
+     *
+     * @param masked Whether the selection text is masked.
+     */
+    public void setMasked(boolean masked) {
+        this.isMasked = masked;
     }
 }

@@ -46,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.5.1@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.5.3@aar'
 ```
 
 # Usage
@@ -143,7 +143,8 @@ MCFTextInputStep textInputStep = new MCFTextInputStep(
                 (MCFStepView) findViewById(R.id.form_test),
                 true,
                 new Regex("^[a-zA-Z0-9]*$", "Only alphanumeric characters"));
-textInputStep.setExplanatoryText("Please enter your name");
+textInputStep.setExplanatoryText("Please enter your name"); //text below the EditText
+textInputStep.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD); //treat it as the regular InputType
 ```
 
 ### MCFDateStep
@@ -255,6 +256,14 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.5.3] - 2018-05-24
+### Fixed
+- Crash when there was not any `Regex` specified.
+
+## [1.5.2] - 2018-05-24
+### Added
+- Support for `InputType` password variants for `MCFTextInputStep`
 
 ## [1.5.1] - 2018-05-23
 ### Added

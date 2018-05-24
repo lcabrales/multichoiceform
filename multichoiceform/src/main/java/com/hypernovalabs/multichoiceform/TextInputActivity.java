@@ -1,6 +1,7 @@
 package com.hypernovalabs.multichoiceform;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -107,11 +108,16 @@ public class TextInputActivity extends AppCompatActivity implements TextWatcher 
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mModel.maxLength)});
         }
 
+        if (mModel.isPassword) {
+            mTextInputLayout.setPasswordVisibilityToggleEnabled(true);
+            mTextInputLayout.setPasswordVisibilityToggleTintList(ColorStateList.valueOf(mModel.saveIconTint));
+        }
+
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    validateAndComplete();
+                    computeStep();
                 }
 
                 return false;
@@ -124,9 +130,20 @@ public class TextInputActivity extends AppCompatActivity implements TextWatcher 
     }
 
     /**
-     * Returns to the calling activity with the input text if the validation is successful.
+     * Verifies whether the step needs to be validated, then perform the proper actions.
      */
-    private void validateAndComplete() {
+    private void computeStep() {
+        if (mModel.regex != null) {
+            validateStep();
+        } else {
+            completeStep();
+        }
+    }
+
+    /**
+     * Validates the {@link MCFTextInputStep#mRegex}.
+     */
+    private void validateStep() {
         EditText editText = mTextInputLayout.getEditText();
 
         if (editText == null) throw new NullPointerException();
@@ -140,16 +157,27 @@ public class TextInputActivity extends AppCompatActivity implements TextWatcher 
             editText.addTextChangedListener(mContext);
 
         } else {
-            Intent intent = new Intent();
-            intent.putExtra(EXTRA_SELECTION, editText.getText().toString());
-            intent.putExtra(MCFConfig.EXTRA_ID_KEY, mModel.id);
 
-            setResult(RESULT_OK, intent);
-            finish();
-
-            overrideTransition();
-
+            completeStep();
         }
+    }
+
+    /**
+     * Returns to the calling activity with the input text
+     */
+    private void completeStep() {
+        EditText editText = mTextInputLayout.getEditText();
+
+        if (editText == null) throw new NullPointerException();
+
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SELECTION, editText.getText().toString());
+        intent.putExtra(MCFConfig.EXTRA_ID_KEY, mModel.id);
+
+        setResult(RESULT_OK, intent);
+        finish();
+
+        overrideTransition();
     }
 
     private void overrideTransition() {
@@ -215,7 +243,7 @@ public class TextInputActivity extends AppCompatActivity implements TextWatcher 
         } else if (id == R.id.save) {
             hideKeyboard();
 
-            validateAndComplete();
+            computeStep();
         }
 
         return super.onOptionsItemSelected(item);
