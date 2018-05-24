@@ -62,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
         step.setSearchable(true); //to enable the SearchView
 
         String[] data2 = {"Yes", "No"};
-        MCFSingleSelectStep step2 = new MCFSingleSelectStep(data2, (MCFStepView) findViewById(R.id.form_test2), true);
+        MCFSingleSelectStep step2 = new MCFSingleSelectStep(
+                data2,
+                (MCFStepView) findViewById(R.id.form_test2),
+                true);
 
         MCFTextInputStep textInputStep = new MCFTextInputStep(
                 (MCFStepView) findViewById(R.id.form_test3),

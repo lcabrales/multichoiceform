@@ -46,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.5.3@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.5.4@aar'
 ```
 
 # Usage
@@ -256,6 +256,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.5.4] - 2018-05-24
+### Improved
+- Adaptability of the step views to adjust their size according to the text length.
+- Reduced the text size by `2dp`.
 
 ## [1.5.3] - 2018-05-24
 ### Fixed

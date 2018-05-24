@@ -21,10 +21,10 @@
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/selection"
@@ -35,25 +35,21 @@
             android:ellipsize="end"
             android:gravity="end"
             android:maxLines="1"
-            android:maxWidth="140dp"
-            android:textSize="16sp" />
+            android:maxWidth="230dp"
+            android:textSize="14sp" />
 
         <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center_vertical|end"
             android:gravity="end">
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:src="@drawable/mcf_ic_action_arrow" />
         </RelativeLayout>
-
     </LinearLayout>
 
     <View
