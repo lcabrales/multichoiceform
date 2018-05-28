@@ -51,8 +51,8 @@
             app:mcf_selectionColor="@color/blue"
             app:mcf_separatorColor="@color/mcf_gray"
             app:mcf_title="Long title long title long title"
-            app:mcf_titleMaxLines="3"
-            app:mcf_titleColor="@color/blue" />
+            app:mcf_titleColor="@color/blue"
+            app:mcf_titleMaxLines="3" />
 
         <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_test3"

@@ -46,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.5.4@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.6.0@aar'
 ```
 
 # Usage
@@ -256,6 +256,11 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.6.0] - 2018-05-28
+### Added
+- Text size parameters.
+- Disabled color parameters.
 
 ## [1.5.4] - 2018-05-24
 ### Improved

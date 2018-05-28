@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Dimension;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,21 +27,15 @@ public class MCFStepView extends LinearLayout {
     private final AttributeSet mAttrs;
     private Context mContext;
     private LinearLayout mLayout;
-    private TextView mTitleTextView;
-    private TextView mSelectionTextView;
+    private TextView mTitleTextView, mSelectionTextView;
     private ImageView mArrowImageView;
     private View mSeparator;
     private Drawable mArrowDrawable;
-    private String mTitle;
-    private String mSelection;
-    private int mSeparatorColor;
-    private int mTitleColor;
-    private int mSelectionColor;
-    private int mDisabledColor;
-    private int mDisabledTextColor;
-    private int mTitleMaxLines, mSelectionMaxLines;
-    private boolean isEnabled;
-    private boolean isMasked;
+    private String mTitle, mSelection;
+    private int mSeparatorColor, mTitleColor, mSelectionColor, mDisabledSeparatorColor, mDisabledTextColor,
+            mTitleMaxLines, mSelectionMaxLines;
+    private float mTitleSize, mSelectionSize;
+    private boolean isEnabled, isMasked;
 
     /**
      * Single constructor for the MCFStepView.
@@ -63,9 +59,6 @@ public class MCFStepView extends LinearLayout {
      * Initializes the custom view and sets the defined attributes.
      */
     private void init() {
-        mDisabledColor = ContextCompat.getColor(mContext, R.color.mcf_disabled);
-        mDisabledTextColor = ContextCompat.getColor(mContext, R.color.mcf_gray);
-
         TypedArray a = mContext.getTheme().obtainStyledAttributes(
                 mAttrs,
                 R.styleable.MCFStepView,
@@ -73,14 +66,20 @@ public class MCFStepView extends LinearLayout {
 
         try {
             mTitle = a.getString(R.styleable.MCFStepView_mcf_title);
+            mTitleColor = a.getColor(R.styleable.MCFStepView_mcf_titleColor, Color.BLACK);
+            mTitleMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_titleMaxLines, 1);
+            mTitleSize = a.getDimension(R.styleable.MCFStepView_mcf_titleSize, getResources().getDimension(R.dimen.mcf_text_size_default));
             mSeparatorColor = a.getColor(R.styleable.MCFStepView_mcf_separatorColor,
                     ContextCompat.getColor(mContext, R.color.mcf_gray));
-            mTitleColor = a.getColor(R.styleable.MCFStepView_mcf_titleColor, Color.BLACK);
             mSelectionColor = a.getColor(R.styleable.MCFStepView_mcf_selectionColor, Color.GRAY);
+            mSelectionMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_selectionMaxLines, 1);
+            mSelectionSize = a.getDimension(R.styleable.MCFStepView_mcf_selectionSize, getResources().getDimension(R.dimen.mcf_text_size_default));
             mArrowDrawable = a.getDrawable(R.styleable.MCFStepView_mcf_arrowDrawable);
             isEnabled = a.getBoolean(R.styleable.MCFStepView_mcf_enabled, true);
-            mTitleMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_titleMaxLines, 1);
-            mSelectionMaxLines = a.getInteger(R.styleable.MCFStepView_mcf_selectionMaxLines, 1);
+            mDisabledSeparatorColor = a.getColor(R.styleable.MCFStepView_mcf_disabledSeparatorColor,
+                    ContextCompat.getColor(mContext, R.color.mcf_disabled));
+            mDisabledTextColor = a.getColor(R.styleable.MCFStepView_mcf_disabledTextColor,
+                    ContextCompat.getColor(mContext, R.color.mcf_gray));
 
             if (mArrowDrawable == null)
                 mArrowDrawable = ContextCompat.getDrawable(mContext, R.drawable.mcf_ic_action_arrow);
@@ -98,12 +97,16 @@ public class MCFStepView extends LinearLayout {
 
         setTitle(mTitle);
         setTitleColor(mTitleColor);
+        setTitleSize(mTitleSize);
+        setTitleMaxLines(mTitleMaxLines);
         setSelectionColor(mSelectionColor);
+        setSelectionMaxLines(mSelectionMaxLines);
+        setSelectionSize(mSelectionSize);
         setSeparatorColor(mSeparatorColor);
         setArrowImageView(mArrowDrawable);
+        setDisabledSeparatorColor(mDisabledSeparatorColor);
+        setDisabledTextColor(mDisabledTextColor);
         setEnabled(isEnabled);
-        setTitleMaxLines(mTitleMaxLines);
-        setSelectionMaxLines(mSelectionMaxLines);
     }
 
     /**
@@ -112,6 +115,7 @@ public class MCFStepView extends LinearLayout {
      * @param title Title of the MCFStepView.
      */
     public void setTitle(String title) {
+        mTitle = title;
         mTitleTextView.setText(title);
 
         invalidate();
@@ -166,6 +170,7 @@ public class MCFStepView extends LinearLayout {
      * @param drawable Any Drawable.
      */
     public void setArrowImageView(Drawable drawable) {
+        mArrowDrawable = drawable;
         mArrowImageView.setBackground(drawable);
     }
 
@@ -211,7 +216,17 @@ public class MCFStepView extends LinearLayout {
      * @param color Any color.
      */
     public void setTitleColor(int color) {
+        mTitleColor = color;
         mTitleTextView.setTextColor(color);
+    }
+
+    /**
+     * Returns MCFStep's title color.
+     *
+     * @return MCFStep's title color.
+     */
+    public int getTitleColor() {
+        return mTitleColor;
     }
 
     /**
@@ -220,7 +235,17 @@ public class MCFStepView extends LinearLayout {
      * @param color Any color.
      */
     public void setSelectionColor(int color) {
+        mSelectionColor = color;
         mSelectionTextView.setTextColor(color);
+    }
+
+    /**
+     * Returns MCFStep's selection color.
+     *
+     * @return MCFStep's selection color.
+     */
+    public int getSelectionColor() {
+        return mSelectionColor;
     }
 
     /**
@@ -229,7 +254,17 @@ public class MCFStepView extends LinearLayout {
      * @param color Any color.
      */
     public void setSeparatorColor(int color) {
+        mSeparatorColor = color;
         mSeparator.setBackgroundColor(color);
+    }
+
+    /**
+     * Returns MCFStep's separator color.
+     *
+     * @return MCFStep's separator color.
+     */
+    public int getSeparatorColor() {
+        return mSeparatorColor;
     }
 
     /**
@@ -253,13 +288,15 @@ public class MCFStepView extends LinearLayout {
         if (enable) {
             mLayout.setEnabled(true);
             ((View) mArrowImageView.getParent()).setVisibility(View.VISIBLE);
+            mTitleTextView.setTextColor(mTitleColor);
             mSelectionTextView.setTextColor(mSelectionColor);
             mSeparator.setBackgroundColor(mSeparatorColor);
         } else {
             mLayout.setEnabled(false);
             ((View) mArrowImageView.getParent()).setVisibility(View.GONE);
+            mTitleTextView.setTextColor(mDisabledTextColor);
             mSelectionTextView.setTextColor(mDisabledTextColor);
-            mSeparator.setBackgroundColor(mDisabledColor);
+            mSeparator.setBackgroundColor(mDisabledSeparatorColor);
         }
 
         invalidate();
@@ -316,6 +353,29 @@ public class MCFStepView extends LinearLayout {
     }
 
     /**
+     * Sets MCFStep's title size; with default 16sp
+     *
+     * @param size title TextView textSize attribute
+     */
+    public void setTitleSize(@Dimension float size) {
+        mTitleSize = size;
+
+        mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+
+        invalidate();
+        requestLayout();
+    }
+
+    /**
+     * Returns the size of title TextView.
+     *
+     * @return MCFStepView's title TextView size.
+     */
+    public float getTitleSize() {
+        return mTitleSize;
+    }
+
+    /**
      * Sets MCFStep's selection max lines; with default 1
      *
      * @param maxLines selection TextView maxLines attribute
@@ -327,6 +387,29 @@ public class MCFStepView extends LinearLayout {
 
         invalidate();
         requestLayout();
+    }
+
+    /**
+     * Sets MCFStep's selection size; with default 16sp
+     *
+     * @param size selection TextView textSize attribute
+     */
+    public void setSelectionSize(@Dimension float size) {
+        mSelectionSize = size;
+
+        mSelectionTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+
+        invalidate();
+        requestLayout();
+    }
+
+    /**
+     * Returns the size of selection TextView.
+     *
+     * @return MCFStepView's selection TextView size.
+     */
+    public float getSelectionSize() {
+        return mTitleSize;
     }
 
     /**
@@ -354,5 +437,43 @@ public class MCFStepView extends LinearLayout {
      */
     public void setMasked(boolean masked) {
         this.isMasked = masked;
+    }
+
+    /**
+     * Sets MCFStep's disabled text color.
+     *
+     * @param color Any color.
+     */
+    public void setDisabledTextColor(int color) {
+        mDisabledTextColor = color;
+        setEnabled(isEnabled);
+    }
+
+    /**
+     * Returns MCFStep's disabled text color.
+     *
+     * @return MCFStep's disabled text color.
+     */
+    public int getDisabledTextColor() {
+        return mDisabledTextColor;
+    }
+
+    /**
+     * Sets MCFStep's disabled separator color.
+     *
+     * @param color Any color.
+     */
+    public void setDisabledSeparatorColor(int color) {
+        mDisabledSeparatorColor = color;
+        setEnabled(isEnabled);
+    }
+
+    /**
+     * Returns MCFStep's disabled separator color.
+     *
+     * @return MCFStep's disabled separator color.
+     */
+    public int getDisabledSeparatorColor() {
+        return mDisabledSeparatorColor;
     }
 }
