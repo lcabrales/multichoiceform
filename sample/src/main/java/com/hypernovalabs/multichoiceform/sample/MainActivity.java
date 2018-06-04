@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
         //In case a step depends on another step
         if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQUEST_SELECTION) {
-            int tag = data.getIntExtra(MCFConfig.EXTRA_TAG_KEY, 0); //gets the resId of the selected MCFStep
+            int tag = data.getIntExtra(MCFConfig.EXTRA_TAG_KEY, 0); //gets the tag of the selected MCFStep
 
             MCFStep currentStep = MCFStep.getStepFromTag(mForm.getSteps(), tag);
 

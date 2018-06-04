@@ -226,9 +226,9 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     //In case a step depends on another step
     if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQUEST_SELECTION) {
-        int id = data.getIntExtra(MCFConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
+        int tag = data.getIntExtra(MCFConfig.EXTRA_TAG_KEY, 0); //gets the tag of the selected MCFStep
 
-        MCFStep currentStep = MCFStep.getStepFromId(mForm.getSteps(), id);
+        MCFStep currentStep = MCFStep.getStepFromTag(mForm.getSteps(), id);
 
         //If you need to handle several dependent steps
         switch (id) {
