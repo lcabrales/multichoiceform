@@ -20,7 +20,12 @@ public class MCFTextInputConfig implements Parcelable {
     public ArrayList<String> data;
     public String selection;
     public String title;
+    /**
+     * @deprecated use {@link #tag}
+     */
+    @Deprecated
     public int id;
+    public int tag;
     public boolean required;
     public boolean hasAutoFocus;
     public boolean isPassword;
@@ -47,6 +52,7 @@ public class MCFTextInputConfig implements Parcelable {
         selection = in.readString();
         title = in.readString();
         id = in.readInt();
+        tag = in.readInt();
         required = in.readByte() != 0x00;
         hasAutoFocus = in.readByte() != 0x00;
         isPassword = in.readByte() != 0x00;
@@ -75,6 +81,7 @@ public class MCFTextInputConfig implements Parcelable {
         dest.writeString(selection);
         dest.writeString(title);
         dest.writeInt(id);
+        dest.writeInt(tag);
         dest.writeByte((byte) (required ? 0x01 : 0x00));
         dest.writeByte((byte) (hasAutoFocus ? 0x01 : 0x00));
         dest.writeByte((byte) (isPassword ? 0x01 : 0x00));

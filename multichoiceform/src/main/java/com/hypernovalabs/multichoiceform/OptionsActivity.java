@@ -95,7 +95,7 @@ public class OptionsActivity extends AppCompatActivity {
 
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_SELECTION, String.valueOf(mAdapter.getItem(i)));
-                intent.putExtra(MCFConfig.EXTRA_ID_KEY, mModel.id);
+                intent.putExtra(MCFConfig.EXTRA_TAG_KEY, mModel.tag);
 
                 setResult(RESULT_OK, intent);
                 finish();

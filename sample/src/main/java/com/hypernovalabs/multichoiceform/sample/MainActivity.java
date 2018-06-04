@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> data = getDummyData("Test", 3);
         MCFSingleSelectStep step = new MCFSingleSelectStep(data, (MCFStepView) findViewById(R.id.form_test), false);
         step.setSearchable(true); //to enable the SearchView
+        step.setTag(100); //this will be used instead of resId to identify the step.
 
         String[] data2 = {"Yes", "No"};
         MCFSingleSelectStep step2 = new MCFSingleSelectStep(
@@ -172,12 +173,12 @@ public class MainActivity extends AppCompatActivity {
 
         //In case a step depends on another step
         if (resultCode == RESULT_OK && requestCode == MultiChoiceForm.REQUEST_SELECTION) {
-            int id = data.getIntExtra(MCFConfig.EXTRA_ID_KEY, 0); //gets the resId of the selected MCFStep
+            int tag = data.getIntExtra(MCFConfig.EXTRA_TAG_KEY, 0); //gets the resId of the selected MCFStep
 
-            MCFStep currentStep = MCFStep.getStepFromId(mForm.getSteps(), id);
+            MCFStep currentStep = MCFStep.getStepFromTag(mForm.getSteps(), tag);
 
             //If you need to handle several dependent steps
-            switch (id) {
+            switch (tag) {
                 case R.id.form_test3:
                     if (currentStep != null) {
                         mDependentStep.setData(getDataFromSelection(currentStep.getView().getSelection(), 5));

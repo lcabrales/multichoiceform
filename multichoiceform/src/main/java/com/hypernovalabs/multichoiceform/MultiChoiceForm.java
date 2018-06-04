@@ -253,6 +253,7 @@ public class MultiChoiceForm {
         model.data = step.getData();
         model.selection = step.getView().getSelection();
         model.id = step.getView().getId();
+        model.tag = step.getTag();
         model.title = step.getView().getTitle();
         model.toolbarBackgroundColor = mToolbarBackgroundColor;
         model.toolbarTitleColor = mToolbarTitleColor;
@@ -280,6 +281,7 @@ public class MultiChoiceForm {
         model.data = step.getData();
         model.selection = step.getView().getSelection();
         model.id = step.getView().getId();
+        model.tag = step.getTag();
         model.title = step.getView().getTitle();
         model.toolbarBackgroundColor = mToolbarBackgroundColor;
         model.toolbarTitleColor = mToolbarTitleColor;
@@ -371,9 +373,9 @@ public class MultiChoiceForm {
     public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (requestCode == REQUEST_SELECTION && resultCode == RESULT_OK) {
             String selection = data.getStringExtra(OptionsActivity.EXTRA_SELECTION);
-            int id = data.getIntExtra(MCFConfig.EXTRA_ID_KEY, 0);
-            if (id != 0) {
-                MCFStep step = MCFStep.getStepFromId(mMCFSteps, id);
+            int tag = data.getIntExtra(MCFConfig.EXTRA_TAG_KEY, 0);
+            if (tag != 0) {
+                MCFStep step = MCFStep.getStepFromTag(mMCFSteps, tag);
                 if (step != null) {
                     step.getView().setSelection(selection);
                 }

@@ -46,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.6.0@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.7.0@aar'
 ```
 
 # Usage
@@ -256,6 +256,22 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.7.0] - 2018-06-04
+### Added
+- `MCFStep.tag` parameter, which has a default of `MCFStep.getView().getId()`.
+You can now use this parameter instead of the view id to identify the `MCFStep`. This is preferable when
+working with dynamic lists of `MCFStep` where the view id is the same for all of the `MCFSteps`, such as
+`ViewHolder`s.
+
+### Modified
+- Method to retrieve a certain `MCFStep` from the list of `MCFStep`s, it is now based on its `tag` parameter.
+
+### Deprecated
+- `getStepFromId(@IdRes int)`.
+
+### Improved
+- `MCFStep` constructors.
 
 ## [1.6.0] - 2018-05-28
 ### Added

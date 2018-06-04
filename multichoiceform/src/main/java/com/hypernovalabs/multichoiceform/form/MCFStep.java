@@ -20,56 +20,21 @@ public class MCFStep {
     private int id;
     private MCFStepType type;
     private boolean required;
+    private int tag;
 
     /**
-     * Optionless constructor.
+     * Main constructor, defines whether the MCFStep is required.
      *
-     * @param view Associated MCFStepView.
-     */
-    MCFStep(@NonNull MCFStepView view) {
-        this.data = new ArrayList<>();
-        this.view = view;
-        this.id = view.getId();
-        this.required = false;
-    }
-
-    /**
-     * Optionless constructor with the added "required" parameter.
-     *
+     * @param data     Contains all of the options.
      * @param view     Associated MCFStepView.
      * @param required Whether the MCFStep is required.
      */
-    MCFStep(@NonNull MCFStepView view, @NonNull boolean required) {
-        this.data = new ArrayList<>();
-        this.view = view;
-        this.id = view.getId();
-        this.required = required;
-    }
-
-    /**
-     * Simple constructor of the MCFStep class, isRequired is false. Takes an array as parameter.
-     *
-     * @param data Contains all of the options.
-     * @param view Associated MCFStepView.
-     */
-    MCFStep(@NonNull String[] data, @NonNull MCFStepView view) {
-        this.data = new ArrayList<>(Arrays.asList(data));
-        this.view = view;
-        this.id = view.getId();
-        this.required = false;
-    }
-
-    /**
-     * Simple constructor of the MCFStep class, isRequired is false.
-     *
-     * @param data Contains all of the options.
-     * @param view Associated MCFStepView.
-     */
-    MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view) {
+    MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, boolean required) {
         this.data = data;
         this.view = view;
         this.id = view.getId();
-        this.required = false;
+        this.tag = id;
+        this.required = required;
     }
 
     /**
@@ -79,25 +44,47 @@ public class MCFStep {
      * @param view     Associated MCFStepView.
      * @param required Whether the MCFStep is required.
      */
-    MCFStep(@NonNull String[] data, @NonNull MCFStepView view, @NonNull boolean required) {
-        this.data = new ArrayList<>(Arrays.asList(data));
-        this.view = view;
-        this.id = view.getId();
-        this.required = required;
+    MCFStep(@NonNull String[] data, @NonNull MCFStepView view, boolean required) {
+        this(new ArrayList<>(Arrays.asList(data)), view, required);
     }
 
     /**
-     * Constructor that defines whether the MCFStep is required.
+     * Optionsless constructor.
      *
-     * @param data     Contains all of the options.
+     * @param view Associated MCFStepView.
+     */
+    MCFStep(@NonNull MCFStepView view) {
+        this(new ArrayList<String>(), view, false);
+    }
+
+    /**
+     * Optionsless constructor with the added "required" parameter.
+     *
      * @param view     Associated MCFStepView.
      * @param required Whether the MCFStep is required.
      */
-    MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, @NonNull boolean required) {
-        this.data = data;
-        this.view = view;
-        this.id = view.getId();
-        this.required = required;
+    MCFStep(@NonNull MCFStepView view, boolean required) {
+        this(new ArrayList<String>(), view, required);
+    }
+
+    /**
+     * Simple constructor of the MCFStep class, isRequired is false. Takes an array as parameter.
+     *
+     * @param data Contains all of the options.
+     * @param view Associated MCFStepView.
+     */
+    MCFStep(@NonNull String[] data, @NonNull MCFStepView view) {
+        this(new ArrayList<>(Arrays.asList(data)), view, false);
+    }
+
+    /**
+     * Simple constructor of the MCFStep class, isRequired is false.
+     *
+     * @param data Contains all of the options.
+     * @param view Associated MCFStepView.
+     */
+    MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view) {
+        this(data, view, false);
     }
 
     /**
@@ -106,10 +93,28 @@ public class MCFStep {
      * @param steps All of the MultiChoiceForm steps.
      * @param id    resId of MCFStepView
      * @return MCFStep of the associated MCFStepView
+     * @deprecated use {@link #getStepFromTag(ArrayList, int)}
      */
+    @Deprecated
     public static MCFStep getStepFromId(@NonNull ArrayList<? extends MCFStep> steps, @IdRes int id) {
         for (MCFStep step : steps) {
             if (step.id == id)
+                return step;
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds a single MCFStep instance based on its tag.
+     *
+     * @param steps All of the MultiChoiceForm steps.
+     * @param tag   {@link #tag} of MCFStepView
+     * @return MCFStep of the associated MCFStepView
+     */
+    public static MCFStep getStepFromTag(@NonNull ArrayList<? extends MCFStep> steps, int tag) {
+        for (MCFStep step : steps) {
+            if (step.tag == tag)
                 return step;
         }
 
@@ -180,5 +185,25 @@ public class MCFStep {
      */
     public void setType(MCFStepType type) {
         this.type = type;
+    }
+
+    /**
+     * Gets the associated tag. This parameter is used to identify the step, should be treated as
+     * a UNIQUE IDENTIFIER.
+     *
+     * @return Associated tag
+     */
+    public int getTag() {
+        return tag;
+    }
+
+    /**
+     * Sets the associated tag. This parameter is used to identify the step, should be treated as
+     * a UNIQUE IDENTIFIER.
+     *
+     * @param tag Associated tag
+     */
+    public void setTag(int tag) {
+        this.tag = tag;
     }
 }

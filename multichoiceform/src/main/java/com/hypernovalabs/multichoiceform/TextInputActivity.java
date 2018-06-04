@@ -172,7 +172,7 @@ public class TextInputActivity extends AppCompatActivity implements TextWatcher 
 
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTION, editText.getText().toString());
-        intent.putExtra(MCFConfig.EXTRA_ID_KEY, mModel.id);
+        intent.putExtra(MCFConfig.EXTRA_TAG_KEY, mModel.tag);
 
         setResult(RESULT_OK, intent);
         finish();
