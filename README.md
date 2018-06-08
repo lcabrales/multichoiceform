@@ -46,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.7.0@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.8.0@aar'
 ```
 
 # Usage
@@ -256,6 +256,17 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.8.0] - 2018-06-08
+### Added
+- `getDisabledTitleColor(int)`.
+- `setDisabledTitleColor(int)`.
+- `getDisabledSelectionColor(int)`.
+- `setDisabledSelectionColor(int)`.
+
+### Deprecated
+- `getDisabledTextColor(int)`.
+- `setDisabledTextColor(int)`.
 
 ## [1.7.0] - 2018-06-04
 ### Added

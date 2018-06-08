@@ -20,6 +20,9 @@ public class MCFStep {
     private int id;
     private MCFStepType type;
     private boolean required;
+    /**
+     * UNIQUE IDENTIFIER of this step, default value is {@link android.R.attr#id}
+     */
     private int tag;
 
     /**

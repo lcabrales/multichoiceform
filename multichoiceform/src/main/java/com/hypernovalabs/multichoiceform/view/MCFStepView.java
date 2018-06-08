@@ -32,8 +32,8 @@ public class MCFStepView extends LinearLayout {
     private View mSeparator;
     private Drawable mArrowDrawable;
     private String mTitle, mSelection;
-    private int mSeparatorColor, mTitleColor, mSelectionColor, mDisabledSeparatorColor, mDisabledTextColor,
-            mTitleMaxLines, mSelectionMaxLines;
+    private int mSeparatorColor, mTitleColor, mSelectionColor, mDisabledSeparatorColor, mDisabledTitleColor,
+            mDisabledSelectionColor, mTitleMaxLines, mSelectionMaxLines;
     private float mTitleSize, mSelectionSize;
     private boolean isEnabled, isMasked;
 
@@ -78,7 +78,9 @@ public class MCFStepView extends LinearLayout {
             isEnabled = a.getBoolean(R.styleable.MCFStepView_mcf_enabled, true);
             mDisabledSeparatorColor = a.getColor(R.styleable.MCFStepView_mcf_disabledSeparatorColor,
                     ContextCompat.getColor(mContext, R.color.mcf_disabled));
-            mDisabledTextColor = a.getColor(R.styleable.MCFStepView_mcf_disabledTextColor,
+            mDisabledTitleColor = a.getColor(R.styleable.MCFStepView_mcf_disabledTitleColor,
+                    ContextCompat.getColor(mContext, R.color.mcf_gray));
+            mDisabledSelectionColor = a.getColor(R.styleable.MCFStepView_mcf_disabledSelectionColor,
                     ContextCompat.getColor(mContext, R.color.mcf_gray));
 
             if (mArrowDrawable == null)
@@ -105,7 +107,8 @@ public class MCFStepView extends LinearLayout {
         setSeparatorColor(mSeparatorColor);
         setArrowImageView(mArrowDrawable);
         setDisabledSeparatorColor(mDisabledSeparatorColor);
-        setDisabledTextColor(mDisabledTextColor);
+        setDisabledTitleColor(mDisabledTitleColor);
+        setDisabledSelectionColor(mDisabledSelectionColor);
         setEnabled(isEnabled);
     }
 
@@ -294,8 +297,8 @@ public class MCFStepView extends LinearLayout {
         } else {
             mLayout.setEnabled(false);
             ((View) mArrowImageView.getParent()).setVisibility(View.GONE);
-            mTitleTextView.setTextColor(mDisabledTextColor);
-            mSelectionTextView.setTextColor(mDisabledTextColor);
+            mTitleTextView.setTextColor(mDisabledTitleColor);
+            mSelectionTextView.setTextColor(mDisabledSelectionColor);
             mSeparator.setBackgroundColor(mDisabledSeparatorColor);
         }
 
@@ -443,19 +446,60 @@ public class MCFStepView extends LinearLayout {
      * Sets MCFStep's disabled text color.
      *
      * @param color Any color.
+     * @deprecated Use {@link #setDisabledTitleColor(int)} and {@link #setDisabledSelectionColor(int)}
      */
     public void setDisabledTextColor(int color) {
-        mDisabledTextColor = color;
+        mDisabledTitleColor = color;
+        mDisabledSelectionColor = color;
         setEnabled(isEnabled);
     }
 
     /**
      * Returns MCFStep's disabled text color.
      *
-     * @return MCFStep's disabled text color.
+     * @return MCFStep's disabled title color.
+     * @deprecated Use {@link #getDisabledTitleColor()} and {@link #getDisabledSelectionColor()}
      */
     public int getDisabledTextColor() {
-        return mDisabledTextColor;
+        return mDisabledTitleColor;
+    }
+
+    /**
+     * Sets MCFStep's disabled title color.
+     *
+     * @param color Any color.
+     */
+    public void setDisabledTitleColor(int color) {
+        mDisabledTitleColor = color;
+        setEnabled(isEnabled);
+    }
+
+    /**
+     * Returns MCFStep's disabled title color.
+     *
+     * @return MCFStep's disabled title color.
+     */
+    public int getDisabledTitleColor() {
+        return mDisabledTitleColor;
+    }
+
+    /**
+     * Sets MCFStep's disabled selection color.
+     *
+     * @param color Any color.
+     */
+    public void setDisabledSelectionColor(int color) {
+        mDisabledSelectionColor = color;
+        setEnabled(isEnabled);
+    }
+
+    /**
+     * Returns MCFStep's disabled selection color.
+     *
+     * @return MCFStep's disabled selection color.
+     */
+    public int getDisabledSelectionColor() {
+        return mDisabledTitleColor;
     }
 
     /**

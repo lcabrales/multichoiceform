@@ -11,7 +11,8 @@
         <attr name="mcf_selectionSize" format="dimension" />
         <attr name="mcf_separatorColor" format="color" />
         <attr name="mcf_arrowDrawable" format="reference" />
-        <attr name="mcf_disabledTextColor" format="color" />
+        <attr name="mcf_disabledTitleColor" format="color" />
+        <attr name="mcf_disabledSelectionColor" format="color" />
         <attr name="mcf_disabledSeparatorColor" format="color" />
     </declare-styleable>
 </resources>
