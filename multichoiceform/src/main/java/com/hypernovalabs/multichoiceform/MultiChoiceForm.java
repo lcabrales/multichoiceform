@@ -33,14 +33,17 @@ import static android.app.Activity.RESULT_OK;
  * Main helper of the library. Holds a form instance, including all of the {@link MCFStep}.
  */
 public class MultiChoiceForm {
+
     public static final int REQUEST_SELECTION = 27;
 
     private Activity mContext;
     private ArrayList<? extends MCFStep> mMCFSteps;
     private int mToolbarBackgroundColor, mToolbarTitleColor;
     private int mValidationColor;
-    private Duration mValidationDuration;
-    private ValidationAnim mValidationAnim;
+    private @ValidateAnimation.Duration
+    int mValidationDuration;
+    private @ValidateAnimation.Anim
+    int mValidationAnim;
     private String mRequiredText;
     private String mEmptyViewTitle, mEmptyViewMsg;
     private String mSearchViewHint;
@@ -52,6 +55,7 @@ public class MultiChoiceForm {
      * Builder class of {@link MultiChoiceForm}.
      */
     public static class Builder {
+
         private MultiChoiceForm form;
 
         /**
@@ -65,8 +69,8 @@ public class MultiChoiceForm {
             form.mContext = context;
             form.mMCFSteps = steps;
             form.mValidationColor = R.color.mcf_red_t;
-            form.mValidationAnim = ValidationAnim.SHAKE_HORIZONTAL;
-            form.mValidationDuration = Duration.MEDIUM;
+            form.mValidationAnim = ValidateAnimation.SHAKE_HORIZONTAL;
+            form.mValidationDuration = ValidateAnimation.MEDIUM;
             form.mEmptyViewTitle = context.getString(R.string.mcf_form_empty_view_title);
             form.mEmptyViewMsg = context.getString(R.string.mcf_form_empty_view_msg);
             form.mSearchViewHint = context.getString(R.string.mcf_search_title);
@@ -90,6 +94,7 @@ public class MultiChoiceForm {
          *
          * @param backgroundColor {@link android.widget.Toolbar} background color.
          * @param textColor       {@link android.widget.Toolbar} title color.
+         *
          * @return Current instance of this builder.
          */
         public Builder setToolbarColors(int backgroundColor, int textColor) {
@@ -102,6 +107,7 @@ public class MultiChoiceForm {
          * Sets the text to be shown in a {@link Toast} in case the validation fails.
          *
          * @param text Required text value.
+         *
          * @return Current instance of this builder.
          */
         public Builder setRequiredText(String text) {
@@ -113,6 +119,7 @@ public class MultiChoiceForm {
          * Sets the validation animation main color.
          *
          * @param color Any color, 50% alpha color is recommended.
+         *
          * @return Current instance of this builder.
          */
         public Builder setValidationColor(int color) {
@@ -123,10 +130,11 @@ public class MultiChoiceForm {
         /**
          * Sets the animation of the validation
          *
-         * @param validationAnim Enum value of {@link ValidationAnim}.
+         * @param validationAnim value of {@link ValidateAnimation.Anim}.
+         *
          * @return Current instance of this builder.
          */
-        public Builder setValidationAnimation(ValidationAnim validationAnim) {
+        public Builder setValidationAnimation(@ValidateAnimation.Anim int validationAnim) {
             this.form.mValidationAnim = validationAnim;
             return this;
         }
@@ -134,21 +142,23 @@ public class MultiChoiceForm {
         /**
          * Sets the duration of the validation animation.
          *
-         * @param duration Enum value of {@link Duration}.
+         * @param duration value of {@link ValidateAnimation.Duration}.
+         *
          * @return Current instance of this builder.
          */
-        public Builder setValidationDuration(Duration duration) {
+        public Builder setValidationDuration(@ValidateAnimation.Duration int duration) {
             this.form.mValidationDuration = duration;
             return this;
         }
 
         /**
-         * If a {@link MCFStep} does not have any data associated with it, it will show an empty view
-         * when prompted. This method defines both the title and the message that will show on the
-         * empty view.
+         * If a {@link MCFStep} does not have any data associated with it, it will show an empty
+         * view when prompted. This method defines both the title and the message that will show on
+         * the empty view.
          *
          * @param title   Title of EmptyView.
          * @param message Message of EmptyView.
+         *
          * @return Current instance of this builder.
          */
         public Builder setEmptyViewTexts(String title, String message) {
@@ -161,6 +171,7 @@ public class MultiChoiceForm {
          * If a {@link MCFStep} is searchable, this is used to show the SearchView's hint.
          *
          * @param hint hint of SearchView.
+         *
          * @return Current instance of this builder.
          */
         public Builder setSearchViewHint(String hint) {
@@ -169,10 +180,11 @@ public class MultiChoiceForm {
         }
 
         /**
-         * If a {@link MCFStep} is searchable, this is used to show the Toolbar's icon. Takes
-         * the app's theme {@link R.attr#colorAccent} by default.
+         * If a {@link MCFStep} is searchable, this is used to show the Toolbar's icon. Takes the
+         * app's theme {@link R.attr#colorAccent} by default.
          *
          * @param color tint color of the Toolbar icon.
+         *
          * @return Current instance of this builder.
          */
         public Builder setToolbarIconTint(int color) {
@@ -184,6 +196,7 @@ public class MultiChoiceForm {
          * Only applicable to the {@link MCFTextInputStep}s.
          *
          * @param hasAutoFocus whether the {@link MCFTextInputStep}s have auto focus.
+         *
          * @return Current instance of this builder.
          */
         public Builder setHasAutoFocus(boolean hasAutoFocus) {
@@ -193,8 +206,8 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Defines the necessary listeners for the {@link MCFStep}, options listener and title tooltip listener.
-     * It has to be called after building the form in order for it to be enabled.
+     * Defines the necessary listeners for the {@link MCFStep}, options listener and title tooltip
+     * listener. It has to be called after building the form in order for it to be enabled.
      * Otherwise, form would not be enabled.
      */
     public void setupForm() {
@@ -222,19 +235,21 @@ public class MultiChoiceForm {
 
         switch (step.getType()) {
 
-            case SINGLE_SELECT:
+            case MCFStep.SINGLE_SELECT:
                 intent = getIntent((MCFSingleSelectStep) step);
                 mContext.startActivityForResult(intent, REQUEST_SELECTION);
-                mContext.overridePendingTransition(R.anim.mcf_slide_in_right, R.anim.mcf_slide_out_left);
+                mContext.overridePendingTransition(R.anim.mcf_slide_in_right,
+                        R.anim.mcf_slide_out_left);
                 break;
 
-            case TEXT_INPUT:
+            case MCFStep.TEXT_INPUT:
                 intent = getIntent((MCFTextInputStep) step);
                 mContext.startActivityForResult(intent, REQUEST_SELECTION);
-                mContext.overridePendingTransition(R.anim.mcf_slide_in_right, R.anim.mcf_slide_out_left);
+                mContext.overridePendingTransition(R.anim.mcf_slide_in_right,
+                        R.anim.mcf_slide_out_left);
                 break;
 
-            case DATE:
+            case MCFStep.DATE:
                 handleDateStep((MCFDateStep) step);
                 break;
         }
@@ -244,6 +259,7 @@ public class MultiChoiceForm {
      * Returns the intent related to {@link OptionsActivity} with all the needed parameters.
      *
      * @param step Associated {@link MCFSingleSelectStep}.
+     *
      * @return Intent to {@link OptionsActivity}.
      */
     private Intent getIntent(MCFSingleSelectStep step) {
@@ -252,7 +268,6 @@ public class MultiChoiceForm {
         MCFOptionsConfig model = new MCFOptionsConfig();
         model.data = step.getData();
         model.selection = step.getView().getSelection();
-        model.id = step.getView().getId();
         model.tag = step.getTag();
         model.title = step.getView().getTitle();
         model.toolbarBackgroundColor = mToolbarBackgroundColor;
@@ -272,6 +287,7 @@ public class MultiChoiceForm {
      * Returns the intent related to {@link TextInputActivity} with all the needed parameters.
      *
      * @param step Associated {@link MCFTextInputStep}.
+     *
      * @return Intent to {@link TextInputActivity}.
      */
     private Intent getIntent(MCFTextInputStep step) {
@@ -280,7 +296,6 @@ public class MultiChoiceForm {
         MCFTextInputConfig model = new MCFTextInputConfig();
         model.data = step.getData();
         model.selection = step.getView().getSelection();
-        model.id = step.getView().getId();
         model.tag = step.getTag();
         model.title = step.getView().getTitle();
         model.toolbarBackgroundColor = mToolbarBackgroundColor;
@@ -319,11 +334,13 @@ public class MultiChoiceForm {
 
         DatePicker datePicker = dialog.findViewById(R.id.mcf_date_picker);
         if (datePicker != null) {
-            if (step.getMinDate() != null)
+            if (step.getMinDate() != null) {
                 datePicker.setMinDate(step.getMinDate().getTime());
+            }
 
-            if (step.getMaxDate() != null)
+            if (step.getMaxDate() != null) {
                 datePicker.setMaxDate(step.getMaxDate().getTime());
+            }
         }
 
         Button btnAccept = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
@@ -354,17 +371,19 @@ public class MultiChoiceForm {
      * Shows a {@link Toast} with the full name of the MCFStep's title.
      *
      * @param view MCFStep view.
+     *
      * @deprecated
      */
     private void tooltip(View view) {
         String text = ((TextView) view).getText().toString();
-        if (text.length() > 0)
+        if (text.length() > 0) {
             Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
-     * Handles the {@link OptionsActivity} onResult.
-     * Edit the {@link com.hypernovalabs.multichoiceform.view.MCFStepView} to show the selected option.
+     * Handles the {@link OptionsActivity} onResult. Edit the {@link com.hypernovalabs.multichoiceform.view.MCFStepView}
+     * to show the selected option.
      *
      * @param requestCode onActivityResult requestCode.
      * @param resultCode  onActivityResult resultCode.
@@ -384,7 +403,8 @@ public class MultiChoiceForm {
     }
 
     /**
-     * Validate all of the {@link MCFStep} where {@link MCFStep#isRequired()}, they cannot be empty.
+     * Validate all of the {@link MCFStep} where {@link MCFStep#isRequired()}, they cannot be
+     * empty.
      *
      * @return Whether all of the required {@link MCFStep}s are selected.
      */
@@ -403,7 +423,8 @@ public class MultiChoiceForm {
                     mToast.show();
                 }
 
-                Animation animation = AnimationUtils.loadAnimation(mContext, mValidationAnim.getResId());
+                Animation animation = AnimationUtils
+                        .loadAnimation(mContext, ValidateAnimation.getAnimRes(mValidationAnim));
 
                 ObjectAnimator
                         .ofObject(
@@ -412,7 +433,7 @@ public class MultiChoiceForm {
                                 new ArgbEvaluator(),
                                 mValidationColor,
                                 ContextCompat.getColor(mContext, R.color.mcf_transparent))
-                        .setDuration(mValidationDuration.getDuration())
+                        .setDuration(mValidationDuration)
                         .start();
 
                 step.getView().startAnimation(animation);

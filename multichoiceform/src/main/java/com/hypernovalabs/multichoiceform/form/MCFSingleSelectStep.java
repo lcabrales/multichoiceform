@@ -23,7 +23,7 @@ public class MCFSingleSelectStep extends MCFStep {
      */
     public MCFSingleSelectStep(@NonNull String[] data, @NonNull MCFStepView view) {
         super(data, view);
-        super.setType(MCFStepType.SINGLE_SELECT);
+        super.setType(MCFStep.SINGLE_SELECT);
     }
 
     /**
@@ -34,7 +34,7 @@ public class MCFSingleSelectStep extends MCFStep {
      */
     public MCFSingleSelectStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view) {
         super(data, view);
-        super.setType(MCFStepType.SINGLE_SELECT);
+        super.setType(MCFStep.SINGLE_SELECT);
     }
 
     /**
@@ -46,7 +46,7 @@ public class MCFSingleSelectStep extends MCFStep {
      */
     public MCFSingleSelectStep(@NonNull String[] data, @NonNull MCFStepView view, @NonNull boolean required) {
         super(data, view, required);
-        super.setType(MCFStepType.SINGLE_SELECT);
+        super.setType(MCFStep.SINGLE_SELECT);
     }
 
     /**
@@ -58,7 +58,7 @@ public class MCFSingleSelectStep extends MCFStep {
      */
     public MCFSingleSelectStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, @NonNull boolean required) {
         super(data, view, required);
-        super.setType(MCFStepType.SINGLE_SELECT);
+        super.setType(MCFStep.SINGLE_SELECT);
     }
 
     /**

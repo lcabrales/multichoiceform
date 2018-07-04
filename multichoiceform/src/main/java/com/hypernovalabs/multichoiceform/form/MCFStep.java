@@ -1,29 +1,38 @@
 package com.hypernovalabs.multichoiceform.form;
 
-import android.support.annotation.IdRes;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 
 import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by lucascabrales on 1/5/18.
- * <p>
- * Main model of a MCFStep. Holds the data, the view, its type and whether it is required.
- * </p>
+ * Created by lucascabrales on 1/5/18. <p> Main model of a MCFStep. Holds the data, the view, its
+ * type and whether it is required. </p>
  */
 public class MCFStep {
+
     private ArrayList<String> data;
     private MCFStepView view;
-    private int id;
-    private MCFStepType type;
+    @Type
+    private int type;
     private boolean required;
     /**
      * UNIQUE IDENTIFIER of this step, default value is {@link android.R.attr#id}
      */
     private int tag;
+
+    public static final int SINGLE_SELECT = 1;
+    public static final int DATE = 2;
+    public static final int TEXT_INPUT = 3;
+
+    @IntDef({SINGLE_SELECT, DATE, TEXT_INPUT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {}
 
     /**
      * Main constructor, defines whether the MCFStep is required.
@@ -35,8 +44,7 @@ public class MCFStep {
     MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, boolean required) {
         this.data = data;
         this.view = view;
-        this.id = view.getId();
-        this.tag = id;
+        this.tag = view.getId();
         this.required = required;
     }
 
@@ -91,34 +99,18 @@ public class MCFStep {
     }
 
     /**
-     * Finds a single MCFStep instance based on its MCFStepView resId.
-     *
-     * @param steps All of the MultiChoiceForm steps.
-     * @param id    resId of MCFStepView
-     * @return MCFStep of the associated MCFStepView
-     * @deprecated use {@link #getStepFromTag(ArrayList, int)}
-     */
-    @Deprecated
-    public static MCFStep getStepFromId(@NonNull ArrayList<? extends MCFStep> steps, @IdRes int id) {
-        for (MCFStep step : steps) {
-            if (step.id == id)
-                return step;
-        }
-
-        return null;
-    }
-
-    /**
      * Finds a single MCFStep instance based on its tag.
      *
      * @param steps All of the MultiChoiceForm steps.
      * @param tag   {@link #tag} of MCFStepView
+     *
      * @return MCFStep of the associated MCFStepView
      */
     public static MCFStep getStepFromTag(@NonNull ArrayList<? extends MCFStep> steps, int tag) {
         for (MCFStep step : steps) {
-            if (step.tag == tag)
+            if (step.tag == tag) {
                 return step;
+            }
         }
 
         return null;
@@ -173,26 +165,27 @@ public class MCFStep {
     }
 
     /**
-     * Gets the associated MCFStepType
+     * Gets the associated {@link Type}
      *
-     * @return Associated MCFStepType
+     * @return Associated {@link Type}
      */
-    public MCFStepType getType() {
+    @Type
+    public int getType() {
         return type;
     }
 
     /**
-     * Sets the associated MCFStepType
+     * Sets the associated {@link Type}
      *
-     * @param type Associated MCFStepType
+     * @param type Associated {@link Type}
      */
-    public void setType(MCFStepType type) {
+    public void setType(@Type int type) {
         this.type = type;
     }
 
     /**
-     * Gets the associated tag. This parameter is used to identify the step, should be treated as
-     * a UNIQUE IDENTIFIER.
+     * Gets the associated tag. This parameter is used to identify the step, should be treated as a
+     * UNIQUE IDENTIFIER.
      *
      * @return Associated tag
      */
@@ -201,8 +194,8 @@ public class MCFStep {
     }
 
     /**
-     * Sets the associated tag. This parameter is used to identify the step, should be treated as
-     * a UNIQUE IDENTIFIER.
+     * Sets the associated tag. This parameter is used to identify the step, should be treated as a
+     * UNIQUE IDENTIFIER.
      *
      * @param tag Associated tag
      */

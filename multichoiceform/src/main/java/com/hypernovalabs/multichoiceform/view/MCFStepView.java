@@ -25,7 +25,7 @@ import com.hypernovalabs.multichoiceform.R;
 public class MCFStepView extends LinearLayout {
 
     private final AttributeSet mAttrs;
-    private Context mContext;
+    private final Context mContext;
     private LinearLayout mLayout;
     private TextView mTitleTextView, mSelectionTextView;
     private ImageView mArrowImageView;
@@ -440,28 +440,6 @@ public class MCFStepView extends LinearLayout {
      */
     public void setMasked(boolean masked) {
         this.isMasked = masked;
-    }
-
-    /**
-     * Sets MCFStep's disabled text color.
-     *
-     * @param color Any color.
-     * @deprecated Use {@link #setDisabledTitleColor(int)} and {@link #setDisabledSelectionColor(int)}
-     */
-    public void setDisabledTextColor(int color) {
-        mDisabledTitleColor = color;
-        mDisabledSelectionColor = color;
-        setEnabled(isEnabled);
-    }
-
-    /**
-     * Returns MCFStep's disabled text color.
-     *
-     * @return MCFStep's disabled title color.
-     * @deprecated Use {@link #getDisabledTitleColor()} and {@link #getDisabledSelectionColor()}
-     */
-    public int getDisabledTextColor() {
-        return mDisabledTitleColor;
     }
 
     /**

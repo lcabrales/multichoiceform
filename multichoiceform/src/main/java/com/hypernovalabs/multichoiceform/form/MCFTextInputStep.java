@@ -29,7 +29,7 @@ public class MCFTextInputStep extends MCFStep {
      */
     public MCFTextInputStep(@NonNull MCFStepView view, @NonNull boolean required) {
         super(view, required);
-        super.setType(MCFStepType.TEXT_INPUT);
+        super.setType(MCFStep.TEXT_INPUT);
 
         mInputType = InputType.TYPE_CLASS_TEXT;
     }
@@ -41,7 +41,7 @@ public class MCFTextInputStep extends MCFStep {
      */
     public MCFTextInputStep(@NonNull MCFStepView view, @NonNull boolean required, Regex regex) {
         super(view, required);
-        super.setType(MCFStepType.TEXT_INPUT);
+        super.setType(MCFStep.TEXT_INPUT);
 
         mInputType = InputType.TYPE_CLASS_TEXT;
         mRegex = regex;

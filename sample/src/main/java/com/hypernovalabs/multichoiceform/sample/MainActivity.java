@@ -10,9 +10,8 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hypernovalabs.multichoiceform.Duration;
 import com.hypernovalabs.multichoiceform.MultiChoiceForm;
-import com.hypernovalabs.multichoiceform.ValidationAnim;
+import com.hypernovalabs.multichoiceform.ValidateAnimation;
 import com.hypernovalabs.multichoiceform.config.MCFConfig;
 import com.hypernovalabs.multichoiceform.form.MCFDateStep;
 import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
@@ -110,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
                         ContextCompat.getColor(mContext, R.color.toolbar_text)) //optional
                 .setRequiredText("Fill out everything, please") //optional
                 .setValidationColor(ContextCompat.getColor(mContext, R.color.bluet)) //optional
-                .setValidationAnimation(ValidationAnim.SHAKE_HORIZONTAL) //optional
-                .setValidationDuration(Duration.SHORT) //optional
+                .setValidationAnimation(ValidateAnimation.SHAKE_HORIZONTAL) //optional
+                .setValidationDuration(ValidateAnimation.SHORT) //optional
                 .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please") //optional
                 .setSearchViewHint("Search here...") //optional
                 .setToolbarIconTint(Color.BLACK) //optional

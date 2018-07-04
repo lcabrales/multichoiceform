@@ -28,7 +28,7 @@ public class MCFDateStep extends MCFStep {
      */
     public MCFDateStep(@NonNull MCFStepView view) {
         super(view);
-        super.setType(MCFStepType.DATE);
+        super.setType(MCFStep.DATE);
 
         positiveButton = "Accept";
         negativeButton = "Cancel";
@@ -43,7 +43,7 @@ public class MCFDateStep extends MCFStep {
      */
     public MCFDateStep(@NonNull MCFStepView view, boolean required) {
         super(view, required);
-        super.setType(MCFStepType.DATE);
+        super.setType(MCFStep.DATE);
 
         positiveButton = "Accept";
         negativeButton = "Cancel";

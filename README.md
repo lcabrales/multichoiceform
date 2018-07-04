@@ -171,8 +171,8 @@ MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps)
                 ContextCompat.getColor(mContext, R.color.toolbar_text)) //optional
         .setRequiredText("Fill out everything, please") //optional
         .setValidationColor(ContextCompat.getColor(mContext, R.color.bluet)) //optional
-        .setValidationAnimation(ValidationAnim.SHAKE_HORIZONTAL) //optional
-        .setValidationDuration(Duration.SHORT) //optional
+        .setValidationAnimation(ValidateAnimation.SHAKE_HORIZONTAL) //optional
+        .setValidationDuration(ValidateAnimation.SHORT) //optional
         .setEmptyViewTexts("Attention!", "Fill out all of the required fields, please") //optional
         .setSearchViewHint("Search here...") //optional
         .setToolbarIconTint(Color.BLACK) //optional
@@ -256,6 +256,15 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.9.0] - 2018-07-04
+### Added
+- `ValidateAnimation` class.
+- `@IntDef` magic constants for `MCFStepType`, `ValidationAnim` and `Duration` instead of Enum classes.
+
+### Removed
+- Enum classes.
+- Deprecated methods.
 
 ## [1.8.0] - 2018-06-08
 ### Added
