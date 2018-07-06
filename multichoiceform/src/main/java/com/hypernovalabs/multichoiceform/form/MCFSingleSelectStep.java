@@ -16,7 +16,7 @@ public class MCFSingleSelectStep extends MCFStep {
     private boolean isSearchable = false;
 
     /**
-     * Simple constructor, sets the parent's type of SINGLE_SELECT. Takes an array as parameter.
+     * Simple constructor, sets the parent's type of {@link MCFStep#SINGLE_SELECT}. Takes an array as parameter.
      *
      * @param data Options data.
      * @param view Associated MCFStepView.
@@ -27,7 +27,7 @@ public class MCFSingleSelectStep extends MCFStep {
     }
 
     /**
-     * Simple constructor, sets the parent's type of SINGLE_SELECT.
+     * Simple constructor, sets the parent's type of {@link MCFStep#SINGLE_SELECT}.
      *
      * @param data Options data.
      * @param view Associated MCFStepView.

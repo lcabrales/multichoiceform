@@ -219,7 +219,11 @@ public class MultiChoiceForm {
         };
         for (MCFStep step : mMCFSteps) {
             step.getView().getLayout().setTag(step);
-            step.getView().getLayout().setOnClickListener(listener);
+
+            if (step.getType() != MCFStep.BUTTON) {
+                //BUTTON type does not have a defined listener, user must set it manually.
+                step.getView().getLayout().setOnClickListener(listener);
+            }
         }
     }
 
@@ -251,6 +255,9 @@ public class MultiChoiceForm {
 
             case MCFStep.DATE:
                 handleDateStep((MCFDateStep) step);
+                break;
+            case MCFStep.BUTTON:
+                //this should never be called
                 break;
         }
     }

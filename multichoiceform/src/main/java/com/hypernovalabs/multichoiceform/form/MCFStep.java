@@ -29,8 +29,9 @@ public class MCFStep {
     public static final int SINGLE_SELECT = 1;
     public static final int DATE = 2;
     public static final int TEXT_INPUT = 3;
+    public static final int BUTTON = 4;
 
-    @IntDef({SINGLE_SELECT, DATE, TEXT_INPUT})
+    @IntDef({SINGLE_SELECT, DATE, TEXT_INPUT, BUTTON})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Type {}
 

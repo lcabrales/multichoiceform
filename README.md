@@ -46,7 +46,7 @@ allprojects {
 
 Then, in your app's build.gradle file:
 ```java
-implementation 'com.hypernovalabs:multichoiceform:1.8.0@aar'
+implementation 'com.hypernovalabs:multichoiceform:1.10.0@aar'
 ```
 
 # Usage
@@ -158,6 +158,22 @@ SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy", Locale.US)
 dateStep.setDateFormat(sdf); //optional
 ```
 
+### MCFButtonStep
+
+Works as a visual step only, the `onClickListener` should be manually set on the `MCFStepView`.
+This step allows you to add a required step to `MultiChoiceForm.validate()` without needing to use it
+as a `MCFSingleSelectStep`
+
+```java
+MCFButtonStep step2 = new MCFButtonStep((MCFStepView) findViewById(R.id.form_test), true);
+step2.getView().setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        //do stuff
+    }
+});
+```
+
 ## Extra Customization
 
 This is all optional, adds increased customization to your form.
@@ -256,6 +272,14 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 # Changelog
+
+## [1.10.0] - 2018-07-07
+### Added
+- `MCFButtonStep`.
+
+### Removed
+- Enum classes.
+- Deprecated methods.
 
 ## [1.9.0] - 2018-07-04
 ### Added
