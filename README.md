@@ -277,10 +277,6 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ### Added
 - `MCFButtonStep`.
 
-### Removed
-- Enum classes.
-- Deprecated methods.
-
 ## [1.9.0] - 2018-07-04
 ### Added
 - `ValidateAnimation` class.
