@@ -1,8 +1,8 @@
 package com.hypernovalabs.multichoiceform.form;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
+import androidx.annotation.NonNull;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import android.text.InputType;
 
 import com.hypernovalabs.multichoiceform.model.Regex;

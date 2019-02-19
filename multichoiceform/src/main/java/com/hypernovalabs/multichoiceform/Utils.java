@@ -2,7 +2,7 @@ package com.hypernovalabs.multichoiceform;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.AttrRes;
+import androidx.annotation.AttrRes;
 import android.util.TypedValue;
 
 import java.text.SimpleDateFormat;

@@ -1,6 +1,6 @@
 package com.hypernovalabs.multichoiceform.form;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
