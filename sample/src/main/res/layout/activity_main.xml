@@ -30,8 +30,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -41,8 +41,9 @@
             android:layout_height="wrap_content"
             app:mcf_selectionColor="@color/blue"
             app:mcf_separatorColor="@color/mcf_gray"
-            app:mcf_title="Test Field"
-            app:mcf_titleColor="@color/blue" />
+            app:mcf_title="This is a more extensive title than usual, whose purpose is to show the multiline capacity"
+            app:mcf_titleColor="@color/blue"
+            app:mcf_titleMaxLines="2" />
 
         <com.hypernovalabs.multichoiceform.view.MCFStepView
             android:id="@+id/form_test2"
