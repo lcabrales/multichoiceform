@@ -17,6 +17,7 @@ import java.util.Arrays;
 public class MCFStep {
 
     private ArrayList<String> data;
+    private ArrayList<? extends MCFStepObj> customData;
     private MCFStepView view;
     @Type
     private int type;
@@ -33,7 +34,8 @@ public class MCFStep {
 
     @IntDef({SINGLE_SELECT, DATE, TEXT_INPUT, BUTTON})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {}
+    public @interface Type {
+    }
 
     /**
      * Main constructor, defines whether the MCFStep is required.
@@ -43,7 +45,23 @@ public class MCFStep {
      * @param required Whether the MCFStep is required.
      */
     MCFStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, boolean required) {
+        this.customData = null;
         this.data = data;
+        this.view = view;
+        this.tag = view.getId();
+        this.required = required;
+    }
+
+    /**
+     * Main constructor, defines whether the MCFStep is required.
+     *
+     * @param required Whether the MCFStep is required.
+     * @param view     Associated MCFStepView.
+     * @param data     Contains all of the options.
+     */
+    MCFStep(boolean required, @NonNull MCFStepView view, @NonNull ArrayList<? extends MCFStepObj> data) {
+        this.data = null;
+        this.customData = data;
         this.view = view;
         this.tag = view.getId();
         this.required = required;
@@ -104,7 +122,6 @@ public class MCFStep {
      *
      * @param steps All of the MultiChoiceForm steps.
      * @param tag   {@link #tag} of MCFStepView
-     *
      * @return MCFStep of the associated MCFStepView
      */
     public static MCFStep getStepFromTag(@NonNull ArrayList<? extends MCFStep> steps, int tag) {
@@ -141,12 +158,28 @@ public class MCFStep {
     }
 
     /**
+     * @return Associated options data.
+     */
+    public ArrayList<? extends MCFStepObj> getCustomData() {
+        return customData;
+    }
+
+    /**
      * Sets the associated options data.
      *
      * @param data Associated options data.
      */
     public void setData(ArrayList<String> data) {
         this.data = data;
+    }
+
+    /**
+     * Sets the associated options data.
+     *
+     * @param data Associated options data.
+     */
+    public void setCustomData(ArrayList<? extends MCFStepObj> data) {
+        customData = data;
     }
 
     /**

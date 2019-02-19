@@ -44,7 +44,7 @@ public class MCFSingleSelectStep extends MCFStep {
      * @param view     Associated MCFStepView.
      * @param required whether the MCFStep is required.
      */
-    public MCFSingleSelectStep(@NonNull String[] data, @NonNull MCFStepView view, @NonNull boolean required) {
+    public MCFSingleSelectStep(@NonNull String[] data, @NonNull MCFStepView view, boolean required) {
         super(data, view, required);
         super.setType(MCFStep.SINGLE_SELECT);
     }
@@ -56,13 +56,24 @@ public class MCFSingleSelectStep extends MCFStep {
      * @param view     Associated MCFStepView.
      * @param required whether the MCFStep is required.
      */
-    public MCFSingleSelectStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, @NonNull boolean required) {
+    public MCFSingleSelectStep(@NonNull ArrayList<String> data, @NonNull MCFStepView view, boolean required) {
         super(data, view, required);
         super.setType(MCFStep.SINGLE_SELECT);
     }
 
     /**
+     * Constructor with the "required" parameter.
      *
+     * @param required whether the MCFStep is required.
+     * @param view     Associated MCFStepView.
+     * @param data     Options data.
+     */
+    public MCFSingleSelectStep(boolean required, @NonNull MCFStepView view, @NonNull ArrayList<? extends MCFStepObj> data) {
+        super(required, view, data);
+        super.setType(MCFStep.SINGLE_SELECT);
+    }
+
+    /**
      * @return whether the step implements a SearchView
      */
     public boolean isSearchable() {
@@ -71,6 +82,7 @@ public class MCFSingleSelectStep extends MCFStep {
 
     /**
      * Sets whether the step implements a SearchView
+     *
      * @param searchable whether the step implements a SearchView
      */
     public void setSearchable(boolean searchable) {

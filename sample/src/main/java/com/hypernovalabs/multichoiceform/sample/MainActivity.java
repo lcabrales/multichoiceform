@@ -3,9 +3,11 @@ package com.hypernovalabs.multichoiceform.sample;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.InputType;
 import android.view.View;
 import android.widget.TextView;
@@ -92,6 +94,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        ArrayList<CustomModel> customModels = new ArrayList<>();
+        customModels.add(new CustomModel("id001", "Display Title1"));
+        customModels.add(new CustomModel("id002", "Display Title2"));
+        customModels.add(new CustomModel("id003", "Display Title3"));
+        customModels.add(new CustomModel("id004", "Display Title4"));
+
+        MCFSingleSelectStep customStep = new MCFSingleSelectStep(true,
+                (MCFStepView) findViewById(R.id.custom_step),
+                customModels);
+
         //Adds them all into an ArrayList
         mSteps = new ArrayList<>();
         mSteps.add(step);
@@ -101,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         mSteps.add(mDependentStep2);
         mSteps.add(emptyStep);
         mSteps.add(dateStep);
+        mSteps.add(customStep);
 
         //Create your MultiChoiceForm instance
         MultiChoiceForm.Builder builder = new MultiChoiceForm.Builder(mContext, mSteps)

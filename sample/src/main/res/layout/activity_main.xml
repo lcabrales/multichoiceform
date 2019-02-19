@@ -101,6 +101,15 @@
             app:mcf_separatorColor="@color/mcf_gray"
             app:mcf_title="Date"
             app:mcf_titleColor="@color/blue" />
+
+        <com.hypernovalabs.multichoiceform.view.MCFStepView
+            android:id="@+id/custom_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mcf_selectionColor="@color/blue"
+            app:mcf_separatorColor="@color/mcf_gray"
+            app:mcf_title="Custom Data"
+            app:mcf_titleColor="@color/blue" />
     </LinearLayout>
 
     <Button

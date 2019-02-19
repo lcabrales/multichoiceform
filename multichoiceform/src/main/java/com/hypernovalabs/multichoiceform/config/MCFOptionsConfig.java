@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.hypernovalabs.multichoiceform.OptionsActivity;
+import com.hypernovalabs.multichoiceform.form.MCFStepObj;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class MCFOptionsConfig implements Parcelable {
 
     public ArrayList<String> data;
+    public ArrayList<? extends MCFStepObj> customData;
     public String selection;
     public String title;
     public int tag;
@@ -36,6 +38,12 @@ public class MCFOptionsConfig implements Parcelable {
             in.readList(data, String.class.getClassLoader());
         } else {
             data = null;
+        }
+        if (in.readByte() == 0x01) {
+            customData = new ArrayList<>();
+            in.readList(customData, MCFStepObj.class.getClassLoader());
+        } else {
+            customData = null;
         }
         selection = in.readString();
         title = in.readString();
@@ -62,6 +70,12 @@ public class MCFOptionsConfig implements Parcelable {
         } else {
             dest.writeByte((byte) (0x01));
             dest.writeList(data);
+        }
+        if (customData == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(customData);
         }
         dest.writeString(selection);
         dest.writeString(title);

@@ -5,10 +5,12 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,6 +25,7 @@ import com.hypernovalabs.multichoiceform.config.MCFTextInputConfig;
 import com.hypernovalabs.multichoiceform.form.MCFDateStep;
 import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
 import com.hypernovalabs.multichoiceform.form.MCFStep;
+import com.hypernovalabs.multichoiceform.form.MCFStepObj;
 import com.hypernovalabs.multichoiceform.form.MCFTextInputStep;
 
 import java.util.ArrayList;
@@ -50,6 +53,7 @@ public class MultiChoiceForm {
     private int mToolbarIconTint;
     private boolean hasAutoFocus;
     private Toast mToast;
+    public  MCFStepObj customObj;
 
     /**
      * Builder class of {@link MultiChoiceForm}.
@@ -94,7 +98,6 @@ public class MultiChoiceForm {
          *
          * @param backgroundColor {@link android.widget.Toolbar} background color.
          * @param textColor       {@link android.widget.Toolbar} title color.
-         *
          * @return Current instance of this builder.
          */
         public Builder setToolbarColors(int backgroundColor, int textColor) {
@@ -107,7 +110,6 @@ public class MultiChoiceForm {
          * Sets the text to be shown in a {@link Toast} in case the validation fails.
          *
          * @param text Required text value.
-         *
          * @return Current instance of this builder.
          */
         public Builder setRequiredText(String text) {
@@ -119,7 +121,6 @@ public class MultiChoiceForm {
          * Sets the validation animation main color.
          *
          * @param color Any color, 50% alpha color is recommended.
-         *
          * @return Current instance of this builder.
          */
         public Builder setValidationColor(int color) {
@@ -131,7 +132,6 @@ public class MultiChoiceForm {
          * Sets the animation of the validation
          *
          * @param validationAnim value of {@link ValidateAnimation.Anim}.
-         *
          * @return Current instance of this builder.
          */
         public Builder setValidationAnimation(@ValidateAnimation.Anim int validationAnim) {
@@ -143,7 +143,6 @@ public class MultiChoiceForm {
          * Sets the duration of the validation animation.
          *
          * @param duration value of {@link ValidateAnimation.Duration}.
-         *
          * @return Current instance of this builder.
          */
         public Builder setValidationDuration(@ValidateAnimation.Duration int duration) {
@@ -158,7 +157,6 @@ public class MultiChoiceForm {
          *
          * @param title   Title of EmptyView.
          * @param message Message of EmptyView.
-         *
          * @return Current instance of this builder.
          */
         public Builder setEmptyViewTexts(String title, String message) {
@@ -171,7 +169,6 @@ public class MultiChoiceForm {
          * If a {@link MCFStep} is searchable, this is used to show the SearchView's hint.
          *
          * @param hint hint of SearchView.
-         *
          * @return Current instance of this builder.
          */
         public Builder setSearchViewHint(String hint) {
@@ -184,7 +181,6 @@ public class MultiChoiceForm {
          * app's theme {@link R.attr#colorAccent} by default.
          *
          * @param color tint color of the Toolbar icon.
-         *
          * @return Current instance of this builder.
          */
         public Builder setToolbarIconTint(int color) {
@@ -196,7 +192,6 @@ public class MultiChoiceForm {
          * Only applicable to the {@link MCFTextInputStep}s.
          *
          * @param hasAutoFocus whether the {@link MCFTextInputStep}s have auto focus.
-         *
          * @return Current instance of this builder.
          */
         public Builder setHasAutoFocus(boolean hasAutoFocus) {
@@ -266,7 +261,6 @@ public class MultiChoiceForm {
      * Returns the intent related to {@link OptionsActivity} with all the needed parameters.
      *
      * @param step Associated {@link MCFSingleSelectStep}.
-     *
      * @return Intent to {@link OptionsActivity}.
      */
     private Intent getIntent(MCFSingleSelectStep step) {
@@ -274,6 +268,7 @@ public class MultiChoiceForm {
 
         MCFOptionsConfig model = new MCFOptionsConfig();
         model.data = step.getData();
+        model.customData = step.getCustomData();
         model.selection = step.getView().getSelection();
         model.tag = step.getTag();
         model.title = step.getView().getTitle();
@@ -294,7 +289,6 @@ public class MultiChoiceForm {
      * Returns the intent related to {@link TextInputActivity} with all the needed parameters.
      *
      * @param step Associated {@link MCFTextInputStep}.
-     *
      * @return Intent to {@link TextInputActivity}.
      */
     private Intent getIntent(MCFTextInputStep step) {
@@ -378,7 +372,6 @@ public class MultiChoiceForm {
      * Shows a {@link Toast} with the full name of the MCFStep's title.
      *
      * @param view MCFStep view.
-     *
      * @deprecated
      */
     private void tooltip(View view) {
@@ -399,6 +392,10 @@ public class MultiChoiceForm {
     public void handleActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         if (requestCode == REQUEST_SELECTION && resultCode == RESULT_OK) {
             String selection = data.getStringExtra(OptionsActivity.EXTRA_SELECTION);
+            if (selection == null) {
+                customObj = data.getParcelableExtra(OptionsActivity.EXTRA_SELECTION);
+                selection = customObj.getDisplayText();
+            }
             int tag = data.getIntExtra(MCFConfig.EXTRA_TAG_KEY, 0);
             if (tag != 0) {
                 MCFStep step = MCFStep.getStepFromTag(mMCFSteps, tag);

@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,10 +20,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hypernovalabs.multichoiceform.adapter.MCFStepAdapter;
 import com.hypernovalabs.multichoiceform.config.MCFConfig;
 import com.hypernovalabs.multichoiceform.config.MCFOptionsConfig;
+import com.hypernovalabs.multichoiceform.form.MCFStepObj;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Activity containing a list of a MCFStep's options
@@ -35,6 +41,7 @@ public class OptionsActivity extends AppCompatActivity {
     private OptionsActivity mContext = this;
     private ListView mListView;
     private ArrayAdapter<String> mAdapter;
+    private ArrayAdapter<MCFStepObj> mCustomAdapter;
     private ArrayList<String> mOptions;
     private MCFOptionsConfig mModel;
 
@@ -83,23 +90,30 @@ public class OptionsActivity extends AppCompatActivity {
         mListView.setEmptyView(findViewById(R.id.mcf_empty_view));
         setEmptyViewTexts(mModel.emptyViewTitle, mModel.emptyViewMsg);
 
-        mOptions = new ArrayList<>(mModel.data);
-        mAdapter = new ArrayAdapter<>(mContext, R.layout.mcf_simple_list_item_checked,
-                mOptions);
-        mListView.setAdapter(mAdapter);
+        if (mModel.data != null) {
+            mOptions = new ArrayList<>(mModel.data);
+            mAdapter = new ArrayAdapter<>(mContext, R.layout.mcf_simple_list_item_checked, mOptions);
+        } else {
+            mOptions = new ArrayList<>(mModel.customData.size());
+            for (MCFStepObj obj : mModel.customData) {
+                mOptions.add(obj.getDisplayText());
+            }
+
+            mCustomAdapter = new MCFStepAdapter(mContext, mModel.customData);
+        }
+        mListView.setAdapter(mAdapter != null ? mAdapter : mCustomAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 hideKeyboard();
-
                 Intent intent = new Intent();
-                intent.putExtra(EXTRA_SELECTION, String.valueOf(mAdapter.getItem(i)));
+                if (mAdapter != null)
+                    intent.putExtra(EXTRA_SELECTION, mAdapter.getItem(position));
+                else
+                    intent.putExtra(EXTRA_SELECTION, mCustomAdapter.getItem(position));
                 intent.putExtra(MCFConfig.EXTRA_TAG_KEY, mModel.tag);
-
                 setResult(RESULT_OK, intent);
                 finish();
-
                 overrideTransition();
             }
         });
