@@ -94,15 +94,13 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ArrayList<CustomModel> customModels = new ArrayList<>();
-        customModels.add(new CustomModel("id001", "Display Title1"));
-        customModels.add(new CustomModel("id002", "Display Title2"));
-        customModels.add(new CustomModel("id003", "Display Title3"));
-        customModels.add(new CustomModel("id004", "Display Title4"));
+        ArrayList<CustomModel> customModels = getCustomDummyData("Display Text", 1000);
 
         MCFSingleSelectStep customStep = new MCFSingleSelectStep(true,
                 (MCFStepView) findViewById(R.id.custom_step),
                 customModels);
+
+        customStep.setSearchable(true);
 
         //Adds them all into an ArrayList
         mSteps = new ArrayList<>();
@@ -140,6 +138,18 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < qty; i++) {
             list.add(prefix + (i + 1));
+        }
+
+        return list;
+    }
+
+    private ArrayList<CustomModel> getCustomDummyData(String prefix, int qty) {
+        ArrayList<CustomModel> list = new ArrayList<>(qty);
+
+        for (int i = 0; i < qty; i++) {
+            String obj = prefix + (i + 1);
+            String id = "id" + (i + 1);
+            list.add(i, new CustomModel(id, obj));
         }
 
         return list;

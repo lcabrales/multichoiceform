@@ -17,6 +17,11 @@ public class MCFOptionsConfig implements Parcelable {
     public ArrayList<String> data;
     public ArrayList<? extends MCFStepObj> customData;
     public String selection;
+    public MCFStepObj customSelection;
+    /**
+     * For now, it only works with custom data
+     */
+    public int selectedPosition;
     public String title;
     public int tag;
     public boolean required;
@@ -46,6 +51,8 @@ public class MCFOptionsConfig implements Parcelable {
             customData = null;
         }
         selection = in.readString();
+        customSelection = (MCFStepObj) in.readValue(MCFStepObj.class.getClassLoader());
+        selectedPosition = in.readInt();
         title = in.readString();
         tag = in.readInt();
         required = in.readByte() != 0x00;
@@ -78,6 +85,8 @@ public class MCFOptionsConfig implements Parcelable {
             dest.writeList(customData);
         }
         dest.writeString(selection);
+        dest.writeValue(customSelection);
+        dest.writeInt(selectedPosition);
         dest.writeString(title);
         dest.writeInt(tag);
         dest.writeByte((byte) (required ? 0x01 : 0x00));

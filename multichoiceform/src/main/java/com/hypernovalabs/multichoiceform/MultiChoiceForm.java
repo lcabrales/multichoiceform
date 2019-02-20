@@ -53,7 +53,7 @@ public class MultiChoiceForm {
     private int mToolbarIconTint;
     private boolean hasAutoFocus;
     private Toast mToast;
-    public  MCFStepObj customObj;
+    public MCFStepObj customObj;
 
     /**
      * Builder class of {@link MultiChoiceForm}.
@@ -270,6 +270,8 @@ public class MultiChoiceForm {
         model.data = step.getData();
         model.customData = step.getCustomData();
         model.selection = step.getView().getSelection();
+        model.customSelection = step.getView().getCustomSelection();
+        model.selectedPosition = step.getView().getSelectedPosition();
         model.tag = step.getTag();
         model.title = step.getView().getTitle();
         model.toolbarBackgroundColor = mToolbarBackgroundColor;
@@ -393,14 +395,17 @@ public class MultiChoiceForm {
         if (requestCode == REQUEST_SELECTION && resultCode == RESULT_OK) {
             String selection = data.getStringExtra(OptionsActivity.EXTRA_SELECTION);
             if (selection == null) {
-                customObj = data.getParcelableExtra(OptionsActivity.EXTRA_SELECTION);
-                selection = customObj.getDisplayText();
+                customObj = data.getParcelableExtra(OptionsActivity.EXTRA_CUSTOM_SELECTION);
             }
             int tag = data.getIntExtra(MCFConfig.EXTRA_TAG_KEY, 0);
             if (tag != 0) {
                 MCFStep step = MCFStep.getStepFromTag(mMCFSteps, tag);
                 if (step != null) {
-                    step.getView().setSelection(selection);
+                    if (selection == null) {
+                        int position = data.getIntExtra(OptionsActivity.EXTRA_CUSTOM_SELECTION_POSITION, -1);
+                        step.getView().setCustomSelection(customObj, position);
+                    } else
+                        step.getView().setSelection(selection);
                 }
             }
         }

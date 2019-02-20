@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.Dimension;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.R;
+import com.hypernovalabs.multichoiceform.form.MCFStepObj;
 
 /**
  * Created by lucascabrales on 12/26/17.
@@ -32,6 +35,8 @@ public class MCFStepView extends LinearLayout {
     private View mSeparator;
     private Drawable mArrowDrawable;
     private String mTitle, mSelection;
+    private MCFStepObj mCustomSelection;
+    private int mSelectedPosition;
     private int mSeparatorColor, mTitleColor, mSelectionColor, mDisabledSeparatorColor, mDisabledTitleColor,
             mDisabledSelectionColor, mTitleMaxLines, mSelectionMaxLines;
     private float mTitleSize, mSelectionSize;
@@ -150,6 +155,35 @@ public class MCFStepView extends LinearLayout {
     }
 
     /**
+     * Sets the selected option text.
+     *
+     * @param selection Selected option text value.
+     */
+    public void setCustomSelection(MCFStepObj selection, int position) {
+        if (selection == null) {
+            mCustomSelection = null;
+            mSelectionTextView.setText("");
+        } else {
+            mCustomSelection = selection;
+            mSelectedPosition = position;
+            String displayText = selection.getDisplayText();
+            if (isMasked) selection.setDisplayText(displayText.replaceAll(".", "•"));
+            mSelectionTextView.setText(displayText);
+        }
+        invalidate();
+        requestLayout();
+    }
+
+    /**
+     * Sets the selected option position.
+     *
+     * @param position Selected option.
+     */
+    public void setSelectedPosition(int position) {
+        mSelectedPosition = position;
+    }
+
+    /**
      * Sets the selected options text from a string resource
      *
      * @param resId String resource
@@ -165,6 +199,24 @@ public class MCFStepView extends LinearLayout {
      */
     public String getSelection() {
         return mSelection;
+    }
+
+    /**
+     * Returns the selected value.
+     *
+     * @return Current selection of the MCFStepView.
+     */
+    public MCFStepObj getCustomSelection() {
+        return mCustomSelection;
+    }
+
+    /**
+     * Returns the selected position, just on customData.
+     *
+     * @return Current selection of the MCFStepView.
+     */
+    public int getSelectedPosition() {
+        return mSelectedPosition;
     }
 
     /**
@@ -276,7 +328,7 @@ public class MCFStepView extends LinearLayout {
      * @return Whether it is selected.
      */
     public boolean isSelected() {
-        return getSelection() != null && getSelection().length() > 0;
+        return ((getSelection() != null && getSelection().length() > 0) || getCustomSelection() != null);
     }
 
     /**
@@ -322,6 +374,7 @@ public class MCFStepView extends LinearLayout {
      */
     public void deselect(boolean enable) {
         setSelection("");
+        setCustomSelection(null, -1);
         setEnabled(enable);
     }
 

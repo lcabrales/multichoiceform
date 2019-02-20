@@ -6,16 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
-import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.R;
-import com.hypernovalabs.multichoiceform.form.MCFStep;
 import com.hypernovalabs.multichoiceform.form.MCFStepObj;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
 
 /**
  * Created by celso on 2/19/19
@@ -52,8 +50,9 @@ public class MCFStepAdapter extends ArrayAdapter<MCFStepObj> {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.mcf_simple_list_item_checked, parent, false);
         }
         CheckedTextView textView = (CheckedTextView) convertView;
+        MCFStepObj item = mDataset.get(position);
         textView.setText(mDataset.get(position).getDisplayText());
-
         return convertView;
     }
+
 }

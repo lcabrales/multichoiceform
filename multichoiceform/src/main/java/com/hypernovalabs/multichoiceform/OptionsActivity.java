@@ -37,12 +37,15 @@ public class OptionsActivity extends AppCompatActivity {
     private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
     protected static final String EXTRA_CONFIG = EXTRA_PREFIX + ".Config";
     protected static final String EXTRA_SELECTION = EXTRA_PREFIX + ".Selection";
+    protected static final String EXTRA_CUSTOM_SELECTION = EXTRA_PREFIX + ".CustomSelection";
+    protected static final String EXTRA_CUSTOM_SELECTION_POSITION = EXTRA_PREFIX + ".CustomSelectionPosition";
 
     private OptionsActivity mContext = this;
     private ListView mListView;
     private ArrayAdapter<String> mAdapter;
-    private ArrayAdapter<MCFStepObj> mCustomAdapter;
+    private MCFStepAdapter mCustomAdapter;
     private ArrayList<String> mOptions;
+    private ArrayList<MCFStepObj> mCustomOptions;
     private MCFOptionsConfig mModel;
 
     @Override
@@ -94,11 +97,7 @@ public class OptionsActivity extends AppCompatActivity {
             mOptions = new ArrayList<>(mModel.data);
             mAdapter = new ArrayAdapter<>(mContext, R.layout.mcf_simple_list_item_checked, mOptions);
         } else {
-            mOptions = new ArrayList<>(mModel.customData.size());
-            for (MCFStepObj obj : mModel.customData) {
-                mOptions.add(obj.getDisplayText());
-            }
-
+            mCustomOptions = new ArrayList<>(mModel.customData);
             mCustomAdapter = new MCFStepAdapter(mContext, mModel.customData);
         }
         mListView.setAdapter(mAdapter != null ? mAdapter : mCustomAdapter);
@@ -109,8 +108,11 @@ public class OptionsActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 if (mAdapter != null)
                     intent.putExtra(EXTRA_SELECTION, mAdapter.getItem(position));
-                else
-                    intent.putExtra(EXTRA_SELECTION, mCustomAdapter.getItem(position));
+                else {
+                    MCFStepObj obj = mCustomAdapter.getItem(position);
+                    intent.putExtra(EXTRA_CUSTOM_SELECTION, obj);
+                    intent.putExtra(EXTRA_CUSTOM_SELECTION_POSITION, mModel.customData.indexOf(obj));
+                }
                 intent.putExtra(MCFConfig.EXTRA_TAG_KEY, mModel.tag);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -134,8 +136,13 @@ public class OptionsActivity extends AppCompatActivity {
      * If there is already a selection for the current {@link com.hypernovalabs.multichoiceform.form.MCFStep}, selects it
      */
     private void checkSelection() {
-        if (mModel.selection != null && mModel.selection.length() > 0)
-            mListView.setItemChecked(mAdapter.getPosition(mModel.selection), true);
+        if (mModel.data != null) {
+            if (mModel.selection != null && mModel.selection.length() > 0)
+                mListView.setItemChecked(mAdapter.getPosition(mModel.selection), true);
+        } else if (mModel.customSelection != null) {
+            int position = mModel.selectedPosition;
+            mListView.setItemChecked(position, true);
+        }
     }
 
     @Override
@@ -157,21 +164,17 @@ public class OptionsActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     hideKeyboard();
-
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-
                     updateQueriedData(newText);
-
                     return true;
                 }
             });
 
         }
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -190,24 +193,32 @@ public class OptionsActivity extends AppCompatActivity {
      * Update the options based on the SearchView query
      */
     private void updateQueriedData(String query) {
-        mOptions = new ArrayList<>();
-
-        for (String option : mModel.data) {
-
-            if (option.toLowerCase().contains(query.toLowerCase())) {
-                mOptions.add(option);
+        if (mModel.data != null) {
+            mOptions = new ArrayList<>();
+            for (String option : mModel.data) {
+                if (option.toLowerCase().contains(query.toLowerCase())) {
+                    mOptions.add(option);
+                }
             }
+            mAdapter.clear();
+            mAdapter.addAll(mOptions);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            mCustomOptions = new ArrayList<>();
+            for (MCFStepObj option : mModel.customData) {
+                String displayText = option.getDisplayText().toLowerCase();
+                if (displayText.contains(query.toLowerCase())) {
+                    mCustomOptions.add(option);
+                }
+            }
+            mCustomAdapter.setData(mCustomOptions);
         }
 
-        mAdapter.clear();
-        mAdapter.addAll(mOptions);
-        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         overrideTransition();
     }
 
