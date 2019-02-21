@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private MultiChoiceForm mForm;
     private ArrayList<MCFStep> mSteps;
     private MCFStep mDependentStep, mDependentStep2;
+    private MCFSingleSelectStep customStep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        DataManager.setBaseContext(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         setupToolbar();
@@ -94,9 +97,12 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ArrayList<CustomModel> customModels = getCustomDummyData("Display Text", 1000);
+        //2943 is the max number of elements supported
+        //520156 bytes exceed the max size of intent extra
+        //
+        ArrayList<CustomModel> customModels = getCustomDummyData("Display Text", 50000);
 
-        MCFSingleSelectStep customStep = new MCFSingleSelectStep(true,
+        customStep = new MCFSingleSelectStep(true,
                 (MCFStepView) findViewById(R.id.custom_step),
                 customModels);
 
@@ -144,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<CustomModel> getCustomDummyData(String prefix, int qty) {
-        ArrayList<CustomModel> list = new ArrayList<>(qty);
+        ArrayList<CustomModel> list = new ArrayList<>();
 
         for (int i = 0; i < qty; i++) {
             String obj = prefix + (i + 1);

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,7 +33,7 @@ import java.util.Objects;
 /**
  * Activity containing a list of a MCFStep's options
  */
-public class OptionsActivity extends AppCompatActivity {
+public class OptionsActivity extends AppCompatActivity{
 
     private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
     protected static final String EXTRA_CONFIG = EXTRA_PREFIX + ".Config";
@@ -46,18 +47,16 @@ public class OptionsActivity extends AppCompatActivity {
     private MCFStepAdapter mCustomAdapter;
     private ArrayList<String> mOptions;
     private ArrayList<MCFStepObj> mCustomOptions;
-    private MCFOptionsConfig mModel;
+    static MCFOptionsConfig model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mcf_activity_options);
-
-        getIntent().setExtrasClassLoader(MCFOptionsConfig.class.getClassLoader());
-        mModel = getIntent().getParcelableExtra(EXTRA_CONFIG);
-
-        setupToolbar();
-        setupListView();
+        if (model != null) {
+            setupToolbar();
+            setupListView();
+        }
     }
 
     /**
@@ -68,13 +67,13 @@ public class OptionsActivity extends AppCompatActivity {
         TextView tvTitle = toolbar.findViewById(R.id.mcf_toolbar_title);
 
         if (tvTitle != null) {
-            tvTitle.setText(mModel.title);
-            if (mModel.toolbarTitleColor != 0)
-                tvTitle.setTextColor(mModel.toolbarTitleColor);
+            tvTitle.setText(model.title);
+            if (model.toolbarTitleColor != 0)
+                tvTitle.setTextColor(model.toolbarTitleColor);
         }
 
-        if (mModel.toolbarBackgroundColor != 0)
-            toolbar.setBackgroundColor(mModel.toolbarBackgroundColor);
+        if (model.toolbarBackgroundColor != 0)
+            toolbar.setBackgroundColor(model.toolbarBackgroundColor);
 
         setSupportActionBar(toolbar);
 
@@ -91,14 +90,14 @@ public class OptionsActivity extends AppCompatActivity {
         mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         mListView.setEmptyView(findViewById(R.id.mcf_empty_view));
-        setEmptyViewTexts(mModel.emptyViewTitle, mModel.emptyViewMsg);
+        setEmptyViewTexts(model.emptyViewTitle, model.emptyViewMsg);
 
-        if (mModel.data != null) {
-            mOptions = new ArrayList<>(mModel.data);
+        if (model.data != null) {
+            mOptions = new ArrayList<>(model.data);
             mAdapter = new ArrayAdapter<>(mContext, R.layout.mcf_simple_list_item_checked, mOptions);
         } else {
-            mCustomOptions = new ArrayList<>(mModel.customData);
-            mCustomAdapter = new MCFStepAdapter(mContext, mModel.customData);
+            mCustomOptions = new ArrayList<>(model.customData);
+            mCustomAdapter = new MCFStepAdapter(mContext, model.customData);
         }
         mListView.setAdapter(mAdapter != null ? mAdapter : mCustomAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,9 +110,9 @@ public class OptionsActivity extends AppCompatActivity {
                 else {
                     MCFStepObj obj = mCustomAdapter.getItem(position);
                     intent.putExtra(EXTRA_CUSTOM_SELECTION, obj);
-                    intent.putExtra(EXTRA_CUSTOM_SELECTION_POSITION, mModel.customData.indexOf(obj));
+                    intent.putExtra(EXTRA_CUSTOM_SELECTION_POSITION, model.customData.indexOf(obj));
                 }
-                intent.putExtra(MCFConfig.EXTRA_TAG_KEY, mModel.tag);
+                intent.putExtra(MCFConfig.EXTRA_TAG_KEY, model.tag);
                 setResult(RESULT_OK, intent);
                 finish();
                 overrideTransition();
@@ -136,29 +135,29 @@ public class OptionsActivity extends AppCompatActivity {
      * If there is already a selection for the current {@link com.hypernovalabs.multichoiceform.form.MCFStep}, selects it
      */
     private void checkSelection() {
-        if (mModel.data != null) {
-            if (mModel.selection != null && mModel.selection.length() > 0)
-                mListView.setItemChecked(mAdapter.getPosition(mModel.selection), true);
-        } else if (mModel.customSelection != null) {
-            int position = mModel.selectedPosition;
+        if (model.data != null) {
+            if (model.selection != null && model.selection.length() > 0)
+                mListView.setItemChecked(mAdapter.getPosition(model.selection), true);
+        } else if (model.customSelection != null) {
+            int position = model.selectedPosition;
             mListView.setItemChecked(position, true);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mModel.isSearchable) {
+        if (model.isSearchable) {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.mcf_menu_search, menu);
 
             final MenuItem searchItem = menu.findItem(R.id.search);
 
             Drawable iconDrawable = ContextCompat.getDrawable(mContext, R.drawable.mcf_ic_search);
-            iconDrawable.setColorFilter(mModel.searchViewIconTint, PorterDuff.Mode.MULTIPLY);
+            iconDrawable.setColorFilter(model.searchViewIconTint, PorterDuff.Mode.MULTIPLY);
             searchItem.setIcon(iconDrawable);
 
             final SearchView searchView = (SearchView) searchItem.getActionView();
-            searchView.setQueryHint(mModel.searchViewHint);
+            searchView.setQueryHint(model.searchViewHint);
             searchView.setIconifiedByDefault(true);
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
@@ -193,9 +192,9 @@ public class OptionsActivity extends AppCompatActivity {
      * Update the options based on the SearchView query
      */
     private void updateQueriedData(String query) {
-        if (mModel.data != null) {
+        if (model.data != null) {
             mOptions = new ArrayList<>();
-            for (String option : mModel.data) {
+            for (String option : model.data) {
                 if (option.toLowerCase().contains(query.toLowerCase())) {
                     mOptions.add(option);
                 }
@@ -205,7 +204,7 @@ public class OptionsActivity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
         } else {
             mCustomOptions = new ArrayList<>();
-            for (MCFStepObj option : mModel.customData) {
+            for (MCFStepObj option : model.customData) {
                 String displayText = option.getDisplayText().toLowerCase();
                 if (displayText.contains(query.toLowerCase())) {
                     mCustomOptions.add(option);
@@ -219,7 +218,16 @@ public class OptionsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        model = null;
+//        DataManager.cancelRequest();
         overrideTransition();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        model = null;
+//        DataManager.cancelRequest();
     }
 
     /**

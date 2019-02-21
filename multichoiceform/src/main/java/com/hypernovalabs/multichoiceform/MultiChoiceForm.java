@@ -11,6 +11,9 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -55,6 +58,14 @@ public class MultiChoiceForm {
     private Toast mToast;
     public MCFStepObj customObj;
 
+    public MultiChoiceForm(Activity mContext) {
+//        DataManager.setBaseContext(mContext);
+        this.mContext = mContext;
+    }
+
+    private MultiChoiceForm() {
+    }
+
     /**
      * Builder class of {@link MultiChoiceForm}.
      */
@@ -69,6 +80,7 @@ public class MultiChoiceForm {
          * @param steps   MCFSteps to be handled.
          */
         public Builder(@NonNull AppCompatActivity context, @NonNull ArrayList<MCFStep> steps) {
+//            DataManager.setBaseContext(context);
             form = new MultiChoiceForm();
             form.mContext = context;
             form.mMCFSteps = steps;
@@ -265,7 +277,6 @@ public class MultiChoiceForm {
      */
     private Intent getIntent(MCFSingleSelectStep step) {
         Intent intent = new Intent(mContext, OptionsActivity.class);
-
         MCFOptionsConfig model = new MCFOptionsConfig();
         model.data = step.getData();
         model.customData = step.getCustomData();
@@ -281,10 +292,24 @@ public class MultiChoiceForm {
         model.isSearchable = step.isSearchable();
         model.searchViewHint = mSearchViewHint;
         model.searchViewIconTint = mToolbarIconTint;
+        OptionsActivity.model = model;
+//        DataManager.saveData(model);
+//        intent.putExtras(bundle);
 
-        intent.putExtra(OptionsActivity.EXTRA_CONFIG, model);
-
+//        int size = getBundleSizeInBytes(bundle);
+//        intent.putExtra(OptionsActivity.EXTRA_CONFIG, model);
+//        Log.e("SIZE", size + "");
         return intent;
+    }
+
+    private int getBundleSizeInBytes(Bundle bundle) {
+        Parcel parcel = Parcel.obtain();
+        parcel.writeValue(bundle);
+        byte[] bytes = parcel.marshall();
+
+        parcel.recycle();
+
+        return bytes.length;
     }
 
     /**

@@ -25,6 +25,16 @@
                 android:gravity="center"
                 android:textSize="18sp" />
         </androidx.appcompat.widget.Toolbar>
+        <!--<ProgressBar
+            android:id="@+id/mcf_loading"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginRight="16dp"
+            android:indeterminate="true"
+            android:visibility="visible" />-->
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
@@ -68,7 +78,7 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:divider="@color/mcf_ios_gray"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp" />
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp" />
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
