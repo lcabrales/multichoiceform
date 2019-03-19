@@ -292,6 +292,7 @@ public class MultiChoiceForm {
         model.isSearchable = step.isSearchable();
         model.searchViewHint = mSearchViewHint;
         model.searchViewIconTint = mToolbarIconTint;
+        model.searchCallback = step.getOnSearchTappedListener();
         OptionsActivity.model = model;
 //        DataManager.saveData(model);
 //        intent.putExtras(bundle);

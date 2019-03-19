@@ -33,7 +33,7 @@ import java.util.Objects;
 /**
  * Activity containing a list of a MCFStep's options
  */
-public class OptionsActivity extends AppCompatActivity{
+public class OptionsActivity extends AppCompatActivity {
 
     private static final String EXTRA_PREFIX = BuildConfig.APPLICATION_ID;
     protected static final String EXTRA_CONFIG = EXTRA_PREFIX + ".Config";
@@ -163,6 +163,8 @@ public class OptionsActivity extends AppCompatActivity{
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     hideKeyboard();
+                    if (model.searchCallback != null)
+                        model.searchCallback.OnSearchTapped(query);
                     return true;
                 }
 

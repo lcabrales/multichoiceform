@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.hypernovalabs.multichoiceform.OptionsActivity;
+import com.hypernovalabs.multichoiceform.form.MCFSingleSelectStep;
 import com.hypernovalabs.multichoiceform.form.MCFStepObj;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class MCFOptionsConfig implements Parcelable {
     public boolean isSearchable;
     public String searchViewHint;
     public int searchViewIconTint;
+    public MCFSingleSelectStep.OnSearchTappedListener searchCallback;
 
     public MCFOptionsConfig() {
     }

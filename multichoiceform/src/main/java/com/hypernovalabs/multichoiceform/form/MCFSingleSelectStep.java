@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class MCFSingleSelectStep extends MCFStep {
 
     private boolean isSearchable = false;
+    private OnSearchTappedListener mSearchCallback;
 
     /**
      * Simple constructor, sets the parent's type of {@link MCFStep#SINGLE_SELECT}. Takes an array as parameter.
@@ -87,5 +88,17 @@ public class MCFSingleSelectStep extends MCFStep {
      */
     public void setSearchable(boolean searchable) {
         isSearchable = searchable;
+    }
+
+    public void setOnSearchTappedListener(OnSearchTappedListener listener) {
+        mSearchCallback = listener;
+    }
+
+    public OnSearchTappedListener getOnSearchTappedListener() {
+        return mSearchCallback;
+    }
+
+    public interface OnSearchTappedListener {
+        void OnSearchTapped(String query);
     }
 }

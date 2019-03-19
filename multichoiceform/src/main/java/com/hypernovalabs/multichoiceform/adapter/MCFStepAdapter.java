@@ -50,7 +50,6 @@ public class MCFStepAdapter extends ArrayAdapter<MCFStepObj> {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.mcf_simple_list_item_checked, parent, false);
         }
         CheckedTextView textView = (CheckedTextView) convertView;
-        MCFStepObj item = mDataset.get(position);
         textView.setText(mDataset.get(position).getDisplayText());
         return convertView;
     }

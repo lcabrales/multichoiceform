@@ -28,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MCFSingleSelectStep.OnSearchTappedListener {
 
     private MainActivity mContext = this;
     private MultiChoiceForm mForm;
@@ -99,14 +99,15 @@ public class MainActivity extends AppCompatActivity {
 
         //2943 is the max number of elements supported
         //520156 bytes exceed the max size of intent extra
-        //
-        ArrayList<CustomModel> customModels = getCustomDummyData("Display Text", 50000);
+        //1820000 new max (Test with Pixel XL 4GB RAM)
+        ArrayList<CustomModel> customModels = getCustomDummyData("Display Text", 1);
 
         customStep = new MCFSingleSelectStep(true,
                 (MCFStepView) findViewById(R.id.custom_step),
                 customModels);
 
         customStep.setSearchable(true);
+        customStep.setOnSearchTappedListener(mContext);
 
         //Adds them all into an ArrayList
         mSteps = new ArrayList<>();
@@ -227,5 +228,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public void OnSearchTapped(String query) {
+        Log.e("Query", query);
     }
 }
