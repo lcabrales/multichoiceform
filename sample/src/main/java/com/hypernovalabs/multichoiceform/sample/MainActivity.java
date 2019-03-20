@@ -4,16 +4,19 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.MultiChoiceForm;
+import com.hypernovalabs.multichoiceform.OptionsActivity;
 import com.hypernovalabs.multichoiceform.ValidateAnimation;
 import com.hypernovalabs.multichoiceform.config.MCFConfig;
 import com.hypernovalabs.multichoiceform.form.MCFDateStep;
@@ -27,6 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements MCFSingleSelectStep.OnSearchTappedListener {
 
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements MCFSingleSelectSt
     private ArrayList<MCFStep> mSteps;
     private MCFStep mDependentStep, mDependentStep2;
     private MCFSingleSelectStep customStep;
+    private OptionsActivity mOptionsContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,7 +236,18 @@ public class MainActivity extends AppCompatActivity implements MCFSingleSelectSt
     }
 
     @Override
-    public void OnSearchTapped(String query) {
-        Log.e("Query", query);
+    public void OnSearchTapped(@NonNull OptionsActivity context, String query) {
+        mOptionsContext = context;
+        mOptionsContext.showLoading(true);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mOptionsContext.showLoading(false);
+                Random r = new Random();
+                int qty = r.nextInt(11 - 1) + 1;//between 1 and 10
+                mOptionsContext.populateAdapter(getCustomDummyData("Display Text", qty));
+            }
+        }, 4000);
     }
 }

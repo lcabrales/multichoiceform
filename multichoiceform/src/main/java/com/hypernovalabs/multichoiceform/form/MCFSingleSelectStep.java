@@ -2,6 +2,7 @@ package com.hypernovalabs.multichoiceform.form;
 
 import androidx.annotation.NonNull;
 
+import com.hypernovalabs.multichoiceform.OptionsActivity;
 import com.hypernovalabs.multichoiceform.view.MCFStepView;
 
 import java.util.ArrayList;
@@ -99,6 +100,6 @@ public class MCFSingleSelectStep extends MCFStep {
     }
 
     public interface OnSearchTappedListener {
-        void OnSearchTapped(String query);
+        void OnSearchTapped(@NonNull OptionsActivity context, String query);
     }
 }

@@ -1,5 +1,6 @@
 package com.hypernovalabs.multichoiceform;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hypernovalabs.multichoiceform.adapter.MCFStepAdapter;
@@ -26,6 +29,7 @@ import com.hypernovalabs.multichoiceform.config.MCFConfig;
 import com.hypernovalabs.multichoiceform.config.MCFOptionsConfig;
 import com.hypernovalabs.multichoiceform.form.MCFStepObj;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,12 +52,14 @@ public class OptionsActivity extends AppCompatActivity {
     private ArrayList<String> mOptions;
     private ArrayList<MCFStepObj> mCustomOptions;
     static MCFOptionsConfig model;
+    private ContentLoadingProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mcf_activity_options);
         if (model != null) {
+            mProgressBar = findViewById(R.id.mcf_loading);
             setupToolbar();
             setupListView();
         }
@@ -163,8 +169,8 @@ public class OptionsActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     hideKeyboard();
-                    if (model.searchCallback != null)
-                        model.searchCallback.OnSearchTapped(query);
+                    if (model.searchCallback != null && mContext != null)
+                        model.searchCallback.OnSearchTapped(mContext, query);
                     return true;
                 }
 
@@ -217,6 +223,32 @@ public class OptionsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * It works only if customData has previously been used
+     *
+     * @param newData
+     */
+    public void populateAdapter(ArrayList<? extends MCFStepObj> newData) {
+        if (mCustomAdapter != null) {
+            mCustomAdapter.setData(newData);
+        }
+    }
+
+    /**
+     * Shows or hides an intermittent loading view
+     *
+     * @param play
+     */
+    public void showLoading(boolean play) {
+        if (play) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mProgressBar.show();
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+            mProgressBar.hide();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -229,6 +261,7 @@ public class OptionsActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         model = null;
+        mContext = null;
 //        DataManager.cancelRequest();
     }
 
