@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
@@ -454,8 +455,13 @@ public class MultiChoiceForm {
                         mToast.cancel();
                     }
 
-                    mToast = Toast.makeText(mContext, mRequiredText, Toast.LENGTH_SHORT);
-                    mToast.show();
+                    try {
+                        mToast = Toast.makeText(mContext, mRequiredText, Toast.LENGTH_SHORT);
+                        //mToast.show();
+                    } catch (Exception e) {
+
+                    }
+
                 }
 
                 Animation animation = AnimationUtils
